@@ -85,10 +85,10 @@ exports.loginHandler = (req,res) =>{
                         err
                     })
                 }
-                res.json({
-                    name: user.name,
-                    message: 'User succesfully login!'
-                })
+                const token = jwt.sign({ _id: user._id }, process.env.SECRET);
+                res.cookie("token", token, { expire: new Date() + 9999 });
+                const { _id, name, email, role } = user;
+                return res.json({ token, user: { _id, name, email, role },message: 'User succesfully login!'});
             });
         }
         else{
