@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-const {signupHandler,loginHandler} = require('../../controllers/main/auth');
-
+const {signupHandler,loginHandler,getUserById,confirmUserHandler} = require('../../controllers/main/auth');
+router.param("userId",getUserById);
 router.post('/signup',[
     check("name", "name should be at least 3 char").isLength({ min: 4 }),
     check("email", "Please provide a valid email").isEmail(),
@@ -10,4 +10,5 @@ router.post('/signup',[
     ],signupHandler);
 
 router.post('/login',loginHandler);
+router.get('/confirmation/:userId',confirmUserHandler);
 module.exports = router; 

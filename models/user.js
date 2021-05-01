@@ -29,6 +29,10 @@ const userSchema = new Schema({
     },
     endvrid: {
         type: String
+    },
+    confirmed: {
+        type: Boolean,
+        default: false
     }
 },
 {
