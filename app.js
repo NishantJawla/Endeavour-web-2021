@@ -17,7 +17,7 @@ mongoose.connect(process.env.db,
                                 console.log(err)
                                 });
 //Predefined controllers/middleware
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 //importing self made routes and controllers
 const authRoutes = require('./routes/main/auth');
