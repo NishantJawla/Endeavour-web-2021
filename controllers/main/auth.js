@@ -127,3 +127,10 @@ exports.confirmUserHandler = (req,res) => {
         return res.json(user);
     })
 }
+
+exports.signoutHandler = (req, res) => {
+    res.clearCookie("token");
+    res.json({
+    message: "User signout"
+    });
+};
