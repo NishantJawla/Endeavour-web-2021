@@ -5,6 +5,8 @@ const nodemailer = require("nodemailer");
 const { check, validationResult } = require("express-validator");
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
+var expressJwt = require("express-jwt");
+const passport = require('passport');
 exports.signupHandler = (req,res)=>{
     const errors = validationResult(req);
 
@@ -84,11 +86,25 @@ exports.loginHandler = (req,res) =>{
                         message: 'Password is not correct',
                         err
                     })
+                }else{
+                    const payload = {
+                        id: user.id,
+                        name: user.name,
+                        avatar: user.avatar
+                    }
+                    jwt.sign(payload,
+                        process.env.SECRET,
+                        {expiresIn : 3600},
+                        (err,token) => {
+                            const { _id, name, email, role } = user;
+                            return res.json({
+                                status: 'success',
+                                token: 'Bearer '+token,
+                                user: { _id, name, email, role },
+                                message: 'User succesfully login!'
+                            })
+                        })
                 }
-                res.json({
-                    name: user.name,
-                    message: 'User succesfully login!'
-                })
             });
         }
         else{
@@ -127,3 +143,40 @@ exports.confirmUserHandler = (req,res) => {
         return res.json(user);
     })
 }
+
+exports.signoutHandler = (req, res) => {
+    res.clearCookie("token");
+    res.json({
+    message: "User signout"
+    });
+};
+
+exports.isAdmin = (req, res,next) => {
+    if(req.extractedUser.role ===  'user' ){
+    return res.status(403).json({
+        error : "You are not admin, Access Denied"
+    })
+    }
+next();
+}
+exports.adminHandler = (req,res) => {
+    res.json({
+        message: 'welcome admin'
+    })
+}
+exports.isSignedIn = expressJwt({
+    secret: process.env.SECRET,
+    algorithms: ['RS256']
+})
+
+exports.isAuthenticated = (req, res,next) => {
+    let checker = req.extractedUser && req.auth && req.extractedUser._id == req.auth._id;
+    //here profile will be set up by the frontend
+    if(!checker) {
+    return res.status(403).json({
+        error : "Access Denied"
+    });
+    }
+next();
+}
+

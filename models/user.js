@@ -33,6 +33,10 @@ const userSchema = new Schema({
     confirmed: {
         type: Boolean,
         default: false
+    },
+    role:{
+        type: String,
+        default: 'user'
     }
 },
 {
