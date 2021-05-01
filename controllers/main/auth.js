@@ -39,5 +39,31 @@ if (!errors.isEmpty()) {
         });
     })
     
-    
+}
+
+exports.loginHandler = (req,res) =>{
+    User.findOne({email:req.body.email}).exec((err,user)=>{
+        if(user){
+            bcrypt.compare(req.body.plainPassword, user.encryptedPassword, function(err, result) {
+                if(result != true){
+                    return res.json({
+                        location: 'contorllers/main/auth/loginhandler',
+                        message: 'Password is not correct',
+                        err
+                    })
+                }
+                res.json({
+                    name: user.name,
+                    message: 'User succesfully login!'
+                })
+            });
+        }
+        else{
+            res.status(404).json({
+                location: 'contorllers/main/auth/loginhandler',
+                message: 'User is not available Please check login details',
+                err
+            })
+        }
+    })
 }
