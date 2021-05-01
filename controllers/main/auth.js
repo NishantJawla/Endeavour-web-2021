@@ -11,24 +11,33 @@ if (!errors.isEmpty()) {
         error: errors.array()[0].msg
     });
 }
-    bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
-        const user = new User(req.body);
-        user.encryptedPassword = hash
-    user.save((err,user) => {
-        if(err){
-        return res.json({
-                location: '/controllers/main/auth.js',
-                msg: 'email already in use',
-                err
+    User.findOne({email:req.body.email}).exec((err,user)=>{
+        if(user){
+            return res.status(400).json({
+                location: '/controllers/main/auth',
+                message: 'User with this email already exist!'
             })
         }
-        res.json({
-            name: user.name,
-            email: user.email,
-            id: user._id,
-            password: user.encryptedPassword
-        })
-    });
-    });
+        bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
+            const user = new User(req.body);
+            user.encryptedPassword = hash
+        user.save((err,user) => {
+            if(err){
+            return res.json({
+                    location: '/controllers/main/auth.js',
+                    msg: 'email already in use',
+                    err
+                })
+            }
+            res.json({
+                name: user.name,
+                email: user.email,
+                id: user._id,
+                password: user.encryptedPassword
+            })
+        });
+        });
+    })
+    
     
 }
