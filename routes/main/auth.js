@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+const passport = require('passport');
+require('../../config/passport')(passport)
 const {signupHandler,loginHandler,getUserById,confirmUserHandler,signoutHandler, isAdmin,adminHandler, isAuthenticated,isSignedIn} = require('../../controllers/main/auth');
 router.param("userId",getUserById);
 router.post('/signup',[
@@ -11,5 +13,5 @@ router.post('/signup',[
 router.get("/signout", signoutHandler);
 router.post('/login',loginHandler);
 router.get('/confirmation/:userId',confirmUserHandler);
-router.get('/admin/:userId',isAuthenticated,isAdmin,adminHandler)
+router.get('/admin/:userId',passport.authenticate('jwt',{session: false}),isAdmin,adminHandler)
 module.exports = router; 
