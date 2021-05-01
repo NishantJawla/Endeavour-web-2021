@@ -135,3 +135,19 @@ exports.signoutHandler = (req, res) => {
     message: "User signout"
     });
 };
+
+exports.isAdmin = (req, res,next) => {
+    if(req.profile.role ===  'user' ){
+    return res.status(403).json({
+        error : "You are not admin, Access Denied"
+    })
+    }
+next();
+}
+/*
+exports.isSignedIn = expressJwt({
+    secret: process.env.SECRET,
+    userProperty: "auth"
+})
+*/
+
