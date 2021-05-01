@@ -17,8 +17,23 @@ const userSchema = new Schema({
     encryptedPassword: {
         type: String,
         required: true,
+    },
+    phoneNumber: {
+        type: String,
+        maxLength: 10,
+        trim: true
+    },
+    college: {
+        type: String,
+        trim: true
+    },
+    endvrid: {
+        type: String
     }
-
-});
+},
+{
+    timestamps: true
+}
+);
 
 module.exports = mongoose.model('User',userSchema);
