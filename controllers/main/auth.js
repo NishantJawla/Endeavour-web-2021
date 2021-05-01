@@ -132,7 +132,7 @@ exports.getUserById = (req, res, next, id) => {
 exports.confirmUserHandler = (req,res) => {
     const user = req.extractedUser;
     user.confirmed = true
-
+    user.endvrid = 'ENDVR2021'+user.phoneNumber
     user.save((err, user) => {
         if (err) {
             return res.status(400).json({
