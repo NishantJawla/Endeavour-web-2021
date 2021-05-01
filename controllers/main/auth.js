@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const { check, validationResult } = require("express-validator");
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
+var expressJwt = require("express-jwt");
 exports.signupHandler = (req,res)=>{
     const errors = validationResult(req);
 
