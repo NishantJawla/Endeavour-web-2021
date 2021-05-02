@@ -21,7 +21,9 @@ const userSchema = new Schema({
     phoneNumber: {
         type: String,
         maxLength: 10,
-        trim: true
+        trim: true,
+        required: true,
+        unique: true
     },
     college: {
         type: String,
