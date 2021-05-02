@@ -71,6 +71,14 @@ if (!errors.isEmpty()) {
 }
 
 exports.loginHandler = (req,res) =>{
+    const errors = validationResult(req);
+
+if (!errors.isEmpty()) {
+    return res.status(402).json({
+        location: '/controllers/main/auth.js login handler',
+        error: errors.array()[0].msg
+    });
+}
     User.findOne({email:req.body.email}).exec((err,user)=>{
         if(user){
             if(user.confirmed == false){
@@ -164,19 +172,6 @@ exports.adminHandler = (req,res) => {
         message: 'welcome admin'
     })
 }
-exports.isSignedIn = expressJwt({
-    secret: process.env.SECRET,
-    algorithms: ['RS256']
-})
 
-exports.isAuthenticated = (req, res,next) => {
-    let checker = req.extractedUser && req.auth && req.extractedUser._id == req.auth._id;
-    //here profile will be set up by the frontend
-    if(!checker) {
-    return res.status(403).json({
-        error : "Access Denied"
-    });
-    }
-next();
-}
+
 
