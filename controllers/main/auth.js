@@ -1,4 +1,4 @@
-const User = require('../../models/user');
+//dependecy
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 const nodemailer = require("nodemailer");
@@ -7,6 +7,13 @@ const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 var expressJwt = require("express-jwt");
 const passport = require('passport');
+
+
+//imported 
+const User = require('../../models/user');
+
+
+//exports
 exports.signupHandler = (req,res)=>{
     const errors = validationResult(req);
 
@@ -122,18 +129,6 @@ if (!errors.isEmpty()) {
                 err
             })
         }
-    })
-}
-
-exports.getUserById = (req, res, next, id) => {
-    User.findById(id).exec((err, user) => {
-        if (err || !user) {
-            return res.status(400).json({
-                error: "No user was found in db"
-            })
-        }
-        req.extractedUser =  user;
-        next();
     })
 }
 
