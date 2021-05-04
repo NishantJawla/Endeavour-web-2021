@@ -1,12 +1,24 @@
+//Dependecies
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const passport = require('passport');
 require('../../config/passport')(passport)
-const {signupHandler,loginHandler,getUserById,confirmUserHandler,signoutHandler, isAdmin,adminHandler} = require('../../controllers/main/auth');
+
+//imported variables
+const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler} = require('../../controllers/main/auth');
+const {getUserById} = require('../../controllers/main/user');
+
+
 //params
 router.param("userId",getUserById);
+
+
 //routes
+
+
+// Public Post notprotected
+// to get signup details of the user
 router.post('/signup',[
     check("name", "name should be at least 3 char").isLength({ min: 4 }),
     check("email", "Please provide a valid email").isEmail(),
@@ -14,11 +26,25 @@ router.post('/signup',[
     check("plainPassword", "password should be at least 5 character long").isLength({ min: 5 })
     ],signupHandler);
 
+
+// Private Get notprotected
+// To get the user to sign out
 router.get("/signout", signoutHandler);
 
+//public post  not protected
+// to allow user to login
 router.post('/login',[check("email", "Please provide a valid email").isEmail(),
 check("plainPassword", "password should be at least 5 character long").isLength({ min: 5 })
 ],loginHandler);
+
+
+//Private get notprotected
+// to allow email confiramtion
 router.get('/confirmation/:userId',confirmUserHandler);
+
+//private get protected 
+//to redirect a user to admin panel
 router.get('/admin/:userId',passport.authenticate('jwt',{session: false}),isAdmin,adminHandler)
+
+
 module.exports = router; 

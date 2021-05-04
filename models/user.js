@@ -1,6 +1,7 @@
+//dependency
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+//user schema
 const userSchema = new Schema({
     name: {
         type: String,
@@ -14,10 +15,6 @@ const userSchema = new Schema({
         trim: true,
         unique: true
     },
-    encryptedPassword: {
-        type: String,
-        required: true,
-    },
     phoneNumber: {
         type: String,
         maxLength: 10,
@@ -25,9 +22,9 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    college: {
+    encryptedPassword: {
         type: String,
-        trim: true
+        required: true,
     },
     endvrid: {
         type: String
