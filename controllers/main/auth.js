@@ -155,7 +155,7 @@ exports.signoutHandler = (req, res) => {
 };
 
 exports.isAdmin = (req, res,next) => {
-    if(req.extractedUser.role ===  'user' ){
+    if(req.user.role ===  'user' ){
     return res.status(403).json({
         error : "You are not admin, Access Denied"
     })
