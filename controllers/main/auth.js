@@ -171,29 +171,77 @@ exports.adminHandler = (req,res) => {
 };
 
 exports.forgotPasswordHandler = (req,res) => {
-
-    async function main() {
-        let testAccount = await nodemailer.createTestAccount();
-        let transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-                user: process.env.GMAIL_USER,
-                pass: process.env.GMAIL_PASS,
-                    },
-        });
-        const url = `http://localhost:7000/main/resetPassword/${user._id}`;
-        let info = await transporter.sendMail({
-        from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-        to: req.body.email, 
-        subject: "forgot password", 
-        text: "it's a forgot password email", 
-        html: `<b>Hello ${req.body.name}</b><br>
-        Please click this link to reset your email password: <a href="${url}">${url}</a>`, 
-        });
-        console.log("Message sent: %s", info.messageId);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    }
-    main().catch(console.error);
+     const user =  User.findOne({email: req.body.email}).exec((err,user)=> {
+         if(err){
+             return res.json({
+                 'msg': "user with this email do not exist"
+             })
+         }
+         async function main() {
+            let testAccount = await nodemailer.createTestAccount();
+            let transporter = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: process.env.GMAIL_USER,
+                    pass: process.env.GMAIL_PASS,
+                        },
+            });
+            var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+            user.resetPassword.passCode = seq;
+            user.resetPassword.use = true;
+            const url = `http://localhost:7000/main/resetPassword/${user._id}`;
+            let info = await transporter.sendMail({
+            from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
+            to: req.body.email, 
+            subject: "forgot password", 
+            text: "it's a forgot password email", 
+            html: `<b>Hello ${req.body.name}</b><br>
+            Please click this link to reset your email password: <a href="${url}">${url}</a></br>
+            pass code: ${user.resetPassword.passCode}`, 
+            });
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        user.save();
+        }
+        main().catch(console.error);
+     })
+    
 }
 
+exports.resetPasswordHandler = (req,res) => {
+    User.findById(req.params.userId).exec((err,user)=> {
+        if(err || !user){
+            return res.json({
+                'msg': "unable to find user"
+            })
+        }
+        if(user.resetPassword.use !== true){
+            user.resetPassword = undefined
+            user.save();
+            return res.json({
+                'msg': "passcode has been expired",
+                'use': "use forgot password again"
+            })
+        }
+        
+        if(parseInt(req.body.passCode) !== parseInt(user.resetPassword.passCode)){
+            user.resetPassword = undefined
+            user.save();
+            return res.json({
+                'msg': "Passcode doesnot match",
+                'use': "use forgot password again"
+            })
+        }
+        bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
+            user.encryptedPassword = hash
+            user.resetPassword = undefined
+            user.save();
+            res.json({
+                'msg': 'User password changed'
+            })
+    }
+    )
+})
+}
+    
 

@@ -52,6 +52,14 @@ const userSchema = new Schema({
     univRollno:{
         type: String
     },
+    resetPassword: {
+        passCode:{
+            type:String
+        },
+        use: {
+            type:Boolean
+        }
+    },
     registerd: [{
         teams: {
             type: Schema.Types.ObjectId,

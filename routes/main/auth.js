@@ -7,7 +7,7 @@ const passport = require('passport');
 require('../../config/passport')(passport)
 
 //imported variables
-const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler} = require('../../controllers/main/auth');
+const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler,forgotPasswordHandler,resetPasswordHandler} = require('../../controllers/main/auth');
 const {registerEvent} = require('../../controllers/main/event');
 const {getUserById} = require('../../controllers/main/user');
 
@@ -57,4 +57,7 @@ router.get('/secure', passport.authenticate('jwt',{session: false}),  (req, res)
 
 router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
 
+
+router.post('/forgotpassword',forgotPasswordHandler);
+router.post('/resetpassword/:userId',resetPasswordHandler);
 module.exports = router; 
