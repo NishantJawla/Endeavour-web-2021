@@ -7,7 +7,7 @@ const User = require('../../models/user');
 const Team = require('../../models/team');
 const Event = require('../../models/event');
 
-exports.changePaidStatusHandler = (req,res) => {
+exports.changePaidStatusHandler = (req,res,next) => {
     User.findOne({
         phoneNumber: req.body.phoneNumber
     }).exec((err,user) => {
@@ -18,6 +18,7 @@ exports.changePaidStatusHandler = (req,res) => {
         }
         user.registerd.forEach(t => {
             if(t.event.toString() === req.body.eventId){
+                
                 Team.findById(t.teams.toString()).exec((err,team) => {
                 team.paidStatus = true
                 team.save((err,team) => {
@@ -26,9 +27,8 @@ exports.changePaidStatusHandler = (req,res) => {
                             msg: 'not able to update'
                         })
                     }
-                    return res.json({
-                        msg:"Sucessfully changed status"
-                    })
+                    req.team = t
+                    next()
                 })
                 });
                 

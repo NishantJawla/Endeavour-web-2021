@@ -24,3 +24,15 @@ exports.createEventHandler = (req,res) =>{
         res.json(event);
     })
 };
+
+exports.addTeamToEventsHandler = (req,res) => {
+    Event.findById(req.team.event.toString()).exec((err,e)=>{
+        if(err || !e){
+            return res.json({
+                msg: "unable to find the event"
+            })
+        }
+        e.paid.push(req.team.event._id)
+        res.json(e)
+    })
+}

@@ -8,7 +8,7 @@ require('../../config/passport')(passport)
 
 //imported variables
 const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler,forgotPasswordHandler,resetPasswordHandler} = require('../../controllers/main/auth');
-const {registerEvent} = require('../../controllers/main/event');
+const {registerEvent,addTeamToEventsHandler} = require('../../controllers/main/event');
 const {getUserById,getAllUsersHandler} = require('../../controllers/main/user');
 const {changePaidStatusHandler} = require('../../controllers/main/team');
 //params
@@ -17,5 +17,5 @@ router.param("userId",getUserById);
 //routes
 
 router.get('/getAllUsers',passport.authenticate('jwt',{session: false}),isAdmin,getAllUsersHandler);
-router.post('/changePaidStatus',passport.authenticate('jwt',{session: false}),isAdmin,changePaidStatusHandler);
+router.post('/changePaidStatus',passport.authenticate('jwt',{session: false}),isAdmin,changePaidStatusHandler,addTeamToEventsHandler);
 module.exports = router; 
