@@ -116,3 +116,16 @@ exports.registerEvent = async (req, res) => {
     });
 
 };
+
+exports.getAllUsersHandler = (req, res) => {
+
+    User.find()
+    .exec((err,users)=> {
+        if(err){
+            return res.status(400).json({
+                error: "seeing all user is causing problems",
+            })
+        }
+        res.json(users);
+    })
+}

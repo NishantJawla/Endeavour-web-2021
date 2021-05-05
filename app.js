@@ -24,10 +24,12 @@ app.use(express.json());
 const authRoutes = require('./routes/main/auth');
 const eventRoutes = require('./routes/main/event');
 const userRouters = require('./routes/main/user');
+const adminRouters = require('./routes/main/admin');
 //Routes
 app.use('/main',authRoutes);
 app.use('/main',eventRoutes);
 app.use('/user', userRouters);
+app.use('/admin', adminRouters);
 app.get('/', (req, res) =>{
     res.send('Welcome to the homepage!!');
 })
