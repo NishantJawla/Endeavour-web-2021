@@ -55,7 +55,6 @@ router.get('/secure', passport.authenticate('jwt',{session: false}),  (req, res)
     });
 });
 
-router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
 
 
 router.post('/forgotpassword',forgotPasswordHandler);
