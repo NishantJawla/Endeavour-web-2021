@@ -12,8 +12,6 @@ const passport = require('passport');
 
 //imported 
 const User = require('../../models/user');
-const Event = require('../../models/event');
-const Team = require('../../models/team');
 
 
 //exports
@@ -171,70 +169,5 @@ exports.adminHandler = (req,res) => {
     })
 };
 
-exports.registerEvent = async (req, res) => {
-    let user1 = await User.findOne({_id: req.user._id});
-    user1.registerd.forEach(team => {
-        if(team.eventId === req.params.eventId){
-            res.json({
-                status: 401,
-                msg: "Team leader already registed"
-            });
-        }
-    });
-
-    let user2 = null;
-    let user3 = null;
-    let user4 = null;
-    if(req.body.member2){
-        user2 = await User.findOne({endvrid: req.body.member2});
-        user2.registerd.forEach(team => {
-            if(team.eventId === req.params.eventId){
-                res.json({
-                    status: 401,
-                    msg: "Member2 is already registed"
-                });
-            }
-        });
-    }
-    if(req.body.member3){
-        user3 = await User.findOne({endvrid: req.body.member3});
-        user3.registerd.forEach(team => {
-            if(team.eventId === req.params.eventId){
-                res.json({
-                    status: 401,
-                    msg: "Member3 is already registed"
-                });
-            }
-        });
-    }
-    if(req.body.member4){
-        user4 = await User.findOne({endvrid: req.body.member4});
-        user4.registerd.forEach(team => {
-            if(team.eventId === req.params.eventId){
-                res.json({
-                    status: 401,
-                    msg: "Member4 is already registed"
-                });
-            }
-        });
-    }
-
-    const data = {
-        event: req.params.eventId,
-        leader: req.user._id,
-        member1: user1._id,
-        member2: user2._id,
-        member3: user3._id,
-        member4: user4._id
-    };
-
-    const team = new Team(data);
-    team.save();
-    res.json({
-        status: 200,
-        msg: "sucessfully registered"
-    });
-
-};
 
 
