@@ -148,7 +148,7 @@ exports.confirmUserHandler = (req,res) => {
 }
 
 exports.signoutHandler = (req, res) => {
-    res.clearCookie("token");
+    req.logout();
     res.json({
     message: "User signout"
     });
