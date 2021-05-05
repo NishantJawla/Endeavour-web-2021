@@ -1,6 +1,7 @@
 //dependency
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Team = require('./team');
 //user schema
 const userSchema = new Schema({
     name: {
@@ -29,6 +30,10 @@ const userSchema = new Schema({
     endvrid: {
         type: String
     },
+    semester:{
+        type: String
+    }
+    ,
     confirmed: {
         type: Boolean,
         default: false
@@ -36,7 +41,23 @@ const userSchema = new Schema({
     role:{
         type: String,
         default: 'user'
-    }
+    },
+    college:{
+        type: String
+    },
+    branch:{
+        type: String
+    },
+    univRollno:{
+        type: String
+    },
+    registerd: [{
+        teams: {
+            type: Schema.Types.ObjectId,
+            ref: "Team"
+        }
+    }  
+    ]
 },
 {
     timestamps: true
