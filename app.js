@@ -22,8 +22,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 //importing self made routes and controllers
 const authRoutes = require('./routes/main/auth');
+const eventRoutes = require('./routes/main/event');
 //Routes
 app.use('/main',authRoutes);
+app.use('/main',eventRoutes);
 app.get('/', (req, res) =>{
     res.send('Welcome to the homepage!!');
 })

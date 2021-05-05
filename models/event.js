@@ -5,8 +5,12 @@ const Schema = mongoose.Schema;
 const User = require('./user');
 //user schema
 const eventSchema = new Schema({
-    fees: {
+    price: {
         type:Number,
+        required: true
+    },
+    eventName:{
+        type:String
     },
     paid:[
         {
