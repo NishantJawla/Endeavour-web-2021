@@ -1,4 +1,5 @@
 //Dependecies
+//jshint esversion: 8
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
@@ -44,7 +45,7 @@ router.get('/confirmation/:userId',confirmUserHandler);
 
 //private get protected 
 //to redirect a user to admin panel
-router.get('/admin',passport.authenticate('jwt',{session: false}),isAdmin,adminHandler)
+router.get('/admin',passport.authenticate('jwt',{session: false}),isAdmin,adminHandler);
 
 
 module.exports = router; 

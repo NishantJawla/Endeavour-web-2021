@@ -1,4 +1,5 @@
 //dependecy
+//jshint esversion: 8
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 const nodemailer = require("nodemailer");
@@ -100,7 +101,7 @@ if (!errors.isEmpty()) {
                         location: 'contorllers/main/auth/loginhandler',
                         message: 'Password is not correct',
                         err
-                    })
+                    });
                 }else{
                     const payload = {
                         id: user.id,

@@ -1,3 +1,4 @@
+//jshint esversion: 8
 const User = require('../../models/user');
 
 exports.getUserById = (req, res, next, id) => {
