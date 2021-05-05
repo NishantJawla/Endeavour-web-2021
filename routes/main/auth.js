@@ -7,7 +7,7 @@ const passport = require('passport');
 require('../../config/passport')(passport)
 
 //imported variables
-const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler} = require('../../controllers/main/auth');
+const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler, registerEvent} = require('../../controllers/main/auth');
 const {getUserById} = require('../../controllers/main/user');
 
 
