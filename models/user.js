@@ -55,6 +55,7 @@ const userSchema = new Schema({
     registerd: [{
         teams: {
             type: Schema.Types.ObjectId,
+            eventId: Schema.Types.ObjectId,
             ref: "Team"
         }
     }  

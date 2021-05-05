@@ -1,4 +1,5 @@
 //dependency
+//jshint esversion: 8
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./user');
@@ -22,6 +23,10 @@ const teamSchema = new Schema({
         ref: "User"
     },
     member3: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    member4: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
