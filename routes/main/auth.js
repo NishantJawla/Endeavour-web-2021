@@ -47,5 +47,14 @@ router.get('/confirmation/:userId',confirmUserHandler);
 //to redirect a user to admin panel
 router.get('/admin',passport.authenticate('jwt',{session: false}),isAdmin,adminHandler);
 
+router.get('/secure', passport.authenticate('jwt',{session: false}),  (req, res) => {
+    res.json({
+        username: req.user.name
+    });
+});
+
+router.post("/register/:eventId", (req, res) => {
+    
+});
 
 module.exports = router; 

@@ -11,4 +11,4 @@ exports.getUserById = (req, res, next, id) => {
         req.extractedUser =  user;
         next();
     })
-}
+} 
