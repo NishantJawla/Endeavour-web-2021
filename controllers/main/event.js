@@ -8,7 +8,8 @@ exports.createEventHandler = (req,res) =>{
         })
     }
     const e = {
-        price: parseInt(req.body.price)
+        price: parseInt(req.body.price),
+        eventName: req.body.eventName
     }
     const event = new Event(e);
     event.save((err,event) => {
