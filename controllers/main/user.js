@@ -1,4 +1,8 @@
 //jshint esversion: 8
+//dependecy
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
+//imports
 const User = require('../../models/user');
 const Team = require('../../models/team');
 const Event = require('../../models/event');
@@ -127,5 +131,38 @@ exports.getAllUsersHandler = (req, res) => {
             })
         }
         res.json(users);
+    })
+}
+
+exports.changePasswordHandler = (req, res) => {
+    const user = User.findById(req.user._id).exec((err,user) => {
+        if(err || !user){
+            return res.json({
+                msg: "failed to change password!"
+            })
+        }
+        bcrypt.compare(req.body.oldPassword, user.encryptedPassword, function(err, result){
+            if(result == true){
+                bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
+                    user.encryptedPassword = hash
+                    user.save((err,user) => {
+                        if(err){
+                        return res.json({
+                                location: '/controllers/main/auth.js',
+                                msg: 'Failed to save user',
+                                err
+                            })
+                        }
+                    return res.json({
+                        msg: "Passwords succesfully changed"
+                        })
+                    })
+                })
+            }else{
+                res.json({
+                    msg: "old password is wrong"
+                })
+            }
+        })
     })
 }

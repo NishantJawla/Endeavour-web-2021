@@ -6,9 +6,9 @@ const passport = require('passport');
 require('../../config/passport')(passport)
 
 //imported variables
-const {registerEvent} = require('../../controllers/main/user');
+const {registerEvent,changePasswordHandler} = require('../../controllers/main/user');
 
 
 router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
-
+router.post("/changePassword",passport.authenticate('jwt',{session: false}),changePasswordHandler);
 module.exports = router;
