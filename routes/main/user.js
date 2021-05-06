@@ -6,9 +6,13 @@ const passport = require('passport');
 require('../../config/passport')(passport)
 
 //imported variables
-const {registerEvent} = require('../../controllers/main/user');
+const {registerEvent, addTeamMember, removeTeamMember} = require('../../controllers/main/user');
 
 
 router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
+
+router.post("/addTeamMember/:teamId", passport.authenticate('jwt', {session: false}), addTeamMember);
+
+router.post("/removeTeamMember/:teamId/:memberId", passport.authenticate('jwt', {session: false}), removeTeamMember);
 
 module.exports = router;

@@ -33,7 +33,8 @@ if (!errors.isEmpty()) {
         }
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
             const user = new User(req.body);
-            user.encryptedPassword = hash
+            user.encryptedPassword = hash;
+            user.endvrid = 'ENDVR2021' + user.phoneNumber.toString();
         user.save((err,user) => {
             if(err){
             return res.json({
@@ -51,7 +52,7 @@ if (!errors.isEmpty()) {
                 auth: {
                     user: process.env.GMAIL_USER,
                     pass: process.env.GMAIL_PASS,
-                        },
+                },
             });
             const url = `http://localhost:7000/main/confirmation/${user._id}`;
             let info = await transporter.sendMail({

@@ -29,7 +29,8 @@ const userSchema = new Schema({
         required: true,
     },
     endvrid: {
-        type: String
+        type: String,
+        required: true
     },
     semester:{
         type: String

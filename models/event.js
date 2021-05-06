@@ -9,6 +9,10 @@ const eventSchema = new Schema({
         type:Number,
         required: true
     },
+    membersCount: {
+        type:Number,
+        required: true
+    },
     eventName:{
         type:String
     },
