@@ -17,22 +17,6 @@ const teamSchema = new Schema({
     teamMembers: {
         type: Array
     },
-    // member1: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User"
-    // },
-    // member2: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User"
-    // },
-    // member3: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User"
-    // },
-    // member4: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User"
-    // },
     paidStatus: {
         type: Boolean,
         default:false

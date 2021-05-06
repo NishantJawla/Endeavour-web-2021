@@ -18,10 +18,8 @@ const eventSchema = new Schema({
     },
     paid:[
         {
-            paidTeam:{
                 type: Schema.Types.ObjectId,
                 ref: "Team"
-            }
         }
     ]
 },
