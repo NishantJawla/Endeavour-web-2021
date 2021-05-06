@@ -2,6 +2,8 @@
 //dependecy
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
+require('dotenv').config();
+const nodemailer = require("nodemailer");
 //imports
 const User = require('../../models/user');
 const Team = require('../../models/team');
@@ -165,4 +167,61 @@ exports.changePasswordHandler = (req, res) => {
             }
         })
     })
+}
+
+exports.contactUsOneHandler = (req,res,next) => {
+    async function main() {
+        let testAccount = await nodemailer.createTestAccount();
+        let transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_PASS,
+                    },
+        });
+        let info = await transporter.sendMail({
+        from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
+        to: req.body.contactEmail, 
+        subject: "Verification email", 
+        text: "Hi it's a verification email", 
+        html: `<b>Hello</b><br>
+        Your concern have been recieved`, 
+        });
+        console.log("Message sent: %s", info.messageId);
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    }
+    main().catch(console.error)
+    next()
+    
+}
+
+exports.contactUsTwoHandler = (req,res) => {
+    
+        async function main() {
+            let testAccount = await nodemailer.createTestAccount();
+            let transporter = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: process.env.GMAIL_USER,
+                    pass: process.env.GMAIL_PASS,
+                        },
+            });
+            let info = await transporter.sendMail({
+            from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
+            to: process.env.GMAIL_USER, 
+            subject: "someone used contact us", 
+            text: "Hi it's a contact us form", 
+            html: `<b>Hello</b><br>
+            send  by : ${req.body.contactEmail}</br>
+            content : ${req.body.contactContent}
+            `, 
+            });
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        }
+        main().catch(console.error);
+    res.json({
+        msg: "succefully contacted us"
+    })
+
 }
