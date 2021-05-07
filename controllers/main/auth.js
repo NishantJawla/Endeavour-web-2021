@@ -28,7 +28,8 @@ if (!errors.isEmpty()) {
         if(user){
             return res.status(400).json({
                 location: '/controllers/main/auth',
-                message: 'User with this email already exist!'
+                msg: 'User with this email already exist!',
+                resCode: '109'
             })
         }
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
@@ -68,10 +69,12 @@ if (!errors.isEmpty()) {
         }
         main().catch(console.error);
         
-            res.json({
+            res.status(200).json({
                 name: user.name,
                 email: user.email,
-                id: user._id
+                id: user._id,
+                resCode: "110",
+                msg: "Signup successful. Please login...."
             })
         });
         });
@@ -91,16 +94,20 @@ if (!errors.isEmpty()) {
     User.findOne({email:req.body.email}).exec((err,user)=>{
         if(user){
             if(user.confirmed == false){
-                return res.json({
-                    location: '/controllers/main/auth.js login handler',
-                    message: 'Please validate your email'
-                })
+                return res
+                    .status(403)
+                    .json({
+                        location: '/controllers/main/auth.js login handler',
+                        msg: 'Please validate your email',
+                        resCode: '101'
+                    });
             }
             bcrypt.compare(req.body.plainPassword, user.encryptedPassword, function(err, result) {
                 if(result != true){
-                    return res.json({
+                    return res.status(403).json({
                         location: 'contorllers/main/auth/loginhandler',
-                        message: 'Password is not correct',
+                        msg: 'Password is not correct',
+                        resCode: '103',
                         err
                     });
                 }else{
@@ -118,7 +125,8 @@ if (!errors.isEmpty()) {
                                 status: 'success',
                                 token: 'Bearer '+token,
                                 user: { _id, name, email, role },
-                                message: 'User succesfully login!'
+                                msg: 'User succesfully login!',
+                                resCode: '104'
                             })
                         })
                 }
@@ -127,21 +135,22 @@ if (!errors.isEmpty()) {
         else{
             res.status(404).json({
                 location: 'contorllers/main/auth/loginhandler',
-                message: 'User is not available Please check login details',
+                msg: 'User is not available Please check login details',
+                resCode: '102',
                 err
-            })
+            });
         }
     })
 }
 
 exports.confirmUserHandler = (req,res) => {
     const user = req.extractedUser;
-    user.confirmed = true
-    user.endvrid = 'ENDVR2021'+user.phoneNumber
+    user.confirmed = true;
+    user.endvrid = 'ENDVR2021'+user.phoneNumber;
     user.save((err, user) => {
         if (err) {
             return res.status(400).json({
-                errors: "Failed to update category",
+                msg: "Failed to update category",
                 error: err.message
             })
         }
@@ -152,14 +161,16 @@ exports.confirmUserHandler = (req,res) => {
 exports.signoutHandler = (req, res) => {
     req.logout();
     res.json({
-    message: "User signout"
+        message: "User signout",
+        resCode: '105'
     });
 };
 
 exports.isAdmin = (req, res,next) => {
     if(req.user.role ===  'user' ){
     return res.status(403).json({
-        error : "You are not admin, Access Denied"
+        msg : "You are not admin, Access Denied",
+        resCode: '106'
     })
     }
 next();
@@ -167,16 +178,18 @@ next();
 
 exports.adminHandler = (req,res) => {
     res.json({
-        message: 'welcome admin'
-    })
+        msg: 'welcome admin',
+        resCode: '107'
+    });
 };
 
 exports.forgotPasswordHandler = (req,res) => {
      const user =  User.findOne({email: req.body.email}).exec((err,user)=> {
          if(err){
-             return res.json({
-                 'msg': "user with this email do not exist"
-             })
+            return res.json({
+                'msg': "user with this email do not exist",
+                resCode: "102"
+            });
          }
          async function main() {
             let testAccount = await nodemailer.createTestAccount();
@@ -213,36 +226,37 @@ exports.resetPasswordHandler = (req,res) => {
     User.findById(req.params.userId).exec((err,user)=> {
         if(err || !user){
             return res.json({
-                'msg': "unable to find user"
+                'msg': "unable to find user",
+                resCode: "102"
             })
         }
         if(user.resetPassword.use !== true){
-            user.resetPassword = undefined
+            user.resetPassword = undefined;
             user.save();
-            return res.json({
+            return res.status(400).json({
                 'msg': "passcode has been expired",
                 'use': "use forgot password again"
             })
         }
         
         if(parseInt(req.body.passCode) !== parseInt(user.resetPassword.passCode)){
-            user.resetPassword = undefined
+            user.resetPassword = undefined;
             user.save();
-            return res.json({
+            return res.status(403).json({
                 'msg': "Passcode doesnot match",
                 'use': "use forgot password again"
             })
         }
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
-            user.encryptedPassword = hash
-            user.resetPassword = undefined
+            user.encryptedPassword = hash;
+            user.resetPassword = undefined;
             user.save();
-            res.json({
-                'msg': 'User password changed'
-            })
-    }
-    )
-})
-}
+            res.status(200).json({
+                'msg': 'User password changed',
+                resCode: '108'
+            });
+        });
+    });
+};
     
 
