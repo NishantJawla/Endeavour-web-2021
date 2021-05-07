@@ -9,7 +9,8 @@ exports.createEventHandler = (req,res) =>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.json({
-            msg:'price is not numeric'
+            status: 400,
+            msg:'Price is not numeric'
         })
     }
     const e = {
@@ -30,6 +31,7 @@ exports.addTeamToEventsHandler = (req,res) => {
     Event.findById(req.team.event.toString()).exec((err,e)=>{
         if(err || !e){
             return res.json({
+                status: 404,
                 msg: "unable to find the event"
             })
         }

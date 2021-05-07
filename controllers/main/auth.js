@@ -27,6 +27,7 @@ if (!errors.isEmpty()) {
     User.findOne({email:req.body.email}).exec((err,user)=>{
         if(user){
             return res.status(400).json({
+                status: 400,
                 location: '/controllers/main/auth',
                 msg: 'User with this email already exist!',
                 resCode: '109'
@@ -35,10 +36,11 @@ if (!errors.isEmpty()) {
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
             const user = new User(req.body);
             user.encryptedPassword = hash;
-            user.endvrid = 'ENDVR2021' + user.phoneNumber.toString();
+            // user.endvrid = 'ENDVR2021' + user.phoneNumber.toString();
         user.save((err,user) => {
             if(err){
             return res.json({
+                    status: 500,
                     location: '/controllers/main/auth.js',
                     msg: 'Failed to save user',
                     err
@@ -70,15 +72,15 @@ if (!errors.isEmpty()) {
         main().catch(console.error);
         
             res.status(200).json({
+                status: 200,
                 name: user.name,
                 email: user.email,
                 id: user._id,
-                resCode: "110",
                 msg: "Signup successful. Please login...."
-            })
+            });
         });
         });
-    })
+    });
     
 }
 
@@ -86,7 +88,9 @@ exports.loginHandler = (req,res) =>{
     const errors = validationResult(req);
 
 if (!errors.isEmpty()) {
-    return res.status(402).json({
+    return res.status(500).json({
+        status: 500,
+        msg: "Something went Wrong",
         location: '/controllers/main/auth.js login handler',
         error: errors.array()[0].msg
     });
@@ -97,6 +101,7 @@ if (!errors.isEmpty()) {
                 return res
                     .status(403)
                     .json({
+                        status: 401,
                         location: '/controllers/main/auth.js login handler',
                         msg: 'Please validate your email',
                         resCode: '101'
@@ -105,9 +110,9 @@ if (!errors.isEmpty()) {
             bcrypt.compare(req.body.plainPassword, user.encryptedPassword, function(err, result) {
                 if(result != true){
                     return res.status(403).json({
+                        status: 403,
                         location: 'contorllers/main/auth/loginhandler',
-                        msg: 'Password is not correct',
-                        resCode: '103',
+                        msg: 'Please Enter correct Password',
                         err
                     });
                 }else{
@@ -122,11 +127,10 @@ if (!errors.isEmpty()) {
                         (err,token) => {
                             const { _id, name, email, role } = user;
                             return res.json({
-                                status: 'success',
+                                status: '200',
                                 token: 'Bearer '+token,
                                 user: { _id, name, email, role },
-                                msg: 'User succesfully login!',
-                                resCode: '104'
+                                msg: 'User succesfully loggedin!'
                             })
                         })
                 }
@@ -134,9 +138,9 @@ if (!errors.isEmpty()) {
         }
         else{
             res.status(404).json({
+                status: 404,
                 location: 'contorllers/main/auth/loginhandler',
-                msg: 'User is not available Please check login details',
-                resCode: '102',
+                msg: 'User is not found. Please check login details',
                 err
             });
         }
@@ -150,6 +154,7 @@ exports.confirmUserHandler = (req,res) => {
     user.save((err, user) => {
         if (err) {
             return res.status(400).json({
+                status: 400,
                 msg: "Failed to update category",
                 error: err.message
             })
@@ -161,25 +166,25 @@ exports.confirmUserHandler = (req,res) => {
 exports.signoutHandler = (req, res) => {
     req.logout();
     res.json({
-        message: "User signout",
-        resCode: '105'
+        status: 200,
+        msg: "User signout successfully"
     });
 };
 
 exports.isAdmin = (req, res,next) => {
     if(req.user.role ===  'user' ){
-    return res.status(403).json({
-        msg : "You are not admin, Access Denied",
-        resCode: '106'
-    })
+        return res.status(403).json({
+            status: 403,
+            msg : "You are not admin, Access Denied"
+        });
     }
 next();
 }
 
 exports.adminHandler = (req,res) => {
     res.json({
-        msg: 'welcome admin',
-        resCode: '107'
+        status: 200,
+        msg: 'welcome admin'
     });
 };
 
@@ -187,8 +192,8 @@ exports.forgotPasswordHandler = (req,res) => {
      const user =  User.findOne({email: req.body.email}).exec((err,user)=> {
          if(err){
             return res.json({
-                'msg': "user with this email do not exist",
-                resCode: "102"
+                status: 500,
+                'msg': "User with this email do not exist",
             });
          }
          async function main() {
@@ -218,9 +223,13 @@ exports.forgotPasswordHandler = (req,res) => {
         user.save();
         }
         main().catch(console.error);
-     })
+        res.json({
+            status: 200,
+            msg: "Password reset request Generated. Please check your registed mail id"
+        });
+     });
     
-}
+};
 
 exports.resetPasswordHandler = (req,res) => {
     User.findById(req.params.userId).exec((err,user)=> {
@@ -234,6 +243,7 @@ exports.resetPasswordHandler = (req,res) => {
             user.resetPassword = undefined;
             user.save();
             return res.status(400).json({
+                status: 400,
                 'msg': "passcode has been expired",
                 'use': "use forgot password again"
             })
@@ -243,6 +253,7 @@ exports.resetPasswordHandler = (req,res) => {
             user.resetPassword = undefined;
             user.save();
             return res.status(403).json({
+                status: 403,
                 'msg': "Passcode doesnot match",
                 'use': "use forgot password again"
             })
@@ -252,8 +263,8 @@ exports.resetPasswordHandler = (req,res) => {
             user.resetPassword = undefined;
             user.save();
             res.status(200).json({
-                'msg': 'User password changed',
-                resCode: '108'
+                status: 200,
+                'msg': 'User password changed Successfully',
             });
         });
     });

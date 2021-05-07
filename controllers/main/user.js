@@ -13,7 +13,8 @@ exports.getUserById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
         if (err || !user) {
             return res.status(400).json({
-                error: "No user was found in db"
+                status: 400,
+                msg: "No user was found in db"
             });
         }
         req.extractedUser =  user;
@@ -155,6 +156,7 @@ exports.unregisterEvent = async (req, res) => {
         if(err){
             res.json({
                 status: 500,
+                msg: "Not able to delete the requested user",
                 msg: err
             });
         } else {
@@ -171,7 +173,8 @@ exports.getAllUsersHandler = (req, res) => {
     .exec((err,users)=> {
         if(err){
             return res.status(400).json({
-                error: "seeing all user is causing problems",
+                status: 400,
+                msg: "seeing all user is causing problems",
             })
         }
         res.json(users);
@@ -182,6 +185,7 @@ exports.changePasswordHandler = (req, res) => {
     const user = User.findById(req.user._id).exec((err,user) => {
         if(err || !user){
             return res.json({
+                status: 500,
                 msg: "failed to change password!"
             })
         }
