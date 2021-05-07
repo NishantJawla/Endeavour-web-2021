@@ -13,7 +13,8 @@ exports.getUserById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
         if (err || !user) {
             return res.status(400).json({
-                error: "No user was found in db"
+                status: 400,
+                msg: "No user was found in db"
             });
         }
         req.extractedUser =  user;
@@ -130,13 +131,50 @@ exports.removeTeamMember = async (req, res) => {
     }
 };
 
-exports.getAllUsersHandler = (req, res) => {
+exports.unregisterEvent = async (req, res) => {
+    const team = await Team.findOne({_id: req.params.teamId});
+    if(team.leader.toString() !== req.user._id.toString()){
+        res.json({
+            status: 403,
+            msg: "Only leader can unregister the whole team"
+        });
+    }
+    //removing event from the list of registred events for all the members of team
+    team.teamMembers.forEach(async (member) => {
+        const tevents = [];
+        const user = await User.findOne({_id: member});
+        user.registerd.forEach(item => {
+            if(item.teams.toString() !== req.params.teamId){
+                tevents.push(item);
+            }
+        });
+        user.registerd = tevents;
+        user.save();
+    });
+    //delete team from the database
+    Team.findOneAndDelete({_id: req.params.teamId}, (err) => {
+        if(err){
+            res.json({
+                status: 500,
+                msg: "Not able to delete the requested user",
+                msg: err
+            });
+        } else {
+            res.json({
+                status: 200,
+                msg: "Unregisted Successfully"
+            });
+        }
+    });
+};
 
+exports.getAllUsersHandler = (req, res) => {
     User.find()
     .exec((err,users)=> {
         if(err){
             return res.status(400).json({
-                error: "seeing all user is causing problems",
+                status: 400,
+                msg: "seeing all user is causing problems",
             })
         }
         res.json(users);
@@ -147,6 +185,7 @@ exports.changePasswordHandler = (req, res) => {
     const user = User.findById(req.user._id).exec((err,user) => {
         if(err || !user){
             return res.json({
+                status: 500,
                 msg: "failed to change password!"
             })
         }

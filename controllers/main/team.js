@@ -13,22 +13,24 @@ exports.changePaidStatusHandler = (req,res,next) => {
     }).exec((err,user) => {
         if(err || !user){
             return res.json({
-                msg: "Sorry admin can't change the status"
+                status: 403,
+                msg: "Sorry admin, Not able tochange the paid status"
             })
         }
         user.registerd.forEach(t => {
             if(t.event.toString() === req.body.eventId){
                 
                 Team.findById(t.teams.toString()).exec((err,team) => {
-                team.paidStatus = true
+                team.paidStatus = true;
                 team.save((err,team) => {
                     if(err){
                         return res.json({
+                            status: 403,
                             msg: 'not able to update'
                         })
                     }
-                    req.team = t
-                    next()
+                    req.team = t;
+                    next();
                 })
                 });
                 
