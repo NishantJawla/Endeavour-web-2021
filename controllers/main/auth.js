@@ -129,10 +129,10 @@ if (!errors.isEmpty()) {
                             return res.json({
                                 status: '200',
                                 token: 'Bearer '+token,
-                                user: { _id, name, email, role },
+                                user: { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno },
                                 msg: 'User succesfully loggedin!'
-                            })
-                        })
+                            });
+                        });
                 }
             });
         }
