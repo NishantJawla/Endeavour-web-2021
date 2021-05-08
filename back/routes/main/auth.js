@@ -25,16 +25,24 @@ router.post('/signup',[
     check("name")
     .isLength({ min: 4 })
     .withMessage("name should be at least 3 char")
-    .isAlpha()
-    .withMessage("Name should only contains A-Z"),
-    check("email", "Please provide a valid email").isEmail(),
+    .isEmpty()
+    .withMessage("Name Field is Required"),
+    check("email")
+    .isEmail()
+    .withMessage("Please provide a valid email")
+    .isEmpty()
+    .withMessage("Email Field is Required"),
     check("phoneNumber")
     .isLength({ min: 10,max:10 })
     .withMessage("Phone number should be 10 char long")
     .isNumeric()
-    .withMessage("phone number should be numeric"),
+    .withMessage("phone number should be numeric")
+    .isEmpty()
+    .withMessage("Phone Number Field is required"),
     check("plainPassword", "password should be at least 5 character long")
     .isLength({ min: 5 })
+    .isEmpty()
+    .withMessage("Password Field is Required")
     ],signupHandler);
 
 
@@ -45,10 +53,15 @@ router.get("/signout", signoutHandler);
 //public post  not protected
 // to allow user to login
 router.post('/login',[
-    check("email", "Please provide a valid email")
-    .isEmail(),
+    check("email")
+    .isEmail()
+    .withMessage("Please provide a valid email")
+    .isEmpty()
+    .withMessage("Email Field is Required"),
     check("plainPassword", "password should be at least 5 character long")
     .isLength({ min: 5 })
+    .isEmpty()
+    .withMessage("Password Field is Required")
 ],loginHandler);
 
 
@@ -69,11 +82,17 @@ router.get('/secure', passport.authenticate('jwt',{session: false}),  (req, res)
 
 
 router.post('/forgotpassword',[
-    check("email", "Please provide a valid email")
-    .isEmail()],forgotPasswordHandler);
-
+    check("email")
+    .isEmail()
+    .withMessage("Please provide a valid email")
+    .isEmpty()
+    .withMessage("Email Field is Required")],forgotPasswordHandler);
     
 router.post('/resetpassword/:userId',[
-    check("plainPassword", "password should be at least 5 character long")
-    .isLength({ min: 5 })],resetPasswordHandler);
+    check("plainPassword")
+    .isLength({ min: 5 })
+    .withMessage("Password should be at least 5 character long")
+    .isEmpty()
+    .withMessage("Password Field is Required")],resetPasswordHandler);
+    
 module.exports = router; 
