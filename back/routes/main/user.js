@@ -9,7 +9,14 @@ require('../../config/passport')(passport);
 
 const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler} = require('../../controllers/main/user');
 
-router.post("/contactUs",contactUsOneHandler,contactUsTwoHandler);
+router.post("/contactUs",[
+    check("contactUserName")
+    .isLength({ min: 4 })
+    .withMessage("name should be at least 3 char")
+    .isAlpha()
+    .withMessage("Name should only contains A-Z"),
+    check("contactEmail", "Please provide a valid email").isEmail(),
+    ],contactUsOneHandler,contactUsTwoHandler);
 
 router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
 

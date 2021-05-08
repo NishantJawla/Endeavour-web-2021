@@ -86,15 +86,14 @@ if (!errors.isEmpty()) {
 
 exports.loginHandler = (req,res) =>{
     const errors = validationResult(req);
-
-if (!errors.isEmpty()) {
-    return res.status(500).json({
-        status: 500,
-        msg: "Something went Wrong",
-        location: '/controllers/main/auth.js login handler',
-        error: errors.array()[0].msg
-    });
-}
+    console.log("in here login handler")
+    if (!errors.isEmpty()) {
+        return res.status(500).json({
+            status: 500,
+            location: '/controllers/main/auth.js',
+            error: errors.array()[0].msg
+        });
+    }
     User.findOne({email:req.body.email}).exec((err,user)=>{
         if(user){
             if(user.confirmed == false){
@@ -125,7 +124,7 @@ if (!errors.isEmpty()) {
                         process.env.SECRET,
                         {expiresIn : 3600},
                         (err,token) => {
-                            const { _id, name, email, role } = user;
+                            const { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno } = user;
                             return res.json({
                                 status: '200',
                                 token: 'Bearer '+token,

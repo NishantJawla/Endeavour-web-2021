@@ -84,7 +84,7 @@ exports.addTeamMember = async (req, res) => {
             msg: "Max no of Participants exceeded"
         });
     } else{
-        team.teamMembers.push(user._id);
+        team.teamMembers.push(user._id.toString());
         user.registerd.push({
             teams: req.params.teamId,
             event: team._id
@@ -257,7 +257,7 @@ exports.contactUsTwoHandler = (req,res) => {
             to: process.env.GMAIL_USER, 
             subject: "someone used contact us", 
             text: "Hi it's a contact us form", 
-            html: `<b>Hello</b><br>
+            html: `<b>Hello ${req.body.contactUserName}</b><br>
             send  by : ${req.body.contactEmail}</br>
             content : ${req.body.contactContent}
             `, 
