@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
 import Footer from "../core/components/footer/footer";
 const Signin = () => {
   const [values, setValues] = useState({
     email: "",
-    plainPassword: "",
+    password: "",
     error: "",
     loading: false,
     didRedirect: false,
   });
 
-  const { email, plainPassword, error, loading, didRedirect } = values;
+  const { email, password, error, loading, didRedirect } = values;
 
   const { user } = isAuthenticated();
 
@@ -22,7 +22,7 @@ const Signin = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
-    signin({ email, plainPassword })
+    signin({ email, password })
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
@@ -93,8 +93,8 @@ const Signin = () => {
               <label className="text-light">Password</label>
               <input
                 className="form-control"
-                onChange={handleChange("plainPassword")}
-                value={plainPassword}
+                onChange={handleChange("password")}
+                value={password}
                 type="password"
               />
             </div>
