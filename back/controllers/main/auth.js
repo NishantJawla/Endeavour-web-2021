@@ -19,17 +19,17 @@ exports.signupHandler = (req,res)=>{
     const errors = validationResult(req);
     
 if (!errors.isEmpty()) {
-    return res.status(402).json({
+    return res.status(400).json({
         error: errors.array()[0].msg
     });
 }
-console.log(req);
+
     User.findOne({email:req.body.email}).exec((err,user)=>{
         if(user){
             return res.status(400).json({
                 status: 400,
-                location: '/controllers/main/auth',
                 msg: 'User with this email already exist!',
+                error: 'User with this email already exist!',
                 resCode: '109'
             })
         }
@@ -39,11 +39,17 @@ console.log(req);
             // user.endvrid = 'ENDVR2021' + user.phoneNumber.toString();
         user.save((err,user) => {
             if(err){
+                if(err.keyPattern.phoneNumber === 1){
+                    return res.json({
+                        status: 400,
+                        msg: 'User with this Phone Number already exist!',
+                        error: 'User with this Phone Number already exist!'
+                    })
+                }
             return res.json({
                     status: 500,
-                    location: '/controllers/main/auth.js',
                     msg: 'Failed to save user',
-                    err
+                    error: 'Failed to save user'
                 })
             }
             const token = jwt.sign({ _id: user._id }, process.env.SECRET);
