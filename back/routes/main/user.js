@@ -20,12 +20,28 @@ router.post("/contactUs",[
 
 router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
 
-router.post("/addTeamMember/:teamId", passport.authenticate('jwt', {session: false}), addTeamMember);
+router.post("/addTeamMember/:teamId",
+            [check("newMember")
+            .isAlphanumeric()
+            .withMessage("Endvr id should be alpha numeric")
+            .isLength({
+                min:19,
+                max:19
+            })
+            .withMessage("Endvr id should be 19 character long")
+            .contains("ENDVR2021",{ ignoreCase: false})
+            .withMessage("Endvr id should begin with ENDVR2021")
+        ], passport.authenticate('jwt', {session: false}), addTeamMember);
 
 router.post("/removeTeamMember/:teamId/:memberId", passport.authenticate('jwt', {session: false}), removeTeamMember);
 
 router.post("/unregister/:teamId", passport.authenticate('jwt', {session: false}), unregisterEvent);
 
-router.post("/changePassword",passport.authenticate('jwt',{session: false}),changePasswordHandler);
+router.post("/changePassword",[
+    check("plainPassword", "new password should be at least 5 character long")
+    .isLength({ min: 5 }),
+    check("oldPassword", "old password should be at least 5 character long")
+    .isLength({ min: 5 })]
+    ,passport.authenticate('jwt',{session: false}),changePasswordHandler);
 
 module.exports = router;

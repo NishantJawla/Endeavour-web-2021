@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10;
 require('dotenv').config();
 const nodemailer = require("nodemailer");
+const { check, validationResult } = require("express-validator");
 //imports
 const User = require('../../models/user');
 const Team = require('../../models/team');
@@ -25,6 +26,12 @@ exports.getUserById = (req, res, next, id) => {
 exports.registerEvent = async (req, res) => {
     let user1 = await User.findOne({_id: req.user._id});
     // console.log(user1.registerd);
+    if(!user1){
+        return res.json({
+            status: 404,
+            msg: "User not found"
+        })
+    }
     user1.registerd.forEach(team => {
         if(team.event.toString() === req.params.eventId){
             res.json({
@@ -55,47 +62,81 @@ exports.registerEvent = async (req, res) => {
 
 
 exports.addTeamMember = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(500).json({
+            status: 500,
+            location: '/controllers/main/auth.js',
+            error: errors.array()[0].msg
+        });
+    }
     const team = await Team.findOne({_id: req.params.teamId});
     const user = await User.findOne({endvrid: req.body.newMember});
     const event = await Event.findOne({_id: team.event});
+    if(!user){
+        return res.json({
+            status: 404,
+            msg: "User not found"
+        })
+    }
+    if(!team)  {
+        return res.json({
+            status: 404,
+            msg: "Team not found"
+        })
+    }
+    if(!event)  {
+        return res.json({
+            status: 404,
+            msg: "Event not found"
+        })
+    }
     if(team.leader.toString() !== req.user._id.toString()){
-        res.json({
+        return res.json({
             status: 403,
             msg: "The Leader can only change team"
         });
-    }
-    user.registerd.forEach(item => {
-        if(item.teams.toString() === req.params.teamId){
-            res.json({
-                status: 400,
-                msg: "Member is already present in the team"
-            });
+    }else{
+        let c = 1;
+        user.registerd.forEach(item => {
+            if(item.teams.toString() === req.params.teamId){
+                c = 0;
+                return res.json({
+                    status: 400,
+                    msg: "Member is already present in the team"
+                });
+            }
+            else if(item.event.toString() === team.event.toString()){
+                c = 0;
+                return res.json({
+                    status: 400,
+                    msg: "User is already registered in another team for the same event"
+                });
+            }
+        });
+        if(c){
+            if(team.teamMembers.length.toString() === event.membersCount.toString()){
+                return res.json({
+                    status: 403,
+                    msg: "Max no of Participants exceeded"
+                });
+            } else{
+                team.teamMembers.push(user._id.toString());
+                user.registerd.push({
+                    teams: req.params.teamId,
+                    event: team._id
+                });
+                user.save();
+                team.save();
+                return res.json({
+                    status: 200,
+                    msg: "Team member added successfully"
+                });
+            }
         }
-        if(item.event.toString() === team.event.toString()){
-            res.json({
-                status: 400,
-                msg: "User is already registered in another team for the same event"
-            });
-        }
-    });
-    if(team.teamMembers.length.toString() === event.membersCount.toString()){
-        res.json({
-            status: 403,
-            msg: "Max no of Participants exceeded"
-        });
-    } else{
-        team.teamMembers.push(user._id.toString());
-        user.registerd.push({
-            teams: req.params.teamId,
-            event: team._id
-        });
-        user.save();
-        team.save();
-        res.json({
-            status: 200,
-            msg: "Team member added successfully"
-        });
+        
     }
+    
 };
 
 exports.removeTeamMember = async (req, res) => {
@@ -133,6 +174,12 @@ exports.removeTeamMember = async (req, res) => {
 
 exports.unregisterEvent = async (req, res) => {
     const team = await Team.findOne({_id: req.params.teamId});
+    if(!team){
+        return res.json({
+            status: 404,
+            msg: "Team not found"
+        })
+    }
     if(team.leader.toString() !== req.user._id.toString()){
         res.json({
             status: 403,
@@ -182,6 +229,14 @@ exports.getAllUsersHandler = (req, res) => {
 }
 
 exports.changePasswordHandler = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(500).json({
+            status: 500,
+            location: '/controllers/main/auth.js',
+            error: errors.array()[0].msg
+        });
+    }
     const user = User.findById(req.user._id).exec((err,user) => {
         if(err || !user){
             return res.json({

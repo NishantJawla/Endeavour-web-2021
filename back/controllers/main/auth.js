@@ -86,7 +86,6 @@ if (!errors.isEmpty()) {
 
 exports.loginHandler = (req,res) =>{
     const errors = validationResult(req);
-    console.log("in here login handler")
     if (!errors.isEmpty()) {
         return res.status(500).json({
             status: 500,

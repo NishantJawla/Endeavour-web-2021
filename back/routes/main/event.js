@@ -16,7 +16,7 @@ router.param("userId",getUserById);
 
 //routes
 
-router.post('/admin/createEvent',[check('price','price is not numeric').isNumeric()],
+router.post('/createEvent',[check('price','price is not numeric').isNumeric()],
 passport.authenticate('jwt',{session: false})
 ,isAdmin
 ,createEventHandler);
