@@ -26,10 +26,10 @@ const eventRoutes = require('./routes/main/event');
 const userRouters = require('./routes/main/user');
 const adminRouters = require('./routes/main/admin');
 //Routes
-app.use('/main',authRoutes);
-app.use('/main',eventRoutes);
-app.use('/user', userRouters);
-app.use('/admin', adminRouters);
+app.use('/main/auth',authRoutes);
+app.use('/main/event',eventRoutes);
+app.use('/main/user', userRouters);
+app.use('/main/admin', adminRouters);
 app.get('/', (req, res) =>{
     res.send('Welcome to the homepage!!');
 })

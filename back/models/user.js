@@ -26,11 +26,10 @@ const userSchema = new Schema({
     },
     encryptedPassword: {
         type: String,
-        required: true,
+        required: true
     },
     endvrid: {
         type: String,
-        required: true
     },
     semester:{
         type: String

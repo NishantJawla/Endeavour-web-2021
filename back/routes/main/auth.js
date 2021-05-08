@@ -22,11 +22,19 @@ router.param("userId",getUserById);
 // Public Post notprotected
 // to get signup details of the user
 router.post('/signup',[
-    check("name", "name should be at least 3 char").isLength({ min: 4 }),
+    check("name")
+    .isLength({ min: 4 })
+    .withMessage("name should be at least 3 char")
+    .isAlpha()
+    .withMessage("Name should only contains A-Z"),
     check("email", "Please provide a valid email").isEmail(),
-    check("phoneNumber", "Phone number should be 10 char long").isLength({ min: 10,max:10 }),
-    check('phoneNumber','phone number should be numeric').isNumeric(),
-    check("plainPassword", "password should be at least 5 character long").isLength({ min: 5 })
+    check("phoneNumber")
+    .isLength({ min: 10,max:10 })
+    .withMessage("Phone number should be 10 char long")
+    .isNumeric()
+    .withMessage("phone number should be numeric"),
+    check("plainPassword", "password should be at least 5 character long")
+    .isLength({ min: 5 })
     ],signupHandler);
 
 
@@ -36,8 +44,11 @@ router.get("/signout", signoutHandler);
 
 //public post  not protected
 // to allow user to login
-router.post('/login',[check("email", "Please provide a valid email").isEmail(),
-check("plainPassword", "password should be at least 5 character long").isLength({ min: 5 })
+router.post('/login',[
+    check("email", "Please provide a valid email")
+    .isEmail(),
+    check("plainPassword", "password should be at least 5 character long")
+    .isLength({ min: 5 })
 ],loginHandler);
 
 
@@ -57,6 +68,12 @@ router.get('/secure', passport.authenticate('jwt',{session: false}),  (req, res)
 
 
 
-router.post('/forgotpassword',forgotPasswordHandler);
-router.post('/resetpassword/:userId',resetPasswordHandler);
+router.post('/forgotpassword',[
+    check("email", "Please provide a valid email")
+    .isEmail()],forgotPasswordHandler);
+
+    
+router.post('/resetpassword/:userId',[
+    check("plainPassword", "password should be at least 5 character long")
+    .isLength({ min: 5 })],resetPasswordHandler);
 module.exports = router; 
