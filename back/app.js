@@ -2,6 +2,7 @@
 //jshint esversion: 8
 const express = require('express');
 const app = express();
+var cors = require("cors");
 require('dotenv').config()
 const port = process.env.PORT;
 const mongoose = require('mongoose');
@@ -20,6 +21,7 @@ mongoose.connect(process.env.db,
 //Predefined controllers/middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
 //importing self made routes and controllers
 const authRoutes = require('./routes/main/auth');
 const eventRoutes = require('./routes/main/event');

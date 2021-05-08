@@ -17,13 +17,13 @@ const User = require('../../models/user');
 //exports
 exports.signupHandler = (req,res)=>{
     const errors = validationResult(req);
-
+    
 if (!errors.isEmpty()) {
     return res.status(402).json({
-        location: '/controllers/main/auth.js',
         error: errors.array()[0].msg
     });
 }
+console.log(req);
     User.findOne({email:req.body.email}).exec((err,user)=>{
         if(user){
             return res.status(400).json({

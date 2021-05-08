@@ -25,23 +25,24 @@ router.post('/signup',[
     check("name")
     .isLength({ min: 4 })
     .withMessage("name should be at least 3 char")
-    .isEmpty()
+    .notEmpty()
     .withMessage("Name Field is Required"),
     check("email")
     .isEmail()
     .withMessage("Please provide a valid email")
-    .isEmpty()
+    .notEmpty()
     .withMessage("Email Field is Required"),
     check("phoneNumber")
     .isLength({ min: 10,max:10 })
     .withMessage("Phone number should be 10 char long")
     .isNumeric()
     .withMessage("phone number should be numeric")
-    .isEmpty()
+    .notEmpty()
     .withMessage("Phone Number Field is required"),
-    check("plainPassword", "password should be at least 5 character long")
+    check("plainPassword")
     .isLength({ min: 5 })
-    .isEmpty()
+    .withMessage( "password should be at least 5 character long")
+    .notEmpty()
     .withMessage("Password Field is Required")
     ],signupHandler);
 
@@ -56,11 +57,11 @@ router.post('/login',[
     check("email")
     .isEmail()
     .withMessage("Please provide a valid email")
-    .isEmpty()
+    .notEmpty()
     .withMessage("Email Field is Required"),
     check("plainPassword", "password should be at least 5 character long")
     .isLength({ min: 5 })
-    .isEmpty()
+    .notEmpty()
     .withMessage("Password Field is Required")
 ],loginHandler);
 
@@ -85,14 +86,14 @@ router.post('/forgotpassword',[
     check("email")
     .isEmail()
     .withMessage("Please provide a valid email")
-    .isEmpty()
+    .notEmpty()
     .withMessage("Email Field is Required")],forgotPasswordHandler);
     
 router.post('/resetpassword/:userId',[
     check("plainPassword")
     .isLength({ min: 5 })
     .withMessage("Password should be at least 5 character long")
-    .isEmpty()
+    .notEmpty()
     .withMessage("Password Field is Required")],resetPasswordHandler);
     
 module.exports = router; 
