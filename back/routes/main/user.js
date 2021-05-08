@@ -12,9 +12,7 @@ const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePa
 router.post("/contactUs",[
     check("contactUserName")
     .isLength({ min: 4 })
-    .withMessage("name should be at least 3 char")
-    .isAlpha()
-    .withMessage("Name should only contains A-Z"),
+    .withMessage("name should be at least 3 char"),
     check("contactEmail", "Please provide a valid email").isEmail(),
     ],contactUsOneHandler,contactUsTwoHandler);
 
@@ -22,6 +20,8 @@ router.post("/register/:eventId", passport.authenticate('jwt',{session: false}),
 
 router.post("/addTeamMember/:teamId",
             [check("newMember")
+            .notEmpty()
+            .withMessage("Invalid Endeavour id")
             .isAlphanumeric()
             .withMessage("Endvr id should be alpha numeric")
             .isLength({

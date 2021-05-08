@@ -11,10 +11,11 @@ const eventSchema = new Schema({
     },
     membersCount: {
         type:Number,
-        required: true
+        required: true,
     },
     eventName:{
-        type:String
+        type:String,
+        unique: true
     },
     paid:[
         {

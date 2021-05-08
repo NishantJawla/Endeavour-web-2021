@@ -16,7 +16,19 @@ router.param("userId",getUserById);
 
 //routes
 
-router.post('/createEvent',[check('price','price is not numeric').isNumeric()],
+router.post('/createEvent',[check('price')
+                            .notEmpty()
+                            .withMessage("Price cannot be empty")
+                            .isNumeric()
+                            .withMessage('price is not numeric'),
+                            check('membersCount')
+                            .notEmpty()
+                            .withMessage("Member Count cannot be empty")
+                            .isNumeric()
+                            .withMessage('Member Count is not numeric'),
+                            check('eventName')
+                            .notEmpty()
+                            .withMessage("Event name can not be empty")],
 passport.authenticate('jwt',{session: false})
 ,isAdmin
 ,createEventHandler);
