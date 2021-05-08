@@ -39,6 +39,9 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+    uniqueString: {
+        type:String
+    },
     role:{
         type: String,
         default: 'user'

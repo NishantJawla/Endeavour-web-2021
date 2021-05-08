@@ -36,7 +36,19 @@ if (!errors.isEmpty()) {
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
             const user = new User(req.body);
             user.encryptedPassword = hash;
-            // user.endvrid = 'ENDVR2021' + user.phoneNumber.toString();
+            
+                const randString = () => {
+                    const len = 64
+                    let randStr = ''
+                    for(let i = 0; i<len; i++){
+                        const ch = Math.floor((Math.random()*10)+1)
+                        randStr += ch
+                    }
+                    return randStr;
+                }
+                const uniqueString = randString()
+                user.uniqueString = uniqueString
+            
         user.save((err,user) => {
             if(err){
                 if(err.keyPattern.phoneNumber === 1){
@@ -52,10 +64,10 @@ if (!errors.isEmpty()) {
                     error: 'Failed to save user'
                 })
             }
-            const token = jwt.sign({ _id: user._id }, process.env.SECRET);
+            
             
         async function main() {
-            let testAccount = await nodemailer.createTestAccount();
+            
             let transporter = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
@@ -63,7 +75,7 @@ if (!errors.isEmpty()) {
                     pass: process.env.GMAIL_PASS,
                 },
             });
-            const url = `http://localhost:7000/main/auth/confirmation/${user._id}`;
+            const url = `http://localhost:7000/main/auth/confirmation/${user.uniqueString}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -149,18 +161,24 @@ exports.loginHandler = (req,res) =>{
 }
 
 exports.confirmUserHandler = (req,res) => {
-    const user = req.extractedUser;
-    user.confirmed = true;
-    user.endvrid = 'ENDVR2021'+user.phoneNumber;
-    user.save((err, user) => {
-        if (err) {
-            return res.status(400).json({
-                status: 400,
-                msg: "Failed to update category",
-                error: err.message
-            })
+    const {uniqueString} = req.params
+    User.findOne({ uniqueString: uniqueString}).exec((err,user) => {
+        if(err || !user){
+        return res.status(400).send("Unable to find user")
         }
-        return res.json(user);
+        user.confirmed = true;
+        user.endvrid = 'ENDVR2021'+user.phoneNumber.toString();
+        user.uniqueString = undefined
+        user.save((err, user) => {
+            if (err) {
+                return res.status(400).json({
+                    status: 400,
+                    msg: "Failed to update category",
+                    error: err.message
+                })
+            }
+            return res.status(200).send("User Confirmed!");
+        })
     })
 }
 

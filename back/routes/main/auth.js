@@ -68,7 +68,7 @@ router.post('/login',[
 
 //Private get notprotected
 // to allow email confiramtion
-router.get('/confirmation/:userId',confirmUserHandler);
+router.get('/confirmation/:uniqueString',confirmUserHandler);
 
 //private get protected 
 //to redirect a user to admin panel
