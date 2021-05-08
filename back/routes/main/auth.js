@@ -89,7 +89,7 @@ router.post('/forgotpassword',[
     .notEmpty()
     .withMessage("Email Field is Required")],forgotPasswordHandler);
     
-router.post('/resetpassword/:userId',[
+router.post('/resetpassword/:uniqueString',[
     check("plainPassword")
     .isLength({ min: 5 })
     .withMessage("Password should be at least 5 character long")

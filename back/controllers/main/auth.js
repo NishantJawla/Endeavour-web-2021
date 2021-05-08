@@ -184,14 +184,14 @@ exports.confirmUserHandler = (req,res) => {
 
 exports.signoutHandler = (req, res) => {
     req.logout();
-    res.json({
+    return res.status(200).json({
         status: 200,
         msg: "User signout successfully"
     });
 };
 
 exports.isAdmin = (req, res,next) => {
-    if(req.user.role ===  'user' ){
+    if(req.user.role !==  'superman' ){
         return res.status(403).json({
             status: 403,
             msg : "You are not admin, Access Denied"
@@ -201,21 +201,35 @@ next();
 }
 
 exports.adminHandler = (req,res) => {
-    res.json({
+    return res.status(200).json({
         status: 200,
         msg: 'welcome admin'
     });
 };
 
 exports.forgotPasswordHandler = (req,res) => {
-     const user =  User.findOne({email: req.body.email}).exec((err,user)=> {
-         if(err){
-            return res.json({
-                status: 500,
+    User.findOne({email: req.body.email}).exec((err,user)=> {
+        if(err || !user){
+            return res.status(400).json({
+                status: 400,
                 'msg': "User with this email do not exist",
+                error: "User with this email do not exist"
             });
-         }
-         async function main() {
+        }
+
+        const randString = () => {
+            const len = 64
+            let randStr = ''
+            for(let i = 0; i<len; i++){
+                const ch = Math.floor((Math.random()*10)+1)
+                randStr += ch
+            }
+            return randStr;
+        }
+        const uniqueString = randString()
+        user.uniqueString = uniqueString
+
+        async function main() {
             let testAccount = await nodemailer.createTestAccount();
             let transporter = nodemailer.createTransport({
                 service: 'Gmail',
@@ -227,7 +241,7 @@ exports.forgotPasswordHandler = (req,res) => {
             var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
             user.resetPassword.passCode = seq;
             user.resetPassword.use = true;
-            const url = `http://localhost:7000/main/resetPassword/${user._id}`;
+            const url = `http://localhost:7000/main/auth/resetPassword/${user.uniqueString}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -241,25 +255,35 @@ exports.forgotPasswordHandler = (req,res) => {
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         user.save();
         }
-        main().catch(console.error);
-        res.json({
+        main().catch(err => {
+            return res.status(500).json({
+                status: 500,
+                msg: "Server Error",
+
+            })
+        });
+        return res.json({
             status: 200,
             msg: "Password reset request Generated. Please check your registed mail id"
         });
-     });
+    });
     
 };
 
 exports.resetPasswordHandler = (req,res) => {
-    User.findById(req.params.userId).exec((err,user)=> {
+    User.findOne({
+        uniqueString: req.params.uniqueString
+    }).exec((err,user)=> {
         if(err || !user){
-            return res.json({
+            return res.status(400).json({
                 'msg': "unable to find user",
+                'error': "unable to find user",
                 resCode: "102"
             })
         }
         if(user.resetPassword.use !== true){
             user.resetPassword = undefined;
+            user.uniqueString = undefined;
             user.save();
             return res.status(400).json({
                 status: 400,
@@ -270,6 +294,7 @@ exports.resetPasswordHandler = (req,res) => {
         
         if(parseInt(req.body.passCode) !== parseInt(user.resetPassword.passCode)){
             user.resetPassword = undefined;
+            user.uniqueString = undefined;
             user.save();
             return res.status(403).json({
                 status: 403,
@@ -280,8 +305,9 @@ exports.resetPasswordHandler = (req,res) => {
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
             user.encryptedPassword = hash;
             user.resetPassword = undefined;
+            user.uniqueString = undefined;
             user.save();
-            res.status(200).json({
+            return res.status(200).json({
                 status: 200,
                 'msg': 'User password changed Successfully',
             });
