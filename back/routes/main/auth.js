@@ -24,7 +24,7 @@ router.param("userId",getUserById);
 router.post('/signup',[
     check("name")
     .isLength({ min: 4 })
-    .withMessage("name should be at least 3 char")
+    .withMessage("Name should be at least 3 char")
     .notEmpty()
     .withMessage("Name Field is Required"),
     check("email")
@@ -36,12 +36,12 @@ router.post('/signup',[
     .isLength({ min: 10,max:10 })
     .withMessage("Phone number should be 10 char long")
     .isNumeric()
-    .withMessage("phone number should be numeric")
+    .withMessage("Phone number should be numeric")
     .notEmpty()
     .withMessage("Phone Number Field is required"),
     check("plainPassword")
     .isLength({ min: 5 })
-    .withMessage( "password should be at least 5 character long")
+    .withMessage( "Password should be at least 5 character long")
     .notEmpty()
     .withMessage("Password Field is Required")
     ],signupHandler);

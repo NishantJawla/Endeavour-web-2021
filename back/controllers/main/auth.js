@@ -63,7 +63,7 @@ if (!errors.isEmpty()) {
                     pass: process.env.GMAIL_PASS,
                 },
             });
-            const url = `http://localhost:7000/main/confirmation/${user._id}`;
+            const url = `http://localhost:7000/main/auth/confirmation/${user._id}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -75,15 +75,15 @@ if (!errors.isEmpty()) {
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         }
-        main().catch(console.error);
+        main().catch(err => {
+            return res.status(503).json({
+                    status: 503,
+                    msg: 'Server Failure',
+                    error: 'Server Failure'
+            })
+        });
         
-            res.status(200).json({
-                status: 200,
-                name: user.name,
-                email: user.email,
-                id: user._id,
-                msg: "Signup successful. Please login...."
-            });
+            res.status(200).send("User Confirmed Succesfully");
         });
         });
     });
@@ -93,31 +93,36 @@ if (!errors.isEmpty()) {
 exports.loginHandler = (req,res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(500).json({
-            status: 500,
-            location: '/controllers/main/auth.js',
+        return res.status(400).json({
+            status: 400,
             error: errors.array()[0].msg
         });
     }
     User.findOne({email:req.body.email}).exec((err,user)=>{
+        if(err || !user){
+            return res.status(400).json({
+                status: 400,
+                msg: 'User with this email does not exist',
+                error: 'User with this email does not exist',
+            })
+        }
         if(user){
             if(user.confirmed == false){
                 return res
-                    .status(403)
+                    .status(400)
                     .json({
-                        status: 401,
-                        location: '/controllers/main/auth.js login handler',
+                        status: 400,
                         msg: 'Please validate your email',
+                        error: 'Please validate your email',
                         resCode: '101'
                     });
             }
             bcrypt.compare(req.body.plainPassword, user.encryptedPassword, function(err, result) {
                 if(result != true){
-                    return res.status(403).json({
-                        status: 403,
-                        location: 'contorllers/main/auth/loginhandler',
+                    return res.status(400).json({
+                        status: 400,
                         msg: 'Please Enter correct Password',
-                        err
+                        error: 'Please Enter correct Password'
                     });
                 }else{
                     const payload = {
@@ -130,7 +135,7 @@ exports.loginHandler = (req,res) =>{
                         {expiresIn : 3600},
                         (err,token) => {
                             const { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno } = user;
-                            return res.json({
+                            return res.status(200).json({
                                 status: '200',
                                 token: 'Bearer '+token,
                                 user: { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno },
@@ -138,14 +143,6 @@ exports.loginHandler = (req,res) =>{
                             });
                         });
                 }
-            });
-        }
-        else{
-            res.status(404).json({
-                status: 404,
-                location: 'contorllers/main/auth/loginhandler',
-                msg: 'User is not found. Please check login details',
-                err
             });
         }
     })

@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+//eslint-disable-next-line
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
 import Footer from "../core/components/footer/footer";
 const Signin = () => {
   const [values, setValues] = useState({
     email: "",
-    password: "",
+    plainPassword: "",
     error: "",
     loading: false,
     didRedirect: false,
   });
 
-  const { email, password, error, loading, didRedirect } = values;
+  const { email, plainPassword, error, loading, didRedirect } = values;
 
   const { user } = isAuthenticated();
 
@@ -22,7 +23,7 @@ const Signin = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
-    signin({ email, password })
+    signin({ email, plainPassword })
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
@@ -40,13 +41,14 @@ const Signin = () => {
 
   const performRedirect = () => {
     if (didRedirect) {
-      if (user && user.role === 1) {
+      if (user && user.role.toString() === 'admin') {
         return <Redirect to="/admin/dashboard" />;
       } else {
         return <Redirect to="/user/dashboard" />;
       }
     }
-    if (isAuthenticated()) {
+    if (!isAuthenticated()) {
+      console.log("is authenticated failed")
       return <Redirect to="/" />;
     }
   };
@@ -93,8 +95,8 @@ const Signin = () => {
               <label className="text-light">Password</label>
               <input
                 className="form-control"
-                onChange={handleChange("password")}
-                value={password}
+                onChange={handleChange("plainPassword")}
+                value={plainPassword}
                 type="password"
               />
             </div>
@@ -116,16 +118,17 @@ const Signin = () => {
                 <div className="jumbotron  bg-transparent  text-white text-center">
                     <h2 className="display-4 bg-transparent">Sign In</h2>
                     {loadingMessage()}
-                    {errorMessage()}
-                    {signInForm()}
-                    {performRedirect()}
-            <p className="text-white text-center">{JSON.stringify(values)}</p>
+      {errorMessage()}
+      {signInForm()}
+      {performRedirect()}
+      <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
                 <Footer/>
             </div>
         </div>
-    </div>
-    );
+      
+      </div>
+  );
 };
 
 export default Signin;

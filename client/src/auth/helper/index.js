@@ -21,7 +21,8 @@ export const signup = user => {
 
 
 export const signin = user => {
-    return fetch(`${API}/auth/signin`,{
+    return fetch(`${API}auth/login`,{
+        mode: 'cors',
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -32,7 +33,10 @@ export const signin = user => {
     .then(response => {
         return response.json()
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        console.log(err)
+        return err;
+    })
 }
 
 
