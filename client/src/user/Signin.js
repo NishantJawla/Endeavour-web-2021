@@ -1,8 +1,10 @@
+//jshint esversion: 8
 import React, { useState } from "react";
 //eslint-disable-next-line
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
-import Footer from "../core/components/footer/footer";
+import Footer from "../core/components/Footer";
+
 const Signin = () => {
   const [values, setValues] = useState({
     email: "",

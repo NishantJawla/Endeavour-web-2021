@@ -1,7 +1,8 @@
+//jshint esversion: 8
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signup } from "../auth/helper";
-import Footer from "../core/components/footer/footer";
+import Footer from "../core/components/Footer";
 import  "./css/Signup.css"
 const Signup = () => {
   const [values, setValues] = useState({

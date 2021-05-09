@@ -1,3 +1,4 @@
+//jshint esversion: 8
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./core/Home";
