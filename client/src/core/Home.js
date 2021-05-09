@@ -1,7 +1,7 @@
 //jshint esversion: 8
 import React from 'react';
 import "../styles.css";
-import { API } from "../Backend";
+import { API } from "../backend";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import AboutUs from "./components/AboutUs";

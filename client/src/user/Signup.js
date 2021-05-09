@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signup } from "../auth/helper";
 import Footer from "../core/components/Footer";
-import  "./css/Signup.css"
+import  "./css/signup.css"
 const Signup = () => {
   const [values, setValues] = useState({
     name: "",

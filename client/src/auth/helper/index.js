@@ -1,5 +1,5 @@
 //jshint esversion: 8
-import {API} from "../../Backend";
+import {API} from "../../backend";
 
 export const signup = user => {
     return fetch(`${API}auth/signup`,{
