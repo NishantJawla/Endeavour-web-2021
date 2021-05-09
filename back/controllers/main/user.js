@@ -321,7 +321,8 @@ exports.contactUsTwoHandler = (req,res) => {
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         }
         main().catch(console.error);
-    res.json({
+    res.status(200).json({
+        status: 200,
         msg: "succefully contacted us"
     })
 

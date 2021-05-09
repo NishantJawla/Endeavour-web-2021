@@ -148,7 +148,7 @@ exports.loginHandler = (req,res) =>{
                         (err,token) => {
                             const { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno } = user;
                             return res.status(200).json({
-                                status: '200',
+                                status: 200,
                                 token: 'Bearer '+token,
                                 user: { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno },
                                 msg: 'User succesfully loggedin!'
