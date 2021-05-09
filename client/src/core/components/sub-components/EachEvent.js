@@ -2,7 +2,13 @@
 import React from 'react';
 import EventIcon from "./../../../assets/img/icons/hack.png";
 
-function EachEvent(){
+function EachEvent(props){
+
+    function showPopup(){
+        // console.log(props);
+        props.changeShowPopup(props.id);
+    }
+
     return (
         <div className="py-5 each-event">
             <div className="p-5">
@@ -11,7 +17,7 @@ function EachEvent(){
                 </div>
                 <div className="event-title fw-bolder ls-1 fs-5 py-2">Hackathon</div>
                 <div className="event-desc py-2">Where Ideas and Technology Synergizes</div>
-                <button className="learn-more border-0 bg-transparent p-0 fw-bold ls-1 mt-2 color-primary">Learn More</button>
+                <button onClick={showPopup} className="learn-more border-0 bg-transparent p-0 fw-bold ls-1 mt-2 color-primary">Learn More</button>
             </div>
         </div>
     );

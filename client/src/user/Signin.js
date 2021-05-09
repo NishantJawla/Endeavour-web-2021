@@ -3,7 +3,6 @@ import React, { useState } from "react";
 //eslint-disable-next-line
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
-import Footer from "../core/components/Footer";
 
 const Signin = () => {
   const [values, setValues] = useState({
@@ -49,7 +48,7 @@ const Signin = () => {
         return <Redirect to="/user/dashboard" />;
       }
     }
-    if (!isAuthenticated()) {
+    if (isAuthenticated()) {
       console.log("is authenticated failed")
       return <Redirect to="/" />;
     }
@@ -84,7 +83,7 @@ const Signin = () => {
       <div className="row">
         <div className="col-md-6 offset-sm-3 text-left">
           <form action="">
-            <div className="form-group">
+            <div className="form-group py-2">
               <label className="text-light">Email</label>
               <input
                 className="form-control"
@@ -125,7 +124,6 @@ const Signin = () => {
       {performRedirect()}
       <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
-                <Footer/>
             </div>
         </div>
       

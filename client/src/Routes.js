@@ -4,15 +4,23 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./core/Home";
 import Signin from "./user/Signin";
 import Signup from "./user/Signup";
+import Navbar from "./core/components/Navbar";
+import Footer from "./core/components/Footer"; 
+
+
 const Routes = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/signup" exact component={Signup}/>
-        <Route path="/signin" exact component={Signin} />
-      </Switch>
-    </BrowserRouter>
+    <React.Fragment>
+      <Navbar />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/signup" exact component={Signup}/>
+          <Route path="/signin" exact component={Signin} />
+        </Switch>
+      </BrowserRouter>
+      <Footer />
+    </React.Fragment>
   );
 };
 

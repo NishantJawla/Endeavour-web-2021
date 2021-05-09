@@ -4,24 +4,24 @@
 .txt-red {
   color: #a13941 !important;
 }
-
-.btn-success,
 .btn-success:hover,
 .btn-success:active,
 .btn-success:visited {
   background-color: #a13941 !important;
 }
-.btn-block {
-  background-color: #a13941 !important;
-}
 .red-img-bg {
-  height: 100vh;
-  width: 100vw;
   z-index: 5;
+  height: fit-content;
   background-image: url("../../assets/img/pattern_main.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   left: 0;
   position: relative;
+}
+.signup .form-control{
+  border: 0;
+  background-color: rgba(32, 32, 32, 0.3);
+  color: #fff;
+  padding: 20px;
 }
