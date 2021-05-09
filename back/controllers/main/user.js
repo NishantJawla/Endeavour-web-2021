@@ -385,3 +385,11 @@ exports.updateProfileHandler = (req,res) => {
         }
     })
 }
+
+exports.getUserHandler = (req, res) => {
+    let messenger = req.user
+    messenger.encryptedPassword = undefined
+    messenger.uniqueString = undefined
+    messenger.resetPassword = undefined
+    res.status(200).json(messenger)
+}

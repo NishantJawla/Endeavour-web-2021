@@ -95,7 +95,10 @@ if (!errors.isEmpty()) {
             })
         });
         
-            res.status(200).send("User Confirmed Succesfully");
+            res.status(200).json({
+                status:200,
+                msg: "User Created Succesfully"
+            });
         });
         });
     });
@@ -177,7 +180,7 @@ exports.confirmUserHandler = (req,res) => {
                     error: err.message
                 })
             }
-            return res.status(200).send("User Confirmed!");
+            return res.status(200).send("E-Mail Verified Succesfully");
         })
     })
 }

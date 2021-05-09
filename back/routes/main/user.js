@@ -7,7 +7,7 @@ require('../../config/passport')(passport);
 
 //imported variables
 
-const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler} = require('../../controllers/main/user');
+const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler, getUserHandler} = require('../../controllers/main/user');
 
 router.post("/contactUs",[
     check("contactUserName")
@@ -68,4 +68,6 @@ router.post("/updateProfile",[
     .notEmpty()
     .withMessage("Discord Id Field is Required")
 ],passport.authenticate('jwt', {session: false}),updateProfileHandler);
+
+router.get("/getUser",passport.authenticate('jwt', {session: false}),getUserHandler)
 module.exports = router;
