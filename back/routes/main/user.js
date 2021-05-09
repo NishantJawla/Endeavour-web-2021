@@ -14,6 +14,11 @@ router.post("/contactUs",[
     .isLength({ min: 4 })
     .withMessage("name should be at least 3 char"),
     check("contactEmail", "Please provide a valid email").isEmail(),
+    check("contactContent")
+    .isLength({
+        min: 20
+    })
+    .withMessage("Content Should be atleast 20 character long")
     ],contactUsOneHandler,contactUsTwoHandler);
 
 router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
