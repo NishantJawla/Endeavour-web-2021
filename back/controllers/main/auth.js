@@ -54,13 +54,13 @@ if (!errors.isEmpty()) {
         user.save((err,user) => {
             if(err){
                 if(err.keyPattern.phoneNumber === 1){
-                    return res.json({
+                    return res.status(400).json({
                         status: 400,
                         msg: 'User with this Phone Number already exist!',
                         error: 'User with this Phone Number already exist!'
                     })
                 }
-            return res.json({
+            return res.status(400).json({
                     status: 500,
                     msg: 'Failed to save user',
                     error: 'Failed to save user'
