@@ -128,7 +128,7 @@ const Signup = () => {
         <div>
             <div className="container-fluid  signup red-img-bg p-5">
                 <div className="bg-transparent text-white text-center p-5">
-                  <div class="heading-font text-center pb-4 fw-bold color-white">SignUp</div>
+                  <div class="heading-font text-center pb-4 fw-bold color-white ls-2">SignUp</div>
                     {successMessage()}
                     {errorMessage()}
                     {signUpForm()}

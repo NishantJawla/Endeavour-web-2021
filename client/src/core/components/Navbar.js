@@ -28,7 +28,7 @@ function Navbar() {
                     <a class="nav-link ls-1 fs-6 color-white fw-bold" href="/speakers">Speakers</a>
                     <a class="nav-link ls-1 fs-6 color-white fw-bold" href="/sponsers">Sponsers</a>
                     <a class="nav-link ls-1 fs-6 color-white fw-bold" href="/team">Team</a>
-                    <a class="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white" href="/login">Login</a>
+                    <a href="/signin" class="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white">Login</a>
                 </div>
                 </div>
             </div>
