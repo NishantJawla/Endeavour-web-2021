@@ -61,7 +61,7 @@ if (!errors.isEmpty()) {
                     })
                 }
             return res.status(400).json({
-                    status: 500,
+                    status: 400,
                     msg: 'Failed to save user',
                     error: 'Failed to save user'
                 })
@@ -91,8 +91,8 @@ if (!errors.isEmpty()) {
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         }
         main().catch(err => {
-            return res.status(503).json({
-                    status: 503,
+            return res.status(500).json({
+                    status: 500,
                     msg: 'Server Failure',
                     error: 'Server Failure'
             })
@@ -365,8 +365,8 @@ exports.resetPasswordHandler = (req,res) => {
                         'error': "unable to find user",
                     })
                 }
-                return res.status(403).json({
-                    status: 403,
+                return res.status(400).json({
+                    status: 400,
                     'msg': "Passcode doesnot match use forgot password again",
                     error: "use forgot password again use forgot password again"
                 })
@@ -423,8 +423,8 @@ exports.resetPasswordHandler = (req,res) => {
                     });
             }
             main().catch(err => {
-                return res.status(503).json({
-                        status: 503,
+                return res.status(500).json({
+                        status: 500,
                         msg: 'Server Failure',
                         error: 'Server Failure'
                 })
