@@ -327,3 +327,52 @@ exports.contactUsTwoHandler = (req,res) => {
     })
 
 }
+
+exports.updateProfileHandler = (req,res) => {
+    const errors =validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            status: 400,
+            msg: errors.array()[0].msg,
+            error: errors.array()[0].msg
+        })
+    }
+    User.findById(req.user._id).exec((err,user)=> {
+        if(err || !user){
+            if(err){
+                return res.status(500).json({
+                    status:500,
+                    msg: "Server Error",
+                    error: "Server Error"
+                })
+            }else{
+                return res.status(400).json({
+                    status:400,
+                    msg: "User Not found!",
+                    error: "User Not found!"
+                })
+            }
+        }
+        else{
+            user.semester = req.body.semester
+            user.college = req.body.college
+            user.branch = req.body.branch
+            user.univRollno = req.body.univRollno
+            user.profile = true
+            user.save((err,user)=>{
+                if(err) {
+                    return res.status(500).json({
+                        status:500,
+                        msg: "Server Error",
+                        error: "Server Error"
+                    })
+                }
+                return res.status(200).json({
+                    status: 200,
+                    msg: "Profile Updated Succesfully",
+                })
+            })
+            
+        }
+    })
+}

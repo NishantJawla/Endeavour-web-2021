@@ -46,6 +46,10 @@ const userSchema = new Schema({
         type: String,
         default: 'user'
     },
+    profile: {
+        type:Boolean,
+        default: false
+    },
     college:{
         type: String
     },
