@@ -11,10 +11,21 @@ const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePa
 
 router.post("/contactUs",[
     check("contactUserName")
+    .notEmpty()
+    .withMessage("Name field is Required")
     .isLength({ min: 4 })
-    .withMessage("name should be at least 3 char"),
-    check("contactEmail", "Please provide a valid email").isEmail(),
+    .withMessage("name should be at least 4 char"),
+    check("contactSubject")
+    .notEmpty()
+    .withMessage("Subject field is Required"),
+    check("contactEmail")
+    .notEmpty()
+    .withMessage("Email field is Required")
+    .isEmail()
+    .withMessage("Please provide a valid email"),
     check("contactContent")
+    .notEmpty()
+    .withMessage("Message Field is Required")
     .isLength({
         min: 20
     })
