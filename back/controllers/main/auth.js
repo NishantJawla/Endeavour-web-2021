@@ -95,7 +95,10 @@ if (!errors.isEmpty()) {
             })
         });
         
-            res.status(200).send("User Confirmed Succesfully");
+            res.status(200).json({
+                status:200,
+                msg: "User Created Succesfully"
+            });
         });
         });
     });
@@ -148,7 +151,7 @@ exports.loginHandler = (req,res) =>{
                         (err,token) => {
                             const { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno } = user;
                             return res.status(200).json({
-                                status: '200',
+                                status: 200,
                                 token: 'Bearer '+token,
                                 user: { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno },
                                 msg: 'User succesfully loggedin!'
@@ -177,7 +180,7 @@ exports.confirmUserHandler = (req,res) => {
                     error: err.message
                 })
             }
-            return res.status(200).send("User Confirmed!");
+            return res.status(200).send("E-Mail Verified Succesfully");
         })
     })
 }

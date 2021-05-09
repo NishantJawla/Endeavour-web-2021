@@ -46,6 +46,10 @@ const userSchema = new Schema({
         type: String,
         default: 'user'
     },
+    profile: {
+        type:Boolean,
+        default: false
+    },
     college:{
         type: String
     },
@@ -53,6 +57,9 @@ const userSchema = new Schema({
         type: String
     },
     univRollno:{
+        type: String
+    },
+    discord: {
         type: String
     },
     resetPassword: {

@@ -321,8 +321,75 @@ exports.contactUsTwoHandler = (req,res) => {
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         }
         main().catch(console.error);
-    res.json({
+    res.status(200).json({
+        status: 200,
         msg: "succefully contacted us"
     })
 
+}
+
+exports.updateProfileHandler = (req,res) => {
+    const errors =validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            status: 400,
+            msg: errors.array()[0].msg,
+            error: errors.array()[0].msg
+        })
+    }
+    User.findById(req.user._id).exec((err,user)=> {
+        if(err || !user){
+            
+            if(err){
+                return res.status(500).json({
+                    status:500,
+                    msg: "Server Error",
+                    error: "Server Error"
+                })
+            }else{
+                return res.status(400).json({
+                    status:400,
+                    msg: "User Not found!",
+                    error: "User Not found!"
+                })
+            }
+        }
+        else{
+            user.semester = req.body.semester
+            user.college = req.body.college
+            user.branch = req.body.branch
+            user.univRollno = req.body.univRollno
+            user.discord = req.body.discord
+            user.profile = true
+            user.save((err,user)=>{
+                if(err) {
+                    if(err.keyPattern.discord === 1){
+                        return res.json({
+                            status: 400,
+                            msg: 'User with this discord id already exist!',
+                            error: 'User with this discord id already exist!'
+                        })
+                    }
+                    return res.status(500).json({
+                        status:500,
+                        msg: "Server Error",
+                        error: "Server Error"
+                    })
+                }
+                return res.status(200).json({
+                    status: 200,
+                    msg: "Profile Updated Succesfully",
+                })
+            })
+            
+        }
+    })
+}
+
+exports.getUserHandler = (req, res) => {
+    let messenger = req.user
+    messenger.encryptedPassword = undefined
+    messenger.uniqueString = undefined
+    messenger.resetPassword = undefined
+    res.status(200).json(messenger)
 }
