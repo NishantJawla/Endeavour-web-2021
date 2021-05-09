@@ -271,6 +271,14 @@ exports.changePasswordHandler = (req, res) => {
 }
 
 exports.contactUsOneHandler = (req,res,next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            status: 400,
+            msg: errors.array()[0].msg,
+            error: errors.array()[0].msg
+        })
+    }
     async function main() {
         let testAccount = await nodemailer.createTestAccount();
         let transporter = nodemailer.createTransport({
@@ -283,10 +291,11 @@ exports.contactUsOneHandler = (req,res,next) => {
         let info = await transporter.sendMail({
         from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
         to: req.body.contactEmail, 
-        subject: "Verification email", 
-        text: "Hi it's a verification email", 
-        html: `<b>Hello</b><br>
-        Your concern have been recieved`, 
+        subject: "Contact Us Succesfull", 
+        text: "Hi it's a contact us succefull mail", 
+        html: `<b>Hello ${req.body.contactUserName}</b><br>
+        Your concern have been recieved. We will send a response to you soon!
+        <br>Regards:<br> Team e-Cell`, 
         });
         console.log("Message sent: %s", info.messageId);
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
@@ -310,12 +319,15 @@ exports.contactUsTwoHandler = (req,res) => {
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: process.env.GMAIL_USER, 
-            subject: "someone used contact us", 
+            subject: "Someone Used Contact Us", 
             text: "Hi it's a contact us form", 
-            html: `<b>Hello ${req.body.contactUserName}</b><br>
-            send  by : ${req.body.contactEmail}<br>
-            subject: ${req.body.contactSubject}
+            html: `
+            <b> Hey! admin there is a person that want to hear from you!</b> <br>
+            <br>Sent by: ${req.body.contactUserName}<br><br>
+            senders mail : ${req.body.contactEmail}<br>
+            subject: ${req.body.contactSubject}<br>
             content : ${req.body.contactContent}<br>
+            <b>Contact him soon! because customer satisfaction is really important</b>
             `, 
             });
             console.log("Message sent: %s", info.messageId);

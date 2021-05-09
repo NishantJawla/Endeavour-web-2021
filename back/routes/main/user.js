@@ -14,7 +14,9 @@ router.post("/contactUs",[
     .notEmpty()
     .withMessage("Name field is Required")
     .isLength({ min: 4 })
-    .withMessage("name should be at least 4 char"),
+    .withMessage("name should be at least 4 char")
+    .matches(/^[a-zA-Z_ ]*$/, "i")
+    .withMessage("Name Field is inValid"),
     check("contactSubject")
     .notEmpty()
     .withMessage("Subject field is Required"),
