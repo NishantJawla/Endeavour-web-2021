@@ -48,10 +48,10 @@ const Signin = () => {
         return <Redirect to="/user/dashboard" />;
       }
     }
-    if (isAuthenticated()) {
-      console.log("is authenticated failed")
-      return <Redirect to="/" />;
-    }
+    // if (isAuthenticated()) {
+    //   console.log("is authenticated failed")
+    //   return <Redirect to="/" />;
+    // }
   };
 
   const loadingMessage = () => {

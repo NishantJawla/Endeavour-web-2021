@@ -1,4 +1,5 @@
 //jshint esversion: 8
+// eslint-disable-next-line
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import EachSpeaker from "./../sub-components/EachSpeaker";
