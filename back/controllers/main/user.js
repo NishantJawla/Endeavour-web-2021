@@ -339,6 +339,7 @@ exports.updateProfileHandler = (req,res) => {
     }
     User.findById(req.user._id).exec((err,user)=> {
         if(err || !user){
+            
             if(err){
                 return res.status(500).json({
                     status:500,
@@ -358,9 +359,17 @@ exports.updateProfileHandler = (req,res) => {
             user.college = req.body.college
             user.branch = req.body.branch
             user.univRollno = req.body.univRollno
+            user.discord = req.body.discord
             user.profile = true
             user.save((err,user)=>{
                 if(err) {
+                    if(err.keyPattern.discord === 1){
+                        return res.json({
+                            status: 400,
+                            msg: 'User with this discord id already exist!',
+                            error: 'User with this discord id already exist!'
+                        })
+                    }
                     return res.status(500).json({
                         status:500,
                         msg: "Server Error",

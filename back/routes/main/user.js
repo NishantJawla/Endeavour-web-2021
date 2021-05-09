@@ -63,6 +63,9 @@ router.post("/updateProfile",[
     .notEmpty()
     .withMessage("Semester is Required")
     .isNumeric()
-    .withMessage("Semester must be a number")
+    .withMessage("Semester must be a number"),
+    check("discord")
+    .notEmpty()
+    .withMessage("Discord Id Field is Required")
 ],passport.authenticate('jwt', {session: false}),updateProfileHandler);
 module.exports = router;

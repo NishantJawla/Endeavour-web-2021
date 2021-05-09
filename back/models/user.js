@@ -59,6 +59,9 @@ const userSchema = new Schema({
     univRollno:{
         type: String
     },
+    discord: {
+        type: String
+    },
     resetPassword: {
         passCode:{
             type:String
