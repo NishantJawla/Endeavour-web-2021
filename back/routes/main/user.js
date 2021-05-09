@@ -63,13 +63,19 @@ router.post("/changePassword",[
 router.post("/updateProfile",[
     check("branch")
     .notEmpty()
-    .withMessage("Branch Field is Required"),
+    .withMessage("Branch Field is Required")
+    .matches(/^[a-zA-Z_ ]*$/, "i")
+    .withMessage("Branch Field is inValid"),
     check("libId")
     .notEmpty()
-    .withMessage("Library Id Field is Required"),
+    .withMessage("Library Id Field is Required")
+    .matches(/^[a-zA-Z0-9_ ]*$/, "i")
+    .withMessage("Library Id Field is inValid"),
     check("college")
     .notEmpty()
-    .withMessage("College Name is Required"),
+    .withMessage("College Name is Required")
+    .matches(/^[a-zA-Z_ ]*$/, "i")
+    .withMessage("College Name Field is inValid"),
     check("semester")
     .notEmpty()
     .withMessage("Semester is Required")
@@ -82,4 +88,6 @@ router.post("/updateProfile",[
 
 router.get("/getUser",passport.authenticate('jwt', {session: false,
     failureRedirect : '/failurejson',}),getUserHandler)
+
+
 module.exports = router;

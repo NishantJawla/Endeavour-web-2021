@@ -23,22 +23,24 @@ router.param("userId",getUserById);
 // to get signup details of the user
 router.post('/signup',[
     check("name")
+    .notEmpty()
+    .withMessage("Name Field is Required")
     .isLength({ min: 4 })
     .withMessage("Name should be at least 3 char")
-    .notEmpty()
-    .withMessage("Name Field is Required"),
+    .matches(/^[a-zA-Z_ ]*$/, "i")
+    .withMessage("Name Field is inValid"),
     check("email")
-    .isEmail()
-    .withMessage("Please provide a valid email")
     .notEmpty()
-    .withMessage("Email Field is Required"),
+    .withMessage("Email Field is Required")
+    .isEmail()
+    .withMessage("Please provide a valid email"),
     check("phoneNumber")
+    .notEmpty()
+    .withMessage("Phone Number Field is required")
     .isLength({ min: 10,max:10 })
     .withMessage("Phone number should be 10 char long")
     .isNumeric()
-    .withMessage("Phone number should be numeric")
-    .notEmpty()
-    .withMessage("Phone Number Field is required"),
+    .withMessage("Phone number should be numeric"),
     check("plainPassword")
     .isLength({ min: 5 })
     .withMessage( "Password should be at least 5 character long")

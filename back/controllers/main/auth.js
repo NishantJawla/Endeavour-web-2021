@@ -20,6 +20,8 @@ exports.signupHandler = (req,res)=>{
     
 if (!errors.isEmpty()) {
     return res.status(400).json({
+        status: 400,
+        msg: errors.array()[0].msg,
         error: errors.array()[0].msg
     });
 }
@@ -81,9 +83,10 @@ if (!errors.isEmpty()) {
             to: req.body.email, 
             subject: "Verification email", 
             text: "Hi it's a verification email", 
-            html: `<b>Hello ${req.body.name}</b><br>
-            Please click this email to confirm your email: <a href="${url}">${url}</a>`, 
-            });
+            html: `
+            <b>Hey! ${req.body.name}</b>,<br>You are one step closer to successfully register for endeavour'21. Simply click <a href="${url}">here</a> to verify your email address.<br>
+            If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
+            `, });
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         }
@@ -110,6 +113,7 @@ exports.loginHandler = (req,res) =>{
     if (!errors.isEmpty()) {
         return res.status(400).json({
             status: 400,
+            msg: errors.array()[0].msg,
             error: errors.array()[0].msg
         });
     }
@@ -213,6 +217,13 @@ exports.adminHandler = (req,res) => {
 exports.forgotPasswordHandler = (req,res) => {
     User.findOne({email: req.body.email}).exec((err,user)=> {
         if(err || !user){
+            if(err){
+                return res.status(500).json({
+                    status: 500,
+                    'msg': "Server Error",
+                    error: "Server Error"
+                });
+            }
             return res.status(400).json({
                 status: 400,
                 'msg': "User with this email do not exist",
@@ -248,15 +259,36 @@ exports.forgotPasswordHandler = (req,res) => {
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
-            subject: "forgot password", 
+            subject: "Forgot Password Support", 
             text: "it's a forgot password email", 
-            html: `<b>Hello ${req.body.name}</b><br>
-            Please click this link to reset your email password: <a href="${url}">${url}</a></br>
-            pass code: ${user.resetPassword.passCode}`, 
+            html: `<b>Hello ${req.body.name}</b><br>Forgot your password? No worries!<br>
+            To reset your password, <a href="${url}">click here</a>:<br> 
+            pass code: ${user.resetPassword.passCode}<br>
+            If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
+            `, 
             });
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        user.save();
+        user.save((err,user) => {
+            if(err || !user){
+                if(err){
+                    return res.status(400).json({
+                        status: 500,
+                        'msg': "Server Error",
+                        error: "Server Error"
+                    });
+                }
+                return res.status(400).json({
+                    status: 400,
+                    'msg': "User with this email do not exist",
+                    error: "User with this email do not exist"
+                });
+            }
+            return res.json({
+                status: 200,
+                msg: "Password reset request Generated. Please check your registed mail id"
+            });
+        });
         }
         main().catch(err => {
             return res.status(500).json({
@@ -264,10 +296,6 @@ exports.forgotPasswordHandler = (req,res) => {
                 msg: "Server Error",
 
             })
-        });
-        return res.json({
-            status: 200,
-            msg: "Password reset request Generated. Please check your registed mail id"
         });
     });
     
@@ -278,6 +306,14 @@ exports.resetPasswordHandler = (req,res) => {
         uniqueString: req.params.uniqueString
     }).exec((err,user)=> {
         if(err || !user){
+            if(err){
+                return res.status(500).json({
+                    status: 500,
+                    'msg': "Server Error",
+                    'error': "Server Error",
+                    resCode: "102"
+                })
+            }
             return res.status(400).json({
                 'msg': "unable to find user",
                 'error': "unable to find user",
@@ -287,35 +323,116 @@ exports.resetPasswordHandler = (req,res) => {
         if(user.resetPassword.use !== true){
             user.resetPassword = undefined;
             user.uniqueString = undefined;
-            user.save();
-            return res.status(400).json({
-                status: 400,
-                'msg': "passcode has been expired",
-                'use': "use forgot password again"
-            })
+            user.save((err, user) => {
+                if(err || !user) {
+                    if(err){
+                        return res.status(500).json({
+                            status: 500,
+                            'msg': "Server Error",
+                            'error': "Server Error",
+                            resCode: "102"
+                        })
+                    }
+                    return res.status(400).json({
+                        'msg': "unable to find user",
+                        'error': "unable to find user",
+                        resCode: "102"
+                    })
+                }
+                return res.status(400).json({
+                    status: 400,
+                    'msg': "passcode has been expired use forgot password again",
+                    error: "use forgot password again use forgot password again"
+                })
+            });
+            
         }
         
         if(parseInt(req.body.passCode) !== parseInt(user.resetPassword.passCode)){
             user.resetPassword = undefined;
             user.uniqueString = undefined;
-            user.save();
-            return res.status(403).json({
-                status: 403,
-                'msg': "Passcode doesnot match",
-                'use': "use forgot password again"
-            })
+            user.save((err, user) => {
+                if(err || !user){
+                    if(err){
+                        return res.status(500).json({
+                            status: 500,
+                            'msg': "Server Error",
+                            'error': "Server Error",
+                        })
+                    }
+                    return res.status(400).json({
+                        'msg': "unable to find user",
+                        'error': "unable to find user",
+                    })
+                }
+                return res.status(403).json({
+                    status: 403,
+                    'msg': "Passcode doesnot match use forgot password again",
+                    error: "use forgot password again use forgot password again"
+                })
+            });
+            
         }
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
+            console.log("changing password")
             user.encryptedPassword = hash;
             user.resetPassword = undefined;
             user.uniqueString = undefined;
-            user.save();
-            return res.status(200).json({
-                status: 200,
-                'msg': 'User password changed Successfully',
+
+            async function main() {
+            
+                let transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        user: process.env.GMAIL_USER,
+                        pass: process.env.GMAIL_PASS,
+                    },
+                });
+                const url = `http://localhost:7000/main/auth/confirmation/${user.uniqueString}`;
+                let info = await transporter.sendMail({
+                from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
+                to: user.email, 
+                subject: "Password Change Alert!", 
+                text: "Hi it's a password change mail", 
+                html: `
+                <b>Hey! ${user.name}</b>,<br>
+                This is a confirmation that the password for your Endeavour account ${user.endvrid} has just been changed.<br>
+                If you didn't change your password, secure your account immediately.<br>    
+                If you're having trouble, please write us back to :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
+                `, });
+                console.log("Message sent: %s", info.messageId);
+                console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+                user.save((err, user) => {
+                    if(err || !user){
+                        if(err){
+                            return res.status(500).json({
+                                status: 500,
+                                'msg': "Server Error",
+                                'error': "Server Error",
+                            })
+                        }
+                        return res.status(400).json({
+                            'msg': "unable to find user",
+                            'error': "unable to find user",
+                        })
+                    }
+                        return res.status(200).json({
+                            status: 200,
+                            'msg': 'User password changed Successfully',
+                        });
+                    });
+            }
+            main().catch(err => {
+                return res.status(503).json({
+                        status: 503,
+                        msg: 'Server Failure',
+                        error: 'Server Failure'
+                })
             });
+
+
+
+            
         });
     });
 };
-    
-
