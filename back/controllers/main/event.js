@@ -53,3 +53,25 @@ exports.addTeamToEventsHandler = (req,res) => {
         res.json(e)
     })
 }
+
+exports.getEventHandler = (req,res) => {
+    Event.findById(req.params.eventId).exec((err,event) => {
+        if(err || !event){
+            if(err){
+                return res.status(500).json({
+                    status: 500,
+                    msg: "Server Error",
+                    error: "Server Error"
+                })
+            }
+            return res.status(400).json({
+                status: 400,
+                msg: "Server Error",
+                error: "Server Error"
+            })
+        }
+        let content = event
+        content.paid = undefined;
+        return res.status(200).json(content)
+    })
+}

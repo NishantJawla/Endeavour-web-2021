@@ -11,10 +11,21 @@ const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePa
 
 router.post("/contactUs",[
     check("contactUserName")
+    .notEmpty()
+    .withMessage("Name field is Required")
     .isLength({ min: 4 })
-    .withMessage("name should be at least 3 char"),
-    check("contactEmail", "Please provide a valid email").isEmail(),
+    .withMessage("name should be at least 4 char"),
+    check("contactSubject")
+    .notEmpty()
+    .withMessage("Subject field is Required"),
+    check("contactEmail")
+    .notEmpty()
+    .withMessage("Email field is Required")
+    .isEmail()
+    .withMessage("Please provide a valid email"),
     check("contactContent")
+    .notEmpty()
+    .withMessage("Message Field is Required")
     .isLength({
         min: 20
     })
@@ -52,13 +63,19 @@ router.post("/changePassword",[
 router.post("/updateProfile",[
     check("branch")
     .notEmpty()
-    .withMessage("Branch Field is Required"),
+    .withMessage("Branch Field is Required")
+    .matches(/^[a-zA-Z_ ]*$/, "i")
+    .withMessage("Branch Field is inValid"),
     check("libId")
     .notEmpty()
-    .withMessage("Library Id Field is Required"),
+    .withMessage("Library Id Field is Required")
+    .matches(/^[a-zA-Z0-9_ ]*$/, "i")
+    .withMessage("Library Id Field is inValid"),
     check("college")
     .notEmpty()
-    .withMessage("College Name is Required"),
+    .withMessage("College Name is Required")
+    .matches(/^[a-zA-Z_ ]*$/, "i")
+    .withMessage("College Name Field is inValid"),
     check("semester")
     .notEmpty()
     .withMessage("Semester is Required")
@@ -71,4 +88,6 @@ router.post("/updateProfile",[
 
 router.get("/getUser",passport.authenticate('jwt', {session: false,
     failureRedirect : '/failurejson',}),getUserHandler)
+
+
 module.exports = router;
