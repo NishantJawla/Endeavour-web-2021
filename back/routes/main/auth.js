@@ -72,9 +72,9 @@ router.get('/confirmation/:uniqueString',confirmUserHandler);
 
 //private get protected 
 //to redirect a user to admin panel
-router.get('/admin',passport.authenticate('jwt',{session: false}),isAdmin,adminHandler);
+router.get('/admin',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,adminHandler);
 
-router.get('/secure', passport.authenticate('jwt',{session: false}),  (req, res) => {
+router.get('/secure', passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),  (req, res) => {
     res.json({
         username: req.user.name
     });

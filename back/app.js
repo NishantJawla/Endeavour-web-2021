@@ -35,6 +35,14 @@ app.use('/main/admin', adminRouters);
 app.get('/', (req, res) =>{
     res.send('Welcome to the homepage!!');
 })
+//failed authentication route
+app.get('/failurejson', function(req, res) {
+    res.status(400).json({
+        status: 400,
+        msg:  "Authentication Failed Login Again",
+        error: "Authentication Failed Login Again"
+    });
+});
 //port connection
 app.listen(port,(req, res) => {
     console.log(`The website is running at ${port}`);

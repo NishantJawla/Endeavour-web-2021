@@ -56,7 +56,7 @@ const userSchema = new Schema({
     branch:{
         type: String
     },
-    univRollno:{
+    libId:{
         type: String
     },
     discord: {

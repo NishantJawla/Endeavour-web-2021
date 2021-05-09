@@ -16,6 +16,8 @@ router.param("userId",getUserById);
 
 //routes
 
-router.get('/getAllUsers',passport.authenticate('jwt',{session: false}),isAdmin,getAllUsersHandler);
-router.post('/changePaidStatus',passport.authenticate('jwt',{session: false}),isAdmin,changePaidStatusHandler,addTeamToEventsHandler);
+router.get('/getAllUsers',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getAllUsersHandler);
+
+
+router.post('/changePaidStatus',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changePaidStatusHandler,addTeamToEventsHandler);
 module.exports = router; 

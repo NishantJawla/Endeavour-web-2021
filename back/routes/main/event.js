@@ -29,7 +29,7 @@ router.post('/createEvent',[check('price')
                             check('eventName')
                             .notEmpty()
                             .withMessage("Event name can not be empty")],
-passport.authenticate('jwt',{session: false})
+passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',})
 ,isAdmin
 ,createEventHandler);
 
