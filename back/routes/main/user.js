@@ -21,7 +21,7 @@ router.post("/contactUs",[
     .withMessage("Content Should be atleast 20 character long")
     ],contactUsOneHandler,contactUsTwoHandler);
 
-router.post("/register/:eventId", passport.authenticate('jwt',{session: false}), registerEvent);
+router.post("/register/:eventId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), registerEvent);
 
 router.post("/addTeamMember/:teamId",
             [check("newMember")
@@ -36,26 +36,26 @@ router.post("/addTeamMember/:teamId",
             .withMessage("Endvr id should be 19 character long")
             .contains("ENDVR2021",{ ignoreCase: false})
             .withMessage("Endvr id should begin with ENDVR2021")
-        ], passport.authenticate('jwt', {session: false}), addTeamMember);
+        ], passport.authenticate('jwt', {session: false,failureRedirect : '/failurejson',}), addTeamMember);
 
 router.post("/removeTeamMember/:teamId/:memberId", passport.authenticate('jwt', {session: false}), removeTeamMember);
 
-router.post("/unregister/:teamId", passport.authenticate('jwt', {session: false}), unregisterEvent);
+router.post("/unregister/:teamId", passport.authenticate('jwt', {session: false,failureRedirect : '/failurejson',}), unregisterEvent);
 
 router.post("/changePassword",[
     check("plainPassword", "new password should be at least 5 character long")
     .isLength({ min: 5 }),
     check("oldPassword", "old password should be at least 5 character long")
     .isLength({ min: 5 })]
-    ,passport.authenticate('jwt',{session: false}),changePasswordHandler);
+    ,passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),changePasswordHandler);
 
 router.post("/updateProfile",[
     check("branch")
     .notEmpty()
     .withMessage("Branch Field is Required"),
-    check("univRollno")
+    check("libId")
     .notEmpty()
-    .withMessage("University Rollno Field is Required"),
+    .withMessage("Library Id Field is Required"),
     check("college")
     .notEmpty()
     .withMessage("College Name is Required"),
@@ -67,7 +67,8 @@ router.post("/updateProfile",[
     check("discord")
     .notEmpty()
     .withMessage("Discord Id Field is Required")
-],passport.authenticate('jwt', {session: false}),updateProfileHandler);
+],passport.authenticate('jwt', {session: false,failureRedirect : '/failurejson',}),updateProfileHandler);
 
-router.get("/getUser",passport.authenticate('jwt', {session: false}),getUserHandler)
+router.get("/getUser",passport.authenticate('jwt', {session: false,
+    failureRedirect : '/failurejson',}),getUserHandler)
 module.exports = router;
