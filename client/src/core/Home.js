@@ -1,14 +1,27 @@
-import React from "react";
+//jshint esversion: 8
+import React from 'react';
 import "../styles.css";
-import { API } from "../backend";
-import Footer from "./components/footer/footer"
-export default function Home() {
-  console.log("API IS", API);
+import { API } from "../Backend";
+import Navbar from "./components/Navbar";
+import Header from "./components/Header";
+import AboutUs from "./components/AboutUs";
+import Speakers from "./components/Speakers";
+import Events from "./components/Events";
+import ContactUs from "./components/ContactUs";
+import Footer from "./components/Footer";
 
-  return (
-    <div>
-      <h1 className="text-white">Hello front end </h1>
-      <Footer/>
-    </div>
-  );
+function Home() {
+    return (
+        <React.Fragment>
+            <Navbar />
+            <Header />
+            <AboutUs />
+            <Speakers />
+            <Events />
+            <ContactUs />
+            <Footer />
+        </React.Fragment>
+    );
 }
+
+export default Home;

@@ -1,3 +1,4 @@
+//jshint esversion: 8
 import React from "react";
 
 export default function App() {
