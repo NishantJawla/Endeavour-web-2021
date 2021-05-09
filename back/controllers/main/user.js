@@ -313,9 +313,9 @@ exports.contactUsTwoHandler = (req,res) => {
             subject: "someone used contact us", 
             text: "Hi it's a contact us form", 
             html: `<b>Hello ${req.body.contactUserName}</b><br>
-            send  by : ${req.body.contactEmail}<br>
-            subject: ${req.body.contactSubject}
-            content : ${req.body.contactContent}<br>
+            <b>Sent By</b> : ${req.body.contactEmail}<br>
+            <b>Subject</b>: ${req.body.contactSubject}<br>
+            <b>Content</b> : ${req.body.contactContent}<br>
             `, 
             });
             console.log("Message sent: %s", info.messageId);
