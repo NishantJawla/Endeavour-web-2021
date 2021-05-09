@@ -21,7 +21,7 @@ function Header(){
                     <div className="content color-white ls-2">
                         KIET Group Of Institutions
                     </div>
-                    <a href="/register" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </a>
+                    <a href="/SignUp" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </a>
                 </div>
             </div>
         </div> 

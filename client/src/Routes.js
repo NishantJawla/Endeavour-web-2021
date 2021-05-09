@@ -6,6 +6,7 @@ import Signin from "./user/Signin";
 import Signup from "./user/Signup";
 import Navbar from "./core/components/Navbar";
 import Footer from "./core/components/Footer"; 
+import NotFoundPage from "./core/components/NotFoundPage";
 
 
 const Routes = () => {
@@ -17,6 +18,7 @@ const Routes = () => {
           <Route path="/" exact component={Home} />
           <Route path="/signup" exact component={Signup}/>
           <Route path="/signin" exact component={Signin} />
+          <Route path="/:random" component={NotFoundPage}/>
         </Switch>
       </BrowserRouter>
       <Footer />

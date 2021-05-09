@@ -81,10 +81,10 @@ const Signin = () => {
   const signInForm = () => {
     return (
       <div className="row">
-        <div className="col-md-6 offset-sm-3 text-left">
+        <div className="col-md-4 col-sm-10 offset-md-4 offset-sm-1 text-left">
           <form action="">
             <div className="form-group py-2">
-              <label className="text-light">Email</label>
+              <label className="fs-6 ls-1">Email</label>
               <input
                 className="form-control"
                 onChange={handleChange("email")}
@@ -92,8 +92,8 @@ const Signin = () => {
                 type="email"
               />
             </div>
-            <div className="form-group">
-              <label className="text-light">Password</label>
+            <div className="form-group py-2">
+              <label className="fs-6 ls-1">Password</label>
               <input
                 className="form-control"
                 onChange={handleChange("plainPassword")}
@@ -101,7 +101,7 @@ const Signin = () => {
                 type="password"
               />
             </div>
-            <button onClick={onSubmit} className="btn btn-success btn-block">
+            <button onClick={onSubmit} className="btn btn-success py-3 my-5 fs-7 ls-1 fw-bold border-0 bg-secondary btn-block">
               Submit
             </button>
           </form>
@@ -115,9 +115,9 @@ const Signin = () => {
     {/* <Base title="Sign up page" description="A page for user to sign up!"> */}
 
     <div>
-            <div className="container-fluid  signup red-img-bg">
-                <div className="jumbotron  bg-transparent  text-white text-center">
-                    <h2 className="display-4 bg-transparent">Sign In</h2>
+            <div className="container-fluid  signup red-img-bg p-5">
+                <div className="bg-transparent text-white text-center p-5">
+                <div class="heading-font text-center pb-4 fw-bold color-white ls-2">SignIn</div>
                     {loadingMessage()}
       {errorMessage()}
       {signInForm()}
