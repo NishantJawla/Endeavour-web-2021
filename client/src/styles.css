@@ -253,6 +253,11 @@ form textarea.form-control{
     width: 20%;
     animation: showImage 2s linear forwards;
 }
+.aboutus{
+    background: url("./assets/img/pattern_main.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 /*-----swiper slide-------*/
 .swiper-container {
     width: 100%;
