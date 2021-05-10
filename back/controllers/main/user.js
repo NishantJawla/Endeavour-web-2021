@@ -418,19 +418,21 @@ exports.isProfileCompleteHandler = (req, res,next) => {
                     error: "Server Error"
                 })
             }
-            res.status(404).json({
+            return res.status(404).json({
                 status:404,
                 msg: "User not found",
                 error: "User Not found!"
             })
         }
         if(user.profile.toString() !== true.toString()){
-            res.status(400).json({
+            return res.status(400).json({
                 status: 400,
                 msg: "Please Complete Profile",
                 error: "Please Complete Profile!"
             })
+        }else{
+            next()
         }
-        next()
+        
     })
 }

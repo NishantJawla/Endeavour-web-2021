@@ -3,9 +3,11 @@ import React from 'react';
 import EcellLogo from "./../../assets/img/logo.png";
 import profileImg from "./../../assets/img/icons/user.png";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
+import {Redirect} from "react-router-dom"
+import {isAuthenticated, signout} from "../../auth/helper/index"
 
-import {isAuthenticated} from "../../auth/helper/index"
-function Navbar() {
+
+const Navbar = () =>  {
     return (
         <nav className="navbar navbar-expand-lg navbar-blur">
             <div className="container">
@@ -38,7 +40,15 @@ function Navbar() {
                                 <Dropdown as={ButtonGroup}>
                                     <Dropdown.Toggle id="dropdown-custom-1" className="bg-transparent border-0"><img src={profileImg} width="24px" alt="user profile img" /></Dropdown.Toggle>
                                     <Dropdown.Menu className="bg-secondary color-white">
-                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1">Action</Dropdown.Item>
+                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
+                                    onClick={() => {
+                                        signout(() => {
+                                          console.log("successfully logged out");
+                                          window.location.reload(false);
+                                          console.log("after reload")
+                                        });
+                                      }}
+                                   >Signout</Dropdown.Item>
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">Another action</Dropdown.Item>
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="3">Active Item</Dropdown.Item>
                                     </Dropdown.Menu>
