@@ -29,6 +29,9 @@
   a:hover{
       color: #25272B;
   }
+  .container{
+      width: 90vw !important;
+  }
   /*-------general styles--------*/
   .bg-white{
       background-color: var(--white) !important;
@@ -151,7 +154,7 @@
       height: 850px;
       margin: 0;
       padding: 0;
-      background: url('./assets/img/mybackground.jpg');
+      background: url('./assets/img/mybackground.png');
       background-repeat: no-repeat;
       background-position: left;
       background-size: cover;
