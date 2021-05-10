@@ -66,13 +66,17 @@ exports.getEventHandler = (req,res) => {
             }
             return res.status(400).json({
                 status: 400,
-                msg: "Server Error",
-                error: "Server Error"
+                msg: "Event Not Found",
+                error: "Event Not Found"
             })
         }
         let content = event
         content.paid = undefined;
-        return res.status(200).json(content)
+        return res.status(200).json({
+            status: 200,
+            msg: "Event Found Successfully"
+
+        })
     })
 }
 
