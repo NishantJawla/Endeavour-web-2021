@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signup } from "../auth/helper";
 import  "./css/signup.css"
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const Signup = () => {
   const [values, setValues] = useState({
     name: "",
@@ -25,8 +27,10 @@ const Signup = () => {
     signup({ name,phoneNumber, email, plainPassword })
       .then((data) => {
         if (data.error) {
+          errorMessage()
           setValues({ ...values, error: data.error, success: false });
         } else {
+          successMessage()
           setValues({
             ...values,
             name: "",
@@ -38,13 +42,28 @@ const Signup = () => {
           });
         }
       })
-      .catch(console.log("Error in signup"));
+      .catch( () =>{
+        errorMessage()
+        console.log("Error in signup")
+      }
+        );
   };
 
   const signUpForm = () => {
     return (
       <div className="row">
         <div className="col-md-4 col-sm-10 offset-md-4 offset-sm-1 text-left">
+        <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
           <form action="">
             <div className="form-group py-2">
               <label className="fs-6 ls-1">Name</label>
@@ -92,34 +111,30 @@ const Signup = () => {
   };
 
   const successMessage = () => {
-    return (
-      <div className="row bg-transparent">
-        <div className="col-md-6 offset-sm-3 text-left">
-          <div
-            className="alert alert-success"
-            style={{ display: success ? "" : "none" }}
-          >
-            New account was created successfully. Please
-            <Link to="/signin">Login Here</Link>
-          </div>
-        </div>
-      </div>
-    );
+    
+            toast.success('New account was created successfully. Please Login to Continue', {
+              position: 'top-right',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              });
   };
 
   const errorMessage = () => {
-    return (
-      <div className="row bg-transparent">
-        <div className="col-md-6 offset-sm-3 text-left">
-          <div
-            className="alert alert-danger"
-            style={{ display: error ? "" : "none" }}
-          >
-            {error}
-          </div>
-        </div>
-      </div>
-    );
+    if(error){
+      toast.error(error, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
   };
 
   return (
@@ -129,8 +144,6 @@ const Signup = () => {
             <div className="container pt-5">
                 <div className="bg-transparent text-white text-center p-5">
                   <div class="heading-font text-center pb-4 fw-bold color-white ls-2">SignUp</div>
-                    {successMessage()}
-                    {errorMessage()}
                     {signUpForm()}
                     <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>

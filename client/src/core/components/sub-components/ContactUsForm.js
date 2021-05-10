@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import {contactus} from '../helper/contact'
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const  ContactUsForm = () => {
     const [values, setValues] = useState({
         contactEmail: "",
@@ -20,8 +22,10 @@ const  ContactUsForm = () => {
         setValues({ ...values, error: false });
         contactus({contactEmail, contactUserName, contactContent, contactSubject}).then((data) =>{
             if(data.error){
+              errorMessage()
                 setValues({ ...values, error: data.error, success: false });
             }else{
+              successMessage()
                 setValues({
                     ...values,
                     contactSubject: "",
@@ -33,41 +37,54 @@ const  ContactUsForm = () => {
                 })
             }
         })
-        .catch(console.log("Contact Us failed"));
+        .catch( () =>{
+          errorMessage()
+          console.log("Contact Us failed")
+        }
+          );
     };
 
     const successMessage = () => {
-        return (
-          <div className="row bg-transparent">
-            <div className="col-md-6 offset-sm-3 text-left">
-              <div
-                className="alert alert-success"
-                style={{ display: success ? "" : "none" }}
-              >
-                Message Sent
-              </div>
-            </div>
-          </div>
-        );
+      toast.success('Message Sent', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       };
       const errorMessage = () => {
-        return (
-          <div className="row bg-transparent">
-            <div className="col-md-6 offset-sm-3 text-left">
-              <div
-                className="alert alert-danger"
-                style={{ display: error ? "" : "none" }}
-              >
-                {error}
-              </div>
-            </div>
-          </div>
-        );
+        
+       if(error){
+        toast.error(error, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+       }
+        
       };
       const contactusform = () => {
           return(
           <span>
           <form action="" method="post">
+          <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
           <div className="name py-3">
               <label className="fs-6 py-2" for="name">Name</label>
               <input className="form-control p-3 border-0 " type="text" name="name" id="name" placeholder="Enter Your Name" autocomplete="off" required
@@ -100,8 +117,6 @@ const  ContactUsForm = () => {
       }
     return (
         <span>
-        {successMessage()}
-        {errorMessage()}
         {contactusform()}
         <p className="text-white text-center">{JSON.stringify(values)}</p>
         </span>
