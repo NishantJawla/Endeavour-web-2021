@@ -3,7 +3,8 @@ import React, { useState } from "react";
 //eslint-disable-next-line
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const Signin = () => {
   const [values, setValues] = useState({
     email: "",
@@ -27,6 +28,7 @@ const Signin = () => {
     signin({ email, plainPassword })
       .then((data) => {
         if (data.error) {
+          errorMessage()
           setValues({ ...values, error: data.error, loading: false });
         } else {
           authenticate(data, () => {
@@ -37,7 +39,10 @@ const Signin = () => {
           });
         }
       })
-      .catch(console.log("signin request failed"));
+      .catch( () => {
+        errorMessage()
+        console.log("signin request failed")
+      });
   };
 
   const performRedirect = () => {
@@ -54,34 +59,46 @@ const Signin = () => {
     // }
   };
 
-  const loadingMessage = () => {
-    return (
-      loading && (
-        <div className="alert alert-info">
-          <h2>Loading...</h2>
-        </div>
-      )
-    );
+  const successMessage = () => {
+    toast.success('logged in success', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   };
   const errorMessage = () => {
-    return (
-      <div className="row">
-        <div className="col-md-6 offset-sm-3 text-left">
-          <div
-            className="alert alert-danger"
-            style={{ display: error ? "" : "none" }}
-          >
-            {error}
-          </div>
-        </div>
-      </div>
-    );
+    if(error){
+      toast.error(error, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
   };
 
   const signInForm = () => {
     return (
       <div className="row">
         <div className="col-md-4 col-sm-10 offset-md-4 offset-sm-1 text-left">
+        <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
           <form action="">
             <div className="form-group py-2">
               <label className="fs-6 ls-1">Email</label>
@@ -118,7 +135,6 @@ const Signin = () => {
             <div className="container-fluid  signup red-img-bg p-5">
                 <div className="bg-transparent text-white text-center p-5">
                 <div class="heading-font text-center pb-4 fw-bold color-white ls-2">SignIn</div>
-                    {loadingMessage()}
       {errorMessage()}
       {signInForm()}
       {performRedirect()}
