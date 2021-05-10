@@ -30,8 +30,10 @@ a {
 a:hover {
   color: #25272b;
 }
-.container {
-  width: 90vw !important;
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1300px;
+  }
 }
 /*-------general styles--------*/
 .bg-white {
@@ -126,7 +128,6 @@ a:hover {
   background: rgba(255, 255, 255, 0.6);
 }
 /*----end general--------*/
-
 .navbar {
   padding: 15px 0;
 }
@@ -151,12 +152,13 @@ z .nav-lines {
   margin-top: 5px;
 }
 .header {
-  height: 850px;
+  height: 100vh;
   margin: 0;
   padding: 0;
-  background: url("./assets/img/mybackground.png");
+  background-image: url("./assets/img/mybackground.png");
+  background: url("./assets//img/BackMain.gif");
   background-repeat: no-repeat;
-  background-position: left;
+  background-position: right;
   background-size: cover;
 }
 .header .header-overlay {
@@ -164,10 +166,10 @@ z .nav-lines {
   z-index: -1;
 }
 .header-content {
-  padding-top: 17%;
+  padding-top: 30%;
 }
 .header-content .head {
-  font-size: 3.2rem;
+  font-size: 3.7rem;
   line-height: initial;
   color: #282828;
 }
@@ -236,6 +238,21 @@ form textarea.form-control {
   transition: all ease-out;
   transition-duration: 0.5s;
 }
+.navbar-blur {
+  backdrop-filter: blur(20px);
+  position: fixed;
+  z-index: 50;
+  width: 100%;
+  margin-top: 0px;
+  background: #202020b3;
+}
+.loader {
+  z-index: 500;
+}
+.loader img {
+  width: 20%;
+  animation: showImage 2s linear forwards;
+}
 /*-----swiper slide-------*/
 .swiper-container {
   width: 100%;
@@ -268,18 +285,18 @@ form textarea.form-control {
   z-index: 50;
 }
 
-/*8888888888888888888*/
-/* Toster */
-/*
-.Toastify__toast--success {
-  /* background: #07bc0c; * /
-  background: #dff2bf;
+/***animations*******/
+@keyframes showImage {
+  0% {
+    width: 17%;
+    opacity: 0.3;
+  }
+  50% {
+    width: 20%;
+    opacity: 1;
+  }
+  100% {
+    width: 17%;
+    opacity: 0.3;
+  }
 }
-.Toastify__toast--warning {
-  background: #f1c40f;
-}
-.toast.error {
-  /* background: #e74c3c; * /
-  background: #ffbaba;
-}
-*/
