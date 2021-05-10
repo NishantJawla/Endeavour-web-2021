@@ -48,8 +48,10 @@ const Signin = () => {
   const performRedirect = () => {
     if (didRedirect) {
       if (user && user.role.toString() === 'superman') {
+        window.location.reload(false);
         return <Redirect to="/admin/dashboard" />;
       } else {
+        window.location.reload(false);
         return <Redirect to="/" />;
       }
     }

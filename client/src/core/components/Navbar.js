@@ -40,6 +40,8 @@ const Navbar = () =>  {
                                 <Dropdown as={ButtonGroup}>
                                     <Dropdown.Toggle id="dropdown-custom-1" className="bg-transparent border-0"><img src={profileImg} width="24px" alt="user profile img" /></Dropdown.Toggle>
                                     <Dropdown.Menu className="bg-secondary color-white">
+                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">Profile</Dropdown.Item>
+                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="3">Change Password</Dropdown.Item>
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
                                     onClick={() => {
                                         signout(() => {
@@ -49,8 +51,6 @@ const Navbar = () =>  {
                                         });
                                       }}
                                    >Signout</Dropdown.Item>
-                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">Another action</Dropdown.Item>
-                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="3">Active Item</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </React.Fragment>
