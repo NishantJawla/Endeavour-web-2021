@@ -1,6 +1,6 @@
 //jshint esversion: 8
 import React from 'react';
-
+import {isAuthenticated} from "../../auth/helper/index"
 function Header(){
 
     const style = {
@@ -21,7 +21,16 @@ function Header(){
                     <div className="content color-white ls-2">
                         KIET Group Of Institutions
                     </div>
-                    <a href="/SignUp" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </a>
+                   {
+                    !isAuthenticated && (<React.Fragment>
+                        <a href="/SignUp" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </a>
+                        </React.Fragment>)
+                   }
+                   {
+                    isAuthenticated && (<React.Fragment>
+                        <a href="#events" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Events </a>
+                        </React.Fragment>)
+                   }
                 </div>
             </div>
         </div> 
