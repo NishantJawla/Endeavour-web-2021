@@ -72,10 +72,13 @@ exports.getEventHandler = (req,res) => {
         }
         let content = event
         content.paid = undefined;
+        content.createdAt = undefined
+        content.updatedAt = undefined
+        content.__v = undefined
         return res.status(200).json({
             status: 200,
-            msg: "Event Found Successfully"
-
+            msg: "Event Found Successfully",
+            content
         })
     })
 }
