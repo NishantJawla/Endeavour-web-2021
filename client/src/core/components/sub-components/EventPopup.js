@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import closeIcon from "./../../../assets/img/icons/cancel.png";
-
+import {isAuthenticated} from "../../../auth/helper/index"
 function EventPopup(props){
 
     function startHidePopup(){
@@ -44,11 +44,29 @@ function EventPopup(props){
                     <div className="popup-subhead fs-6 pb-2 pt-3 fw-bold ls-1">Rules:</div>
                     What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?
                 </div>
-                <div className="register-button position-absolute bottom-0 pb-5">
-                    <Link to="/signin">
-                        <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
+                
+                {
+                    !isAuthenticated() && (
+                        <React.Fragment>
+                            <div className="register-button position-absolute bottom-0 pb-5">
+                    <a href="/signin">
+                        <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Sign in</button>
+                    </a>
+                </div>
+                </React.Fragment>
+                    )
+                }
+                {
+                    isAuthenticated() && (
+                        <React.Fragment>
+            <div className="register-button position-absolute bottom-0 pb-5">
+                    <Link to="#!">
+                        <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay</button>
                     </Link>
                 </div>
+                </React.Fragment>
+                    )
+                }
             </div>
         </div>
     );

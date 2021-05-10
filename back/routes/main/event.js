@@ -33,6 +33,7 @@ passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',})
 ,isAdmin
 ,createEventHandler);
 
-router.get('/getEvent/:eventId',isProfileCompleteHandler,getEventHandler);
+router.get('/getEvent/:eventId',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),
+isProfileCompleteHandler,getEventHandler);
 
 module.exports = router; 
