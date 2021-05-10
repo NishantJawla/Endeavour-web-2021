@@ -18,7 +18,9 @@
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
-    "swiper": "^6.5.9"
+    "react-toastify": "^7.0.4",
+    "swiper": "^6.5.9",
+    "toastr": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
