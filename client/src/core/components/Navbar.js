@@ -3,6 +3,7 @@ import React from 'react';
 import EcellLogo from "./../../assets/img/logo.png";
 import profileImg from "./../../assets/img/icons/user.png";
 
+import {isAuthenticated} from "../../auth/helper/index"
 function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-blur">
@@ -35,6 +36,13 @@ function Navbar() {
                         </div>
                     </div>
                     <a href="/signin" className="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white">Login</a>
+                    {
+                        !isAuthenticated() && (
+                            <React.Fragment>
+                        <a href="/signin" className="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white">Login</a>
+                        </React.Fragment>
+                        )
+                    }
                 </div>
                 </div>
             </div>
