@@ -8,7 +8,7 @@ require('../../config/passport')(passport)
 
 //imported variables
 const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler} = require('../../controllers/main/auth');
-const {getUserById} = require('../../controllers/main/user');
+const {getUserById,isProfileCompleteHandler} = require('../../controllers/main/user');
 const {createEventHandler,getEventHandler} = require('../../controllers/main/event');
 //params
 router.param("userId",getUserById);
@@ -33,6 +33,6 @@ passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',})
 ,isAdmin
 ,createEventHandler);
 
-router.get('/getEvent/:eventId',getEventHandler);
+router.get('/getEvent/:eventId',isProfileCompleteHandler,getEventHandler);
 
 module.exports = router; 

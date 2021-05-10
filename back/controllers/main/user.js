@@ -9,6 +9,7 @@ const { check, validationResult } = require("express-validator");
 const User = require('../../models/user');
 const Team = require('../../models/team');
 const Event = require('../../models/event');
+const user = require('../../models/user');
 
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
@@ -405,4 +406,31 @@ exports.getUserHandler = (req, res) => {
     messenger.uniqueString = undefined
     messenger.resetPassword = undefined
     res.status(200).json(messenger)
+}
+
+exports.isProfileCompleteHandler = (req, res,next) => {
+    User.findById(req.user._id).exec((err, user) => {
+        if(err || !user){
+            if(err){
+            return res.status(500).json({
+                    status:500,
+                    msg:"Server error",
+                    error: "Server Error"
+                })
+            }
+            res.status(404).json({
+                status:404,
+                msg: "User not found",
+                error: "User Not found!"
+            })
+        }
+        if(user.profile.toString() !== true.toString()){
+            res.status(400).json({
+                status: 400,
+                msg: "Please Complete Profile",
+                error: "Please Complete Profile!"
+            })
+        }
+        next()
+    })
 }
