@@ -16,7 +16,7 @@ const Routes = () => {
 
     setTimeout(() => {
         setHide(false);
-    }, 1500);
+    }, 3500);
 
   return (
     <React.Fragment>
