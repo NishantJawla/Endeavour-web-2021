@@ -2,6 +2,7 @@
 import React from 'react';
 import EcellLogo from "./../../assets/img/logo.png";
 import profileImg from "./../../assets/img/icons/user.png";
+import { Dropdown, ButtonGroup } from "react-bootstrap";
 
 import {isAuthenticated} from "../../auth/helper/index"
 function Navbar() {
@@ -33,19 +34,23 @@ function Navbar() {
                     {
                         isAuthenticated() && (
                             <React.Fragment>
-                    <div className="user-profile">
-                        <div className="p-2 cursor-pointer border-1 rounded">
-                            <img src={profileImg} width="24px" alt="user profile img" />
-                        </div>
-                    </div>
-                    </React.Fragment>
+
+                                <Dropdown as={ButtonGroup}>
+                                    <Dropdown.Toggle id="dropdown-custom-1" className="bg-transparent border-0"><img src={profileImg} width="24px" alt="user profile img" /></Dropdown.Toggle>
+                                    <Dropdown.Menu className="bg-secondary color-white">
+                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1">Action</Dropdown.Item>
+                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">Another action</Dropdown.Item>
+                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="3">Active Item</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </React.Fragment>
                         )
                     }
                     {
                         !isAuthenticated() && (
                             <React.Fragment>
-                        <a href="/signin" className="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white">Login</a>
-                        </React.Fragment>
+                                <a href="/signin" className="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white">Login</a>
+                            </React.Fragment>
                         )
                     }
                 </div>

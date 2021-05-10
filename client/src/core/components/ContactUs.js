@@ -7,7 +7,7 @@ function ContactUs(){
     return (
         <div className="contact-us py-5">
             <div className="container">
-                <div className="heading-font text-center fw-bold">Get In Touch</div>
+                <div className="heading-font text-center fw-bold color-white">Get In Touch</div>
                 <div className="row py-3">
                     <div className="col-md-6 d-md-block d-none">
                         <div className="p-3">
@@ -15,7 +15,7 @@ function ContactUs(){
                                 <img src={ContactUsImage} alt="contact us img"/>
                             </div>
                         </div>
-                        <div className="contact-details p-3">
+                        <div className="contact-details p-3 color-white">
                             <div className="fs-4 py-3">Contact Us:</div>
                             <div>
                                 <div>Mobile Number : 1234567890</div>
@@ -24,7 +24,7 @@ function ContactUs(){
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-6 col-sm-12 px-5">
+                    <div className="col-md-6 col-sm-12 px-5 color-white">
                         <ContactUsForm />
                     </div>
                 </div>

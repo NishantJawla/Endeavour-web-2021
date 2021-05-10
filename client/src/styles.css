@@ -195,11 +195,12 @@ z .nav-lines {
   background-repeat: no-repeat;
   background-size: cover;
 }
-form input.form-control,
-form textarea.form-control {
-  /* background-color: rgba(161, 57, 65, 0.1); */
-  background-color: rgba(32, 32, 32, 0.1);
+.contact-us .form-control{
+  background-color: rgba(225, 225, 225, 0.4);
+  /* background-color: rgba(32, 32, 32, 0.1); */
+  color: white
 }
+
 .event-popup {
   left: 25%;
   /* z-index: 100; */
@@ -257,6 +258,14 @@ form textarea.form-control {
     background: url("./assets/img/pattern_main.svg");
     background-repeat: no-repeat;
     background-size: cover;
+}
+.contact-us{
+    background: url("./assets/img/patter_black.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.profile-dropdown:hover{
+    background: var(--primary-color);
 }
 /*-----swiper slide-------*/
 .swiper-container {
