@@ -3,7 +3,7 @@ import React from 'react';
 
 function AboutUs(){
     return (
-        <div className="aboutus py-5">
+        <div className="aboutus bg-main-pattern py-5">
             <div className="container py-5 position-relative">
                 <div className="heading-font text-center color-white fw-bold">About Us</div>
                 <div className="aboutus-content py-3 text-justify color-white fs-5 lh-lg">

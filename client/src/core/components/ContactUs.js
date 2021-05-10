@@ -5,7 +5,7 @@ import ContactUsImage from "./../../assets/img/form.png";
 
 function ContactUs(){
     return (
-        <div className="contact-us py-5">
+        <div className="contact-us bg-sec-pattern py-5">
             <div className="container">
                 <div className="heading-font text-center fw-bold color-white">Get In Touch</div>
                 <div className="row py-3">

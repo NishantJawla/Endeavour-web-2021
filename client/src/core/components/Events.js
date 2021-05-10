@@ -23,7 +23,7 @@ function Event() {
 
     return (
         <React.Fragment>
-            <div className="events py-5" id="events">
+            <div className="events py-5 bg-main-pattern" id="events">
                 <div className="container">
                     <div className="heading-font text-center color-white fw-bold">Our Events</div>
                     <div className="events-container">
