@@ -9,13 +9,20 @@
 .btn-success:visited {
   background-color: #a13941 !important;
 }
+.signin,
+.signup{
+  background-image: url("../../assets/img/pattern_main.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .red-img-bg {
   z-index: 5;
   height: fit-content;
-  background-image: url("../../assets/img/pattern_main.svg");
+  /* background-image: url("../../assets/img/pattern_main.svg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
   left: 0;
   position: relative;
 }

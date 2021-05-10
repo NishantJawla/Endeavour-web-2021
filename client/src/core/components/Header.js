@@ -11,7 +11,7 @@ function Header(){
         <div className="header container-fluid position-relative">
             <div className="header-overlay position-absolute w-100 h-100"></div>
             <div style={style} className="container">
-                <div className="header-content w-50 ">
+                <div className="header-content w-100 ">
                     <div className="fw-bold head color-white">
                         E-Summit 2021
                         <div className="fs-6 ls-1">

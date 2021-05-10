@@ -5,10 +5,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import EachSpeaker from "./../sub-components/EachSpeaker";
 
 // import Swiper core and required modules
-import SwiperCore, { Pagination, Navigation } from "swiper/core";
+import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper/core";
 
 // install Swiper modules
-SwiperCore.use([Pagination, Navigation]);
+SwiperCore.use([Pagination, Navigation, Autoplay]);
 
 export default function SpeakerSwiper() {
 
@@ -29,11 +29,15 @@ export default function SpeakerSwiper() {
     <>
       <Swiper
         slidesPerView={changeSlideCount()}
-        spaceBetween={60}
+        spaceBetween={100}
         navigation={{
-            prevEl: navigationPrevRef.current,
-            nextEl: navigationNextRef.current,
+            "prevEl": navigationPrevRef.current,
+            "nextEl": navigationNextRef.current,
           }}
+        autoplay={{
+          "delay": 1000,
+          "disableOnInteraction": false
+        }}
         loop={true}
         className="mySwiper"
       >

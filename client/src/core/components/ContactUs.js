@@ -9,7 +9,7 @@ function ContactUs(){
             <div className="container">
                 <div className="heading-font text-center fw-bold">Get In Touch</div>
                 <div className="row py-3">
-                    <div className="col-md-6 d-md-block d-sm-none">
+                    <div className="col-md-6 d-md-block d-none">
                         <div className="p-3">
                             <div className="contact-image">
                                 <img src={ContactUsImage} alt="contact us img"/>
@@ -24,7 +24,7 @@ function ContactUs(){
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-6 col-sm-12">
+                    <div className="col-md-6 col-sm-12 px-5">
                         <ContactUsForm />
                     </div>
                 </div>
