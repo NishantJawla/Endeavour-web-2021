@@ -28,8 +28,12 @@ const Navbar = () =>  {
     return (
         <nav className="navbar navbar-expand-lg navbar-blur">
             <div className="container">
-                <Link className="navbar-brand" to="/">
+                <Link className="navbar-brand d-flex align-items-center" to="/">
                     <img src={EcellLogo} width="50px" height="50px" alt="logo" />
+                    <div className="color-white px-3 fs-6 ls-1 fw-bold">
+                        <div className="fs-4">E-Summit'21</div>
+                        Breakthrough the Excellence
+                    </div>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon">
