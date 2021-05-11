@@ -10,7 +10,8 @@ import Team from "./core/components/Team";
 import Sponsers from "./core/components/Sponsers";
 import NotFoundPage from "./core/components/NotFoundPage";
 import Loader from "./core/components/Loader";
-
+import PrivateRoute from "./auth/helper/PrivateRoutes";
+import UserDashBoard from "./user/UserDashBoard";
 
 const Routes = () => {
 
@@ -22,21 +23,21 @@ const Routes = () => {
 
   return (
     <React.Fragment>
+      <BrowserRouter>
       { hide ? <Loader /> : null }
       <Navbar />
-      <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/signup" exact component={Signup}/>
           <Route path="/signin" exact component={Signin} />
           <Route path="/team" exact component={Team} />
           <Route path="/sponsers" exact component={Sponsers} />
+          <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
           <Route path="/:random" component={NotFoundPage}/>
-          <Route exact path="/">
-</Route>
+           
         </Switch>
-      </BrowserRouter>
       <Footer />
+      </BrowserRouter>
     </React.Fragment>
   );
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import EcellLogo from "./../../assets/img/logo.png";
 import profileImg from "./../../assets/img/icons/user.png";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
-import {Redirect} from "react-router-dom"
+import {Redirect,Link} from "react-router-dom"
 import {isAuthenticated, signout} from "../../auth/helper/index"
 
 
@@ -28,9 +28,9 @@ const Navbar = () =>  {
     return (
         <nav className="navbar navbar-expand-lg navbar-blur">
             <div className="container">
-                <a className="navbar-brand" href="/">
+                <Link className="navbar-brand" to="/">
                     <img src={EcellLogo} width="50px" height="50px" alt="logo" />
-                </a>
+                </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon">
                     <svg className="nav-lines" width="24" height="3" viewBox="0 0 24 3" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,10 +46,10 @@ const Navbar = () =>  {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav w-100 d-flex justify-content-end">
-                    <a className="nav-link ls-1 fs-6 color-white fw-bold active" href="/">Home</a>
-                    <a className="nav-link ls-1 fs-6 color-white fw-bold" href="/speakers">Speakers</a>
-                    <a className="nav-link ls-1 fs-6 color-white fw-bold" href="/sponsers">Sponsers</a>
-                    <a className="nav-link ls-1 fs-6 color-white fw-bold" href="/team">Team</a>
+                    <Link className="nav-link ls-1 fs-6 color-white fw-bold active" to="/">Home</Link>
+                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/speakers">Speakers</Link>
+                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/sponsers">Sponsers</Link>
+                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/team">Team</Link>
                     {
                         isAuthenticated() && (
                             <React.Fragment>
@@ -76,7 +76,7 @@ const Navbar = () =>  {
                     {
                         !isAuthenticated() && (
                             <React.Fragment>
-                                <a href="/signin" className="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white">Login</a>
+                                <Link to="/signin" className="nav-link ls-1 fs-6 fw-bold br-7 bg-primary color-white">Login</Link>
                             </React.Fragment>
                         )
                     }
