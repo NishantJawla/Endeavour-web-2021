@@ -112,3 +112,21 @@ export const forgotPasswordHandler = (data) => {
         return err;
     })
 }
+
+export const resetPasswordHandler = (data) => {
+    return fetch(`${API}auth/resetPassword/${data.email}`,{
+        mode: 'cors',
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        return err;
+    })
+}

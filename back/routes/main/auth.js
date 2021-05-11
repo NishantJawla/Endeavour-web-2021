@@ -93,10 +93,21 @@ router.post('/forgotpassword',[
     ],forgotPasswordHandler);
     
 router.post('/resetpassword/:uniqueString',[
+    check("email")
+    .notEmpty()
+    .withMessage("Emially Field is Required")
+    .isEmail()
+    .withMessage("Please provide a valid email"),
+    check("passCode")
+    .notEmpty()
+    .withMessage("4-digit code is required")
+    .isLength({ min: 4,max:4})
+    .withMessage("Code Should be a 4 digit Number"),
     check("plainPassword")
+    .notEmpty()
+    .withMessage("Password Field is Required")
     .isLength({ min: 5 })
     .withMessage("Password should be at least 5 character long")
-    .notEmpty()
-    .withMessage("Password Field is Required")],resetPasswordHandler);
+    ],resetPasswordHandler);
     
 module.exports = router; 

@@ -215,6 +215,14 @@ exports.adminHandler = (req,res) => {
 };
 
 exports.forgotPasswordHandler = (req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            status: 400,
+            msg: errors.array()[0].msg,
+            error: errors.array()[0].msg
+        });
+    }
     User.findOne({email: req.body.email}).exec((err,user)=> {
         if(err || !user){
             if(err){
@@ -254,7 +262,7 @@ exports.forgotPasswordHandler = (req,res) => {
             var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
             user.resetPassword.passCode = seq;
             user.resetPassword.use = true;
-            const url = `http://localhost:3000/resetpassword}`;
+            const url = `http://localhost:3000/resetpassword`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -293,7 +301,7 @@ exports.forgotPasswordHandler = (req,res) => {
             return res.status(500).json({
                 status: 500,
                 msg: "Server Error",
-
+                error: "Server Error"
             })
         });
     });
@@ -301,6 +309,14 @@ exports.forgotPasswordHandler = (req,res) => {
 };
 
 exports.resetPasswordHandler = (req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            status: 400,
+            msg: errors.array()[0].msg,
+            error: errors.array()[0].msg
+        });
+    }
     User.findOne({
         email: req.params.uniqueString
     }).exec((err,user)=> {
@@ -308,14 +324,14 @@ exports.resetPasswordHandler = (req,res) => {
             if(err){
                 return res.status(500).json({
                     status: 500,
-                    'msg': "Server Error",
-                    'error': "Server Error",
+                    msg: "Server Error",
+                    error: "Server Error",
                     resCode: "102"
                 })
             }
             return res.status(400).json({
-                'msg': "unable to find user",
-                'error': "unable to find user",
+                msg: "unable to find user",
+                error: "unable to find user",
                 resCode: "102"
             })
         }
@@ -327,20 +343,20 @@ exports.resetPasswordHandler = (req,res) => {
                     if(err){
                         return res.status(500).json({
                             status: 500,
-                            'msg': "Server Error",
-                            'error': "Server Error",
+                            msg: "Server Error",
+                            error: "Server Error",
                             resCode: "102"
                         })
                     }
                     return res.status(400).json({
-                        'msg': "unable to find user",
-                        'error': "unable to find user",
+                        msg: "unable to find user",
+                        error: "unable to find user",
                         resCode: "102"
                     })
                 }
                 return res.status(400).json({
                     status: 400,
-                    'msg': "passcode has been expired use forgot password again",
+                    msg: "passcode has been expired use forgot password again",
                     error: "use forgot password again use forgot password again"
                 })
             });
@@ -355,18 +371,18 @@ exports.resetPasswordHandler = (req,res) => {
                     if(err){
                         return res.status(500).json({
                             status: 500,
-                            'msg': "Server Error",
-                            'error': "Server Error",
+                            msg: "Server Error",
+                            error: "Server Error",
                         })
                     }
                     return res.status(400).json({
-                        'msg': "unable to find user",
-                        'error': "unable to find user",
+                        msg: "unable to find user",
+                        error: "unable to find user",
                     })
                 }
                 return res.status(400).json({
                     status: 400,
-                    'msg': "Passcode doesnot match use forgot password again",
+                    msg: "Passcode doesnot match use forgot password again",
                     error: "use forgot password again use forgot password again"
                 })
             });
@@ -406,18 +422,18 @@ exports.resetPasswordHandler = (req,res) => {
                         if(err){
                             return res.status(500).json({
                                 status: 500,
-                                'msg': "Server Error",
-                                'error': "Server Error",
+                                msg: "Server Error",
+                                error: "Server Error",
                             })
                         }
                         return res.status(400).json({
-                            'msg': "unable to find user",
-                            'error': "unable to find user",
+                            msg: "unable to find user",
+                            error: "unable to find user",
                         })
                     }
                         return res.status(200).json({
                             status: 200,
-                            'msg': 'User password changed Successfully',
+                            msg: 'User password changed Successfully',
                         });
                     });
             }
@@ -429,7 +445,9 @@ exports.resetPasswordHandler = (req,res) => {
                 })
             });
 
-
+            res.status(400).json({
+                error: 'Internal Server Error'
+            })
 
             
         });
