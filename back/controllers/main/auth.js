@@ -241,7 +241,6 @@ exports.forgotPasswordHandler = (req,res) => {
             return randStr;
         }
         const uniqueString = randString()
-        user.uniqueString = uniqueString
 
         async function main() {
             let testAccount = await nodemailer.createTestAccount();
@@ -255,7 +254,7 @@ exports.forgotPasswordHandler = (req,res) => {
             var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
             user.resetPassword.passCode = seq;
             user.resetPassword.use = true;
-            const url = `http://localhost:7000/main/auth/resetPassword/${user.uniqueString}`;
+            const url = `http://localhost:3000/resetpassword}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -303,7 +302,7 @@ exports.forgotPasswordHandler = (req,res) => {
 
 exports.resetPasswordHandler = (req,res) => {
     User.findOne({
-        uniqueString: req.params.uniqueString
+        email: req.params.uniqueString
     }).exec((err,user)=> {
         if(err || !user){
             if(err){

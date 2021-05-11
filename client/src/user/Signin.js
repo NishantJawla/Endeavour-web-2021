@@ -119,6 +119,8 @@ pauseOnHover
                 type="password"
               />
             </div>
+            <Link to="/forgotpassword">Forgot Password ?</Link>
+            <Link to="/signup">Sign Up!</Link>
             <button onClick={onSubmit} className="btn btn-success py-3 my-5 fs-7 ls-1 fw-bold border-0 bg-secondary btn-block">
               Submit
             </button>

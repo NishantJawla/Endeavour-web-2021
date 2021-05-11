@@ -441,7 +441,3 @@ exports.isProfileCompleteHandler = (req, res,next) => {
         
     })
 }
-
-exports.getsaltHandler = (req,res) => {
-    
-}

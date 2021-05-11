@@ -86,10 +86,11 @@ router.get('/secure', passport.authenticate('jwt',{session: false,failureRedirec
 
 router.post('/forgotpassword',[
     check("email")
+    .notEmpty()
+    .withMessage("Email Field is Required")
     .isEmail()
     .withMessage("Please provide a valid email")
-    .notEmpty()
-    .withMessage("Email Field is Required")],forgotPasswordHandler);
+    ],forgotPasswordHandler);
     
 router.post('/resetpassword/:uniqueString',[
     check("plainPassword")
