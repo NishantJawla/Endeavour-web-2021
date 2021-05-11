@@ -1,6 +1,7 @@
 //jshint esversion: 8
 import React from 'react';
 import {isAuthenticated} from "../../auth/helper/index"
+import {Link} from "react-router-dom"
 function Header(){
 
     const style = {
@@ -23,12 +24,12 @@ function Header(){
                     </div>
                    {
                     !isAuthenticated() && (<React.Fragment>
-                        <a href="/SignUp" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </a>
+                        <Link href="/SignUp" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </Link>
                         </React.Fragment>)
                    }
                    {
                     isAuthenticated() && (<React.Fragment>
-                        <a href="#events" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Events </a>
+                        <a href="#!" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Join Discord</a>
                         </React.Fragment>)
                    }
                 </div>

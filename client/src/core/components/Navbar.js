@@ -59,15 +59,13 @@ const Navbar = () =>  {
                                     <Dropdown.Menu className="bg-secondary color-white">
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">Profile</Dropdown.Item>
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="3">Change Password</Dropdown.Item>
-                                  <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
+                                <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
                                     onClick={() => {
                                         fun1()
                                         fun2()
-                                       
-                                        
-                                      
+                                    
                                     }}
-                                   >Signout</Dropdown.Item>
+                                >Signout</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </React.Fragment>
