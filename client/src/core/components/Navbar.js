@@ -8,6 +8,23 @@ import {isAuthenticated, signout} from "../../auth/helper/index"
 
 
 const Navbar = () =>  {
+    const fun1 = () => {
+        signout(() => {
+            console.log("successfully logged out");
+            fun2()
+          }
+          );
+        fun3()
+    }
+    const fun2 = () => {
+        !isAuthenticated() ? <Redirect to="/" /> : <Redirect to="/" />
+    }
+    const fun3 = () => {
+        
+            !isAuthenticated() && window.location.reload(false);
+            
+        
+    }
     return (
         <nav className="navbar navbar-expand-lg navbar-blur">
             <div className="container">
@@ -42,14 +59,14 @@ const Navbar = () =>  {
                                     <Dropdown.Menu className="bg-secondary color-white">
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">Profile</Dropdown.Item>
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="3">Change Password</Dropdown.Item>
-                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
+                                  <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
                                     onClick={() => {
-                                        signout(() => {
-                                          console.log("successfully logged out");
-                                          window.location.reload(false);
-                                          console.log("after reload")
-                                        });
-                                      }}
+                                        fun1()
+                                        fun2()
+                                       
+                                        
+                                      
+                                    }}
                                    >Signout</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -66,6 +83,7 @@ const Navbar = () =>  {
                 </div>
                 </div>
             </div>
+            
         </nav>
     );
 }

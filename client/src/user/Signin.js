@@ -7,8 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 const Signin = () => {
   const [values, setValues] = useState({
-    email: "",
-    plainPassword: "",
+    email: "test@gmail.com",
+    plainPassword: "123456",
     error: "",
     loading: false,
     didRedirect: false,
@@ -37,6 +37,7 @@ const Signin = () => {
               didRedirect: true,
             });
           });
+          dorun()
         }
       })
       .catch( () => {
@@ -48,11 +49,9 @@ const Signin = () => {
   const performRedirect = () => {
     if (didRedirect) {
       if (user && user.role.toString() === 'superman') {
-        window.location.reload(false);
         return <Redirect to="/admin/dashboard" />;
       } else {
-        window.location.reload(false);
-        return <Redirect to="/" />;
+        return <Redirect to="/user/dashboard" />;
       }
     }
     // if (isAuthenticated()) {
@@ -128,7 +127,10 @@ pauseOnHover
       </div>
     );
   };
-
+  const dorun = () =>
+  {
+    window.location.reload(false);
+  } 
   return (
     <div>
     {/* <Base title="Sign up page" description="A page for user to sign up!"> */}
@@ -140,6 +142,9 @@ pauseOnHover
       {errorMessage()}
       {signInForm()}
       {performRedirect()}
+      {
+        isAuthenticated() && dorun
+      }
       <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
             </div>

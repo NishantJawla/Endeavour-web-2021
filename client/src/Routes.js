@@ -32,6 +32,8 @@ const Routes = () => {
           <Route path="/team" exact component={Team} />
           <Route path="/sponsers" exact component={Sponsers} />
           <Route path="/:random" component={NotFoundPage}/>
+          <Route exact path="/">
+</Route>
         </Switch>
       </BrowserRouter>
       <Footer />
