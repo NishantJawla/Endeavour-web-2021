@@ -57,8 +57,12 @@ const Navbar = () =>  {
                                 <Dropdown as={ButtonGroup}>
                                     <Dropdown.Toggle id="dropdown-custom-1" className="bg-transparent border-0"><img src={profileImg} width="24px" alt="user profile img" /></Dropdown.Toggle>
                                     <Dropdown.Menu className="bg-secondary color-white">
-                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">Profile</Dropdown.Item>
-                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="3">Change Password</Dropdown.Item>
+                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">
+                                        <Link to="/user/dashboard"className="color-white ls-1 profile-dropdown"> 
+                                        Profile
+                                        </Link>
+                                        </Dropdown.Item>
+                                    <Dropdown.Item  eventKey="3" className="color-white ls-1 profile-dropdown"><Link to="/changepassword" className="color-white ls-1 profile-dropdown">  Change Password</Link></Dropdown.Item>
                                 <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
                                     onClick={() => {
                                         fun1()

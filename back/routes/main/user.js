@@ -55,12 +55,12 @@ router.post("/removeTeamMember/:teamId/:memberId", passport.authenticate('jwt', 
 
 router.post("/unregister/:teamId", passport.authenticate('jwt', {session: false,failureRedirect : '/failurejson',}), unregisterEvent);
 
-router.post("/changePassword",[
+router.post("/changePassword",passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),[
     check("plainPassword", "new password should be at least 5 character long")
     .isLength({ min: 5 }),
     check("oldPassword", "old password should be at least 5 character long")
     .isLength({ min: 5 })]
-    ,passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),changePasswordHandler);
+    ,changePasswordHandler);
 
 router.post("/updateProfile",[
     check("branch")

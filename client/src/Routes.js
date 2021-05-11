@@ -12,6 +12,7 @@ import NotFoundPage from "./core/components/NotFoundPage";
 import Loader from "./core/components/Loader";
 import PrivateRoute from "./auth/helper/PrivateRoutes";
 import UserDashBoard from "./user/UserDashBoard";
+import ChangePassword from "./user/ChangePassword";
 
 const Routes = () => {
 
@@ -33,6 +34,7 @@ const Routes = () => {
           <Route path="/team" exact component={Team} />
           <Route path="/sponsers" exact component={Sponsers} />
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
+          <PrivateRoute path="/changepassword" exact component={ChangePassword} />
           <Route path="/:random" component={NotFoundPage}/>
            
         </Switch>

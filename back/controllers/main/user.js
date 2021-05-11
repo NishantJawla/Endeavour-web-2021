@@ -242,7 +242,8 @@ exports.changePasswordHandler = (req, res) => {
         if(err || !user){
             return res.json({
                 status: 500,
-                msg: "failed to change password!"
+                msg: "failed to change password!",
+                error: "Failed to change password!"
             })
         }
         bcrypt.compare(req.body.oldPassword, user.encryptedPassword, function(err, result){
@@ -251,10 +252,10 @@ exports.changePasswordHandler = (req, res) => {
                     user.encryptedPassword = hash
                     user.save((err,user) => {
                         if(err){
-                        return res.json({
+                        return res.status(500).json({
                                 location: '/controllers/main/auth.js',
                                 msg: 'Failed to save user',
-                                err
+                                error: "Failed to save user"
                             })
                         }
                     return res.json({
@@ -263,8 +264,9 @@ exports.changePasswordHandler = (req, res) => {
                     })
                 })
             }else{
-                res.json({
-                    msg: "old password is wrong"
+                res.status(400).json({
+                    msg: "old password is wrong",
+                    error: "old password is wrong"
                 })
             }
         })
@@ -405,6 +407,9 @@ exports.getUserHandler = (req, res) => {
     messenger.encryptedPassword = undefined
     messenger.uniqueString = undefined
     messenger.resetPassword = undefined
+    messenger.__v = undefined
+    messenger.createdAt = undefined
+    messenger.updatedAt = undefined
     res.status(200).json(messenger)
 }
 
@@ -435,4 +440,8 @@ exports.isProfileCompleteHandler = (req, res,next) => {
         }
         
     })
+}
+
+exports.getsaltHandler = (req,res) => {
+    
 }

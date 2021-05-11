@@ -53,7 +53,7 @@ export const signout = next => {
     if(typeof window !== "undefined"){
         localStorage.removeItem("jwt")
         next();
-
+    
         return fetch(`${API}auth/signout`,{
             method: "GET"
         })
@@ -72,3 +72,24 @@ export const isAuthenticated = () => {
         return false;
     }
 }
+
+export const changePasswordHandler = data => {
+    const { user, token } = isAuthenticated();
+    return fetch(`${API}user/changePassword`,{
+        mode: 'cors',
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => {
+        console.log(err)
+        return err;
+    })
+} 
