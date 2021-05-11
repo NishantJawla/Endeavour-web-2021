@@ -54,16 +54,16 @@ const resetPasswordForm = () => {
     <div className="row">
         <div className="col-md-4 col-sm-10 offset-md-4 offset-sm-1 text-left">
         <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-/>
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
         <form action="">
             <div className="form-group py-2">
             <label className="fs-6 ls-1">Email</label>
@@ -146,7 +146,7 @@ return (
         <div class="signup py-5">
             <div className="container pt-5">
                 <div className="bg-transparent text-white text-center p-5">
-                <div class="heading-font text-center pb-4 fw-bold color-white ls-2">Reset Password</div>
+                <div className="heading-font text-center color-white fw-bold">Change Password</div>
                     {resetPasswordForm()}
                     <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>

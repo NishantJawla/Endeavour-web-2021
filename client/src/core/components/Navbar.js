@@ -21,7 +21,7 @@ const Navbar = () =>  {
     }
     const fun3 = () => {
         
-            !isAuthenticated() && window.location.reload(false);
+        !isAuthenticated() && window.location.reload(false);
             
         
     }
