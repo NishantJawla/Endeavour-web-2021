@@ -49,9 +49,9 @@ function EventPopup(props){
                     !isAuthenticated() && (
                         <React.Fragment>
                             <div className="register-button position-absolute bottom-0 pb-5">
-                    <a href="/signin">
+                    <Link to= "/signin">
                         <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Sign in</button>
-                    </a>
+                        </Link>
                 </div>
                 </React.Fragment>
                     )
