@@ -5,9 +5,7 @@ import facebookIcon from "./../../../assets/img/icons/facebook.png";
 import linkedinIcon from "./../../../assets/img/icons/linkedin.png";
 
 const EachMember = (props) => {
-    console.log({
-        "props":props 
-    })
+
     return(
         <div className="m-4 py-3 each-member">
             <div className="position-relative">

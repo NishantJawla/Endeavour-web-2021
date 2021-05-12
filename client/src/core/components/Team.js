@@ -3,7 +3,7 @@ import React, {useEffect,useState} from "react";
 import EachMember from "./sub-components/EachMember";
 import firebase from "../../firebase"
 function Team(){
-    const [teamData, setteamData] = useState();
+  const [teamData, setteamData] = useState();
   useEffect(() => {
 
     const teamRef = firebase.database().ref('team');
