@@ -27,6 +27,7 @@ const Navbar = () =>  {
     }
     return (
         <nav className="navbar navbar-expand-lg navbar-blur">
+            {/* <div className="container-fluid px-5 mx-5"> */}
             <div className="container">
                 <Link className="navbar-brand d-flex align-items-center" to="/">
                     <img src={EcellLogo} width="50px" height="50px" alt="logo" />
@@ -50,8 +51,9 @@ const Navbar = () =>  {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav w-100 d-flex justify-content-end">
+                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/geteventpass">Get Event Pass</Link>
                     <Link className="nav-link ls-1 fs-6 color-white fw-bold active" to="/">Home</Link>
-                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/speakers">Speakers</Link>
+                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/guests">Speakers</Link>
                     <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/sponsers">Sponsers</Link>
                     <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/team">Team</Link>
                     {
@@ -62,11 +64,11 @@ const Navbar = () =>  {
                                     <Dropdown.Toggle id="dropdown-custom-1" className="bg-transparent border-0"><img src={profileImg} width="24px" alt="user profile img" /></Dropdown.Toggle>
                                     <Dropdown.Menu className="bg-secondary color-white">
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">
-                                        <Link to="/user/dashboard"className="color-white ls-1 profile-dropdown"> 
+                                        <Link to="/user/dashboard" className="color-white ls-1 profile-dropdown text-decoration-none"> 
                                         Profile
                                         </Link>
                                         </Dropdown.Item>
-                                    <Dropdown.Item  eventKey="3" className="color-white ls-1 profile-dropdown"><Link to="/changepassword" className="color-white ls-1 profile-dropdown">  Change Password</Link></Dropdown.Item>
+                                    <Dropdown.Item  eventKey="3" className="color-white ls-1 profile-dropdown"><Link to="/changepassword" className="color-white ls-1 profile-dropdown text-decoration-none">  Change Password</Link></Dropdown.Item>
                                 <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
                                     onClick={() => {
                                         fun1()

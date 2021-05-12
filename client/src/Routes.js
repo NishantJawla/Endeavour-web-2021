@@ -15,6 +15,7 @@ import UserDashBoard from "./user/UserDashBoard";
 import ChangePassword from "./user/ChangePassword";
 import ForgotPassword from "./user/ForgotPassword";
 import ResetPassword from "./user/ResetPassword";
+import SpeakersPage from "./core/components/SpeakersPage";
 const Routes = () => {
 
   const [hide, setHide] = useState(true);
@@ -35,7 +36,8 @@ const Routes = () => {
           <Route path="/team" exact component={Team} />
           <Route path="/sponsers" exact component={Sponsers} />
           <Route path="/forgotpassword" exact component={ForgotPassword} />
-          <Route path="/resetpassword"  component={ResetPassword} />
+          <Route path="/resetpassword" exact component={ResetPassword} />
+          <Route path="/guests" exact component={SpeakersPage} />
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
           <PrivateRoute path="/changepassword" exact component={ChangePassword} />
           <Route path="/:random" component={NotFoundPage}/>

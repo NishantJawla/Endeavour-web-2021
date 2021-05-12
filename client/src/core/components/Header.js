@@ -18,13 +18,16 @@ function Header(){
                         <div className="fs-6 ls-1">
                             Breakthrough the Excellence
                         </div>
+                        <div className="fs-6 py-3 ls-1">
+                            April 5, 2021
+                        </div>
                     </div>
                     <div className="content color-white ls-2">
                         KIET Group Of Institutions
                     </div>
                    {
                     !isAuthenticated() && (<React.Fragment>
-                        <Link href="/SignUp" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </Link>
+                        <Link to="/signup" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </Link>
                         </React.Fragment>)
                    }
                    {

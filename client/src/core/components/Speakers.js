@@ -15,7 +15,7 @@ function Speakers() {
     return (
         <div className="py-5 position-relative speakers bg-sec-pattern">
             <div className="container py-4">
-                <div className="heading-font text-center color-white fw-bold">Our Speakers</div>
+                <div className="heading-font text-center color-white fw-bold">Our Guests</div>
                 <div className="pt-5 position-relative">
                     <SpeakerSwiper />
                 </div>

@@ -119,9 +119,11 @@ pauseOnHover
                 type="password"
               />
             </div>
-            <Link to="/forgotpassword">Forgot Password ?</Link>
-            <Link to="/signup">Sign Up!</Link>
-            <button onClick={onSubmit} className="btn btn-success py-3 my-5 fs-7 ls-1 fw-bold border-0 bg-secondary btn-block">
+            <div className="d-flex justify-content-between">
+              <Link className="color-secondary" to="/forgotpassword">Forgot Password ?</Link>
+              <Link className="px-5" to="/signup">Sign Up!</Link>
+            </div>
+            <button onClick={onSubmit} className="btn btn-success py-3 my-4 fs-7 ls-1 fw-bold border-0 bg-secondary btn-block">
               Submit
             </button>
           </form>
@@ -136,7 +138,6 @@ pauseOnHover
   return (
     <div>
     {/* <Base title="Sign up page" description="A page for user to sign up!"> */}
-
     <div class="signin signup py-5">
             <div className="container pt-5">
                 <div className="bg-transparent text-white text-center p-5">

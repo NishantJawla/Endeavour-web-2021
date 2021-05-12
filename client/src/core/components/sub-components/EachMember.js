@@ -8,8 +8,8 @@ function EachMember(){
             <div className="position-relative overflow-hidden rounded">
                 <a href="https://www.google.com">
                     <div className="member-img">
-                        <div className="overlay bg-primary w-100 h-100 position-absolute"></div>
-                        <div href="google.com">
+                        <div className="overlay bg-secondary w-100 h-100 position-absolute"></div>
+                        <div>
                             <img src={teamImg} width="100%" height="100%" alt="hackathon icon"/>
                         </div>
                     </div>
