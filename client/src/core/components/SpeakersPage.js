@@ -7,8 +7,8 @@ const SpeakersPage = () => {
     const [speakerData, setspeakerData] = useState();
   useEffect(() => {
 
-    const teamRef = firebase.database().ref('speakers');
-    teamRef.on('value', (snapshot) => {
+    const speakerRef = firebase.database().ref('speakers');
+    speakerRef.on('value', (snapshot) => {
       const speakers = snapshot.val();
       const speakerData = [];
       for (let id in speakers) {
@@ -17,7 +17,6 @@ const SpeakersPage = () => {
       setspeakerData(speakerData);
     });
   }, []);
-     console.log(speakerData);
     return (
         <div className="py-5 position-relative speakers bg-sec-pattern">
             <div className="container py-5">

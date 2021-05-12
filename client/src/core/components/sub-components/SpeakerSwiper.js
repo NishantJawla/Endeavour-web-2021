@@ -1,16 +1,29 @@
 //jshint esversion: 8
 // eslint-disable-next-line
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import EachSpeaker from "./../sub-components/EachSpeaker";
-
+import firebase from "../../../firebase"
 // import Swiper core and required modules
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper/core";
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation, Autoplay]);
 
-export default function SpeakerSwiper() {
+const SpeakerSwiper = () => {
+  const [speakerData, setspeakerData] = useState();
+  useEffect(() => {
+
+    const speakerRef = firebase.database().ref('speakers');
+    speakerRef.on('value', (snapshot) => {
+      const speakers = snapshot.val();
+      const speakerData = [];
+      for (let id in speakers) {
+        speakerData.push({ id, ...speakers[id] });
+      }
+      setspeakerData(speakerData);
+    });
+  }, []);
 
     const navigationPrevRef = React.useRef(null)
     const navigationNextRef = React.useRef(null)
@@ -41,13 +54,12 @@ export default function SpeakerSwiper() {
         loop={true}
         className="mySwiper"
       >
-        <SwiperSlide><EachSpeaker /></SwiperSlide>
-        <SwiperSlide><EachSpeaker /></SwiperSlide>
-        <SwiperSlide><EachSpeaker /></SwiperSlide>
-        <SwiperSlide><EachSpeaker /></SwiperSlide>
-        <SwiperSlide><EachSpeaker /></SwiperSlide>
-        <SwiperSlide><EachSpeaker /></SwiperSlide>
-        <SwiperSlide><EachSpeaker /></SwiperSlide>
+        {speakerData
+    ? speakerData.map((todo, index) => 
+    <SwiperSlide><EachSpeaker data={todo} key={index} /></SwiperSlide>
+  )
+    : ''}
+
       </Swiper>
       {/* <div className="slider-buttons d-flex justify-content-between position-absolute">
             <div className="next-speaker py-2 px-2 color-white" ref={navigationPrevRef}>
@@ -64,3 +76,5 @@ export default function SpeakerSwiper() {
     </>
   );
 }
+
+export default SpeakerSwiper;
