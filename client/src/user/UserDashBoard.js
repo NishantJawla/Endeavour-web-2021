@@ -81,6 +81,9 @@ const UserDashBoard= () => {
                             <div className="col">
                                 Status
                             </div>
+                            <div className="col">
+                                Paid Status
+                            </div>
                         </div>
                         <div className="row py-2 ls-1">
                             <div className="col">
@@ -92,6 +95,9 @@ const UserDashBoard= () => {
                             <div className="col color-registered">
                                 Registered
                             </div>
+                            <div className="col color-registered">
+                                Paid
+                            </div>
                         </div>
                         <div className="row py-2 ls-1">
                             <div className="col">
@@ -102,6 +108,9 @@ const UserDashBoard= () => {
                             </div>
                             <div className="col py-1 not-registerd cursor-pointer">
                                 <div className="">Register Now</div>
+                            </div>
+                            <div className="col py-1 not-registerd cursor-pointer">
+                                <div className="">Not paid</div>
                             </div>
                         </div>
                     </div>

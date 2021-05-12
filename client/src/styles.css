@@ -112,7 +112,7 @@ a:hover {
 }
 .hbg-dark:hover {
   background: #4e2024 !important;
-  color: #fff;
+  color: #fff !important;
 }
 .rbr-t-b {
   border-top-left-radius: 0;
@@ -224,6 +224,10 @@ z .nav-lines {
   /* z-index: 100; */
   top: 12.5%;
   border-radius: 10px;
+}
+.event-popup .form-control{
+  background-color: rgba(225, 225, 225, 0.4) !important;
+  color: white;
 }
 .event-conf-popup {
   left: 37.5%;

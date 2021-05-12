@@ -15,6 +15,7 @@ import UserDashBoard from "./user/UserDashBoard";
 import ChangePassword from "./user/ChangePassword";
 import ForgotPassword from "./user/ForgotPassword";
 import ResetPassword from "./user/ResetPassword";
+import EventRegister from "./user/EventRegister";
 import SpeakersPage from "./core/components/SpeakersPage";
 const Routes = () => {
 
@@ -38,6 +39,7 @@ const Routes = () => {
           <Route path="/forgotpassword" exact component={ForgotPassword} />
           <Route path="/resetpassword" exact component={ResetPassword} />
           <Route path="/guests" exact component={SpeakersPage} />
+          <Route path="/events/:eventId" exact component={EventRegister} />   
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
           <PrivateRoute path="/changepassword" exact component={ChangePassword} />
           <Route path="/:random" component={NotFoundPage}/>

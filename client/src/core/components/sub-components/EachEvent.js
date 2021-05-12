@@ -1,5 +1,6 @@
 //jshint esversion: 8
 import React from 'react';
+import { Link } from 'react-router-dom';
 import EventIcon from "./../../../assets/img/icons/hack.png";
 
 function EachEvent(props){
@@ -17,7 +18,7 @@ function EachEvent(props){
                 </div>
                 <div className="event-title fw-bolder ls-1 fs-5 py-2">Hackathon</div>
                 <div className="event-desc py-2">Where Ideas and Technology Synergizes</div>
-                <button onClick={showPopup} className="learn-more border-0 bg-transparent p-0 fw-bold ls-1 mt-2 color-primary">Read More</button>
+                <Link to="/events/:eventId" className="learn-more border-0 bg-transparent p-0 fw-bold ls-1 mt-2 color-primary">Read More</Link>
             </div>
         </div>
     );

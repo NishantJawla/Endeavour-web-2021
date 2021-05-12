@@ -3,8 +3,8 @@ import React from 'react';
 import EcellLogo from "./../../assets/img/logo.png";
 import profileImg from "./../../assets/img/icons/user.png";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
-import {Redirect,Link} from "react-router-dom"
-import {isAuthenticated, signout} from "../../auth/helper/index"
+import {Redirect,Link, NavLink} from "react-router-dom";
+import {isAuthenticated, signout} from "../../auth/helper/index";
 
 
 const Navbar = () =>  {
@@ -51,11 +51,11 @@ const Navbar = () =>  {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav w-100 d-flex justify-content-end">
-                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/geteventpass">Get Event Pass</Link>
-                    <Link className="nav-link ls-1 fs-6 color-white fw-bold active" to="/">Home</Link>
-                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/guests">Speakers</Link>
-                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/sponsers">Sponsers</Link>
-                    <Link className="nav-link ls-1 fs-6 color-white fw-bold" to="/team">Team</Link>
+                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/geteventpass">Get Event Pass</NavLink>
+                    <Link activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/">Home</Link>
+                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/guests">Speakers</NavLink>
+                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/sponsers">Sponsers</NavLink>
+                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/team">Team</NavLink>
                     {
                         isAuthenticated() && (
                             <React.Fragment>
