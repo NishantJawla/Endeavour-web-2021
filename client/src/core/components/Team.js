@@ -16,10 +16,6 @@ function Team(){
       setteamData(teamData);
     });
   }, []);
-//   {todoList
-//     ? todoList.map((todo, index) => <Todo todo={todo} key={index} />)
-//     : ''}
-console.log(teamData);
 
     return(
         <div className="team py-5 bg-sec-pattern bg-norepeat" id="events">

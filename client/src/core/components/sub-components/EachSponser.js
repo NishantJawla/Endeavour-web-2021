@@ -3,7 +3,6 @@ import React from "react";
 import sponserImg from "./../../../assets/img/sponser/dubulletin.jpg";
 
 const EachSponser = (props) => {
-    console.log(props);
     return(
         <div className="m-4 py-3 each-member each-sponser">
             <div className="position-relative overflow-hidden rounded">
