@@ -43,7 +43,7 @@ const ResetPassword = () => {
         errorMessage()
         setValues({ ...values, error: data.error, success: false });
         } else {
-        successMessage(data.msg)
+        successMessage("Succefully changed password")
         setValues({
         email:"",
         passCode: "",
