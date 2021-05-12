@@ -16,7 +16,7 @@ function Header(){
                     <div className="fw-bold head color-white">
                         E-Summit 2021
                         <div className="fs-6 ls-1">
-                            Breakthrough the Excellence
+                        COHORT OF PATHFINDERS
                         </div>
                         <div className="fs-6 py-3 ls-1">
                             April 5, 2021
