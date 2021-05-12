@@ -17,6 +17,10 @@ const eventSchema = new Schema({
         type:String,
         unique: true
     },
+    response: {
+        type: Boolean,
+        default: true
+    },
     paid:[
         {
                 type: Schema.Types.ObjectId,

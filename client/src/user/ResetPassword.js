@@ -23,6 +23,18 @@ const ResetPassword = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    if(values.email.toString() === ""){
+      errorMessage2("Email Field is required")
+      return;
+    }
+    if(values.passCode.toString() === ""){
+      errorMessage2("Pass Code Field is required")
+      return;
+    }
+    if(values.plainPassword.toString() === ""){
+      errorMessage2("Pass Code Field is required")
+      return;
+    }
     setValues({ ...values, error: false });
     resetPasswordHandler({ email,passCode,plainPassword })
     .then((data) => {
@@ -42,7 +54,6 @@ const ResetPassword = () => {
         }
     })
     .catch( () =>{
-        errorMessage2("Email Field is required")
         console.log("Error in changePasscord")
     }
         );
@@ -84,7 +95,7 @@ const resetPasswordForm = () => {
             />
             </div>
             <div className="form-group py-2">
-            <label className="fs-6 ls-1">Password</label>
+            <label className="fs-6 ls-1">New Password</label>
             <input
                 className="form-control"
                 onChange={handleChange("plainPassword")}
@@ -146,7 +157,7 @@ return (
         <div class="signup py-5">
             <div className="container pt-5">
                 <div className="bg-transparent text-white text-center p-5">
-                <div className="heading-font text-center color-white fw-bold">Change Password</div>
+                <div className="heading-font text-center color-white fw-bold">Reset Password</div>
                     {resetPasswordForm()}
                     <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
