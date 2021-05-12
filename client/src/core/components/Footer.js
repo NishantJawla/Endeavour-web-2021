@@ -3,7 +3,7 @@ import React from 'react';
 import "./footer.css";
 import SocialLinks from "./sub-components/SocialLinks";
 import personIcon1 from "./../../assets/img/icons/person1.png";
-import personIcon2 from "./../../assets/img/icons/person2.png";
+import personIcon2 from "./../../assets/img/icons/person3.png";
 
 function Footer() {
     return (
