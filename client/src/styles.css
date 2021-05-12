@@ -140,6 +140,7 @@ a:hover {
   text-decoration: underline;
   color: var(--secondary-color);
 }
+
 /*----end general--------*/
 .navbar {
   padding: 15px 0;
@@ -276,33 +277,30 @@ z .nav-lines {
 .profile-dropdown:hover{
     background: var(--primary-color);
 }
-.each-member .member-img{
-    /* width: 300px; */
-    width: 250px;
-    height: 250px;
+.each-member > div{
+    width: 220px;
 }
-.each-member .overlay{
+.each-sponser .overlay{
     opacity: 0;
     top: -100%;
 }
-.each-member .member-desc{
+.each-sponser .member-desc{
     opacity: 0;
     top: 100%;
 }
-.each-member > div:hover .overlay{
+.each-sponser > div:hover .overlay{
     transition: all 0.5s linear;
     top: 0;
     z-index: 20;
     opacity: 0.79;
-    /* filter: blur(25px); */
 }
-.each-member > div:hover .member-desc{
+.each-sponser > div:hover .member-desc{
     transition: all 0.8s linear;
     opacity: 1;
     z-index: 30;
     top: auto;
 }
-.each-member > div:hover img{
+.each-sponser > div:hover img{
     transform: scale(1.5);
     filter: blur(3px);
     transition: transform 0.5s linear;
