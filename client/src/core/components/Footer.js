@@ -26,9 +26,9 @@ function Footer() {
                                     </div>
                                     <div className="bg-white w-100 my-3" style={{height:"2px", }}></div>
                                     <div className="py-2">
-                                        <div className="name">Person 1</div>
-                                        <div className="designation">Member Ecell</div>
-                                        <div className="contact">+91 1234567890</div>
+                                        <div className="name">Nishant Jawla</div>
+                                        <div className="designation">Web Developer e-Cell</div>
+                                        <div className="contact">+91 7054409248</div>
                                     </div>
                                     
                                 </div>
@@ -38,9 +38,9 @@ function Footer() {
                                     </div>
                                     <div className="bg-white w-100 my-3" style={{height:"2px", }}></div>    
                                     <div className="py-2">
-                                        <div className="name">Person 1</div>
-                                        <div className="designation">Member Ecell</div>
-                                        <div className="contact">+91 1234567890</div>
+                                        <div className="name">Pranav Shukla</div>
+                                        <div className="designation">Web Developer e-Cell</div>
+                                        <div className="contact">+91 9718069294</div>
                                     </div>
                                     
                                 </div>
