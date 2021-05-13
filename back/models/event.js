@@ -17,7 +17,21 @@ const eventSchema = new Schema({
         type:String,
         unique: true
     },
+    response: {
+        type: Boolean,
+        default: true
+    },
+    launched: {
+        type: Boolean,
+        default: false
+    },
     paid:[
+        {
+                type: Schema.Types.ObjectId,
+                ref: "Team"
+        }
+    ],
+    registered: [
         {
                 type: Schema.Types.ObjectId,
                 ref: "Team"

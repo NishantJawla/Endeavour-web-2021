@@ -7,7 +7,7 @@ require('../../config/passport')(passport);
 
 //imported variables
 
-const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler, getUserHandler} = require('../../controllers/main/user');
+const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler, getUserHandler, isRegisteredAndPaidMobileHandler} = require('../../controllers/main/user');
 
 router.post("/contactUs",[
     check("contactUserName")
@@ -91,5 +91,6 @@ router.post("/updateProfile",[
 router.get("/getUser",passport.authenticate('jwt', {session: false,
     failureRedirect : '/failurejson',}),getUserHandler);
 
+router.get("/registered/mobile/:eventId",passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isRegisteredAndPaidMobileHandler);
 
 module.exports = router;

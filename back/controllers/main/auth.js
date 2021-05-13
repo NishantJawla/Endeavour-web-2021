@@ -362,8 +362,7 @@ exports.resetPasswordHandler = (req,res) => {
             });
             
         }
-        
-        if(parseInt(req.body.passCode) !== parseInt(user.resetPassword.passCode)){
+        else if(parseInt(req.body.passCode) !== parseInt(user.resetPassword.passCode)){
             user.resetPassword = undefined;
             user.uniqueString = undefined;
             user.save((err, user) => {
@@ -387,69 +386,66 @@ exports.resetPasswordHandler = (req,res) => {
                 })
             });
             
-        }
-        bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
-            console.log("changing password")
-            user.encryptedPassword = hash;
-            user.resetPassword = undefined;
-            user.uniqueString = undefined;
-
-            async function main() {
-            
-                let transporter = nodemailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: process.env.GMAIL_USER,
-                        pass: process.env.GMAIL_PASS,
-                    },
-                });
-                const url = `http://localhost:7000/main/auth/confirmation/${user.uniqueString}`;
-                let info = await transporter.sendMail({
-                from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-                to: user.email, 
-                subject: "Password Change Alert!", 
-                text: "Hi it's a password change mail", 
-                html: `
-                <b>Hey! ${user.name}</b>,<br>
-                This is a confirmation that the password for your Endeavour account ${user.endvrid} has just been changed.<br>
-                If you didn't change your password, secure your account immediately.<br>    
-                If you're having trouble, please write us back to :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
-                `, });
-                console.log("Message sent: %s", info.messageId);
-                console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-                user.save((err, user) => {
-                    if(err || !user){
-                        if(err){
-                            return res.status(500).json({
-                                status: 500,
-                                msg: "Server Error",
-                                error: "Server Error",
+        } else{
+            bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
+                console.log("changing password")
+                user.encryptedPassword = hash;
+                user.resetPassword = undefined;
+                user.uniqueString = undefined;
+    
+                async function main() {
+                
+                    let transporter = nodemailer.createTransport({
+                        service: 'Gmail',
+                        auth: {
+                            user: process.env.GMAIL_USER,
+                            pass: process.env.GMAIL_PASS,
+                        },
+                    });
+                    const url = `http://localhost:7000/main/auth/confirmation/${user.uniqueString}`;
+                    let info = await transporter.sendMail({
+                    from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
+                    to: user.email, 
+                    subject: "Password Change Alert!", 
+                    text: "Hi it's a password change mail", 
+                    html: `
+                    <b>Hey! ${user.name}</b>,<br>
+                    This is a confirmation that the password for your Endeavour account ${user.endvrid} has just been changed.<br>
+                    If you didn't change your password, secure your account immediately.<br>    
+                    If you're having trouble, please write us back to :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
+                    `, });
+                    console.log("Message sent: %s", info.messageId);
+                    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+                    user.save((err, user) => {
+                        if(err || !user){
+                            if(err){
+                                return res.status(500).json({
+                                    status: 500,
+                                    msg: "Server Error",
+                                    error: "Server Error",
+                                })
+                            }
+                            return res.status(400).json({
+                                msg: "unable to find user",
+                                error: "unable to find user",
                             })
                         }
-                        return res.status(400).json({
-                            msg: "unable to find user",
-                            error: "unable to find user",
-                        })
-                    }
-                        return res.status(200).json({
-                            status: 200,
-                            msg: 'User password changed Successfully',
+                            return res.status(200).json({
+                                status: 200,
+                                msg: 'User password changed Successfully',
+                            });
                         });
-                    });
-            }
-            main().catch(err => {
-                return res.status(500).json({
-                        status: 500,
-                        msg: 'Server Failure',
-                        error: 'Server Failure'
-                })
+                }
+                main().catch(err => {
+                    return res.status(500).json({
+                            status: 500,
+                            msg: 'Server Failure',
+                            error: 'Server Failure'
+                    })
+                });
+                
             });
-
-            res.status(400).json({
-                error: 'Internal Server Error'
-            })
-
-            
-        });
+        }
+    
     });
 };

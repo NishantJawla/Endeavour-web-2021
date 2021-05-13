@@ -17,6 +17,9 @@ import ForgotPassword from "./user/ForgotPassword";
 import ResetPassword from "./user/ResetPassword";
 import EventRegister from "./user/EventRegister";
 import SpeakersPage from "./core/components/SpeakersPage";
+import AdminRoute from "./auth/helper/AdminRoutes";
+import AdminDashBoard from "./user/AdminDashBoard";
+
 const Routes = () => {
 
   const [hide, setHide] = useState(true);
@@ -42,6 +45,7 @@ const Routes = () => {
           <Route path="/events/:eventId" exact component={EventRegister} />   
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
           <PrivateRoute path="/changepassword" exact component={ChangePassword} />
+          <AdminRoute path="/admin/dashboard" exact component={AdminDashBoard} />
           <Route path="/:random" component={NotFoundPage}/>
         </Switch>
       <Footer />

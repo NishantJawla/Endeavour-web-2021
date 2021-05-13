@@ -112,7 +112,7 @@ pauseOnHover
 
   const successMessage = () => {
     
-            toast.success('New account was created successfully. Please Login to Continue', {
+            toast.success('New account was created successfully. Verify your email by clicking on the link sent to your mail. Please Login to Continue', {
               position: 'top-right',
               autoClose: 5000,
               hideProgressBar: false,
