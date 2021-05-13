@@ -441,3 +441,39 @@ exports.isProfileCompleteHandler = (req, res,next) => {
         
     })
 }
+
+exports.isRegisteredAndPaidMobileHandler = (req, res) => {
+    User.findById(req.user._id).exec((err, user) => {
+        if(err || !user){
+            return res.status(400).json({
+                status: 'User Not Found!',
+                error: "User not found!"
+            })
+        }
+        user.registerd.forEach(item => {
+            if(item.event.toString() === req.params.eventId.toString()){
+            Team.findById(item.teams.toString()).exec((err, team) => {
+                if(team.paidStatus === true){
+                    return res.status(200).json({
+                        paid: true,
+                        registered: true,
+                        msg: "User have already paid for this event"
+                    })
+                }else{
+                    return res.status(200).json({
+                        paid: false,
+                        registered: true,
+                        msg: "User have registered but not yet paid for this event"
+                    })
+                }
+            })
+            }
+        });
+        return res.send(200).json({
+            registered: false,
+            paid: false,
+            msg: "User have not registered for this event"
+        })
+
+    })
+}
