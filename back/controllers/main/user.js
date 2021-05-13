@@ -504,6 +504,14 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
 
 exports.registerEventOne  = async (req,res,next) => {
     let status = true;
+    if(req.user.profile === false){
+        status = false;
+        return res.status(400).json({
+            status: 400,
+            msg: "Please Complete Your Profile to Continue",
+            error: "Please Complete Your Profile to Continue"
+        })
+    }else{
         try {
             var user1 = await User.findOne({endvrid : req.user.endvrid}).exec();
             if(user1.profile === false){
@@ -513,6 +521,18 @@ exports.registerEventOne  = async (req,res,next) => {
                     msg:  "Please Complete Your Profile to Continue",
                     error:  "Please Complete Your Profile to Continue"
                 })
+            } else {
+                user1.registered.forEach(team => {
+                    if(team.event.toString() === req.params.eventId){
+                        if(team.editable === false) {
+                            return res.status(400).json({
+                                status: 400,
+                                msg: "You are already registered in a team",
+                                error: "You are already registered in a team"
+                            })
+                        }
+                    }
+                });
             }
         }catch (err) {
             status = false;
@@ -533,6 +553,18 @@ exports.registerEventOne  = async (req,res,next) => {
                 msg: "Member 2 Complete Your Profile to Continue",
                 error: "Member 2 Complete Your Profile to Continue"
             })
+        } else {
+            user2.registered.forEach(team => {
+                if(team.event.toString() === req.params.eventId){
+                    if(team.editable === false) {
+                        return res.status(400).json({
+                            status: 400,
+                            msg: "You are already registered in a team",
+                            error: "You are already registered in a team"
+                        })
+                    }
+                }
+            });
         }
     }catch (err) {
         status = false;
@@ -555,6 +587,18 @@ exports.registerEventOne  = async (req,res,next) => {
                         msg: "Member 2 Complete Your Profile to Continue",
                         error: "Member 2 Complete Your Profile to Continue"
                     })
+                } else {
+                    user3.registered.forEach(team => {
+                        if(team.event.toString() === req.params.eventId){
+                            if(team.editable === false) {
+                                return res.status(400).json({
+                                    status: 400,
+                                    msg: "You are already registered in a team",
+                                    error: "You are already registered in a team"
+                                })
+                            }
+                        }
+                    });
                 }
             }catch (err) {
                 status = false;
@@ -566,6 +610,7 @@ exports.registerEventOne  = async (req,res,next) => {
             }
         }
     
+    }
     if(status){
         console.log("wtf i m doing herre")
         next();
