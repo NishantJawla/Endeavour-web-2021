@@ -78,6 +78,10 @@ const userSchema = new Schema({
         event: {
             type: Schema.Types.ObjectId,
             ref: "Event"
+        },
+        editable: {
+            type: Boolean,
+            default: true
         }
     }  
     ]
