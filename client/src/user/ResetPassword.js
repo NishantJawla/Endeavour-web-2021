@@ -103,6 +103,8 @@ const resetPasswordForm = () => {
                 value={plainPassword}
             />
             </div>
+            For security purposes popper is diabled on this page.
+            If you have entered wrong password then use forgot password again!
             <button onClick={onSubmit} className="btn btn-success py-3 my-5 fs-7 ls-1 fw-bold border-0 bg-secondary btn-block">
             Submit
             </button>
