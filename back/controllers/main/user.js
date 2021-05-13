@@ -565,12 +565,18 @@ exports.registerEvent = async (req, res, next) => {
     const data = {
         event: req.params.eventId,
         leader: req.user._id,
-        member1: user1._id,
-        member2: user2 !== null ? user2._id : null,
-        member3: user3 !== null ? user3._id : null,
-        member4: user3 !== null ? user4._id : null
+        teamMembers: []
     };
-
+    data.teamMembers.push(user1._id.toString());
+    if(user2) {
+        data.teamMembers.push(user2._id.toString());
+    }
+    if(user3) {
+        data.teamMembers.push(user3._id.toString());
+    }
+    if(user4) {
+        data.teamMembers.push(user4._id.toString());
+    }
     const team = new Team(data);
     team.save((err,team) => {
         if(err || !team){
