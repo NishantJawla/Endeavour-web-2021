@@ -47,7 +47,7 @@ function EventRegister(){
             <EventPopup 
                 showSlowly={showPopUp}
                 hidePopup={hidePopup}
-                memberCount={3}
+                memberCount={2}
             />
         </React.Fragment>
     );

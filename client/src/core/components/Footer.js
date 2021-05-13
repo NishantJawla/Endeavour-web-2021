@@ -21,7 +21,7 @@ function Footer() {
                             <div className="fs-4 color-white py-3 fw-bold ls-1">Contact Info</div>
                             <div className="d-flex justify-content-between">
                                 <div className="each-contact color-grey p-3 ls-1">
-                                    <div className="pt-3 pb-4">
+                                    <div className="pt-3 pb-4 d-flex justify-content-center">
                                         <img src={personIcon1} height="150px" alt="person" />
                                     </div>
                                     <div className="bg-white w-100 my-3" style={{height:"2px", }}></div>
@@ -33,7 +33,7 @@ function Footer() {
                                     
                                 </div>
                                 <div className="each-contact color-grey p-3 ls-1">
-                                    <div className="pt-3 pb-4">
+                                    <div className="pt-3 pb-4 d-flex justify-content-center">
                                         <img src={personIcon2} height="150px" alt="person" />
                                     </div>
                                     <div className="bg-white w-100 my-3" style={{height:"2px", }}></div>    

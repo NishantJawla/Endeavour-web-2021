@@ -64,6 +64,9 @@ a:hover {
 .color-primary {
   color: var(--primary-color) !important;
 }
+.color-secondary{
+  color: var(--secondary-color) !important;
+}
 .color-grey {
   color: #b6b6b6;
   font-size: 1rem;
@@ -309,7 +312,8 @@ z .nav-lines {
     filter: blur(3px);
     transition: transform 0.5s linear;
 }
-.profile-container .form-control{
+.profile-container .form-control,
+.profile-container option{
   background-color: rgba(225, 225, 225, 0.4) !important;
   color: white;
   border: 0;

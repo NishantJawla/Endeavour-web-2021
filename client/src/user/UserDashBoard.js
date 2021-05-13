@@ -1,8 +1,22 @@
 //jshint esversion: 8
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
+import { API } from "./../backend";
+import { getUserData, getEventData } from "./../auth/helper/index";
 
 const UserDashBoard= () => {
+
+    const [userData, setUserData] = useState({});
+    const [events, setEvents] = useState([]);
+
+
+    useEffect(() => {
+        getUserData(setUserData);
+        userData.registerd.forEach(event => {
+            getEventData(event.event.toString(), setEvents);
+        });
+    }, []);
+
     return (
         <div className="profile-container py-5 bg-sec-pattern bg-norepeat">
             <div className="container py-5">
@@ -12,57 +26,72 @@ const UserDashBoard= () => {
                         <div className="w-50 m-auto overflow-hidden rounded-circle">
                             <img className="profile-pic" width="100%" height="100%" src={profileImg} alt="profil_pic" />
                         </div>
+                        <div className="profile-info color-white py-4 text-center">
+                            <div className="fs-6 ls-1 py-1 fw-bold ">{userData.name}</div>
+                            <div className="fs-6 ls-1 py-1">{userData.email}</div>
+                            <div className="fs-6 ls-1 py-1 fw-bold ">{userData.endvrid}</div>
+                        </div>
                     </div>
                     <div className="col-lg-7 col-md-10">
-                        <div className="fs-5 fw-bold pb-3 ls-1">Personal Info</div>
+                        <div className="fs-5 fw-bold pb-3 ls-1">Update Profile</div>
+                        <div className="profile-update-note py-3 color-white italic ls-1 fw-bold">The Profile can be only updated once. Make sure to enter the Correct Data.</div>
                         <form className="edit-details" action="" method="">
                             <div className="row py-2 ls-1 fs-6">
                                 <div className="col-lg-3">
-                                    <label for="Username">Username: </label>
+                                    <label for="Username">Branch: </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="username" />
+                                    <input className="form-control p-3 border-0" type="text" name="branch" placeholder="Branch" required/>
                                 </div>
                             </div>
 
                             <div className="row py-2 ls-1 fs-6">
                                 <div className="col-lg-3">
-                                    <label for="Username">Username: </label>
+                                    <label for="Username">Library Id (Only for KIET Students): </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="username" />
+                                    <input className="form-control p-3 border-0" type="text" name="libId" placeholder="Library Id" />
                                 </div>
                             </div>
                             <div className="row py-2 ls-1 fs-6">
                                 <div className="col-lg-3">
-                                    <label for="Username">Username: </label>
+                                    <label for="Username">College Name: </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="username" />
+                                    <input className="form-control p-3 border-0" type="text" name="clgName" placeholder="College Name" required />
                                 </div>
                             </div>
                             <div className="row py-2 ls-1 fs-6">
                                 <div className="col-lg-3">
-                                    <label for="Username">Username: </label>
+                                    <label for="Username">Semester: </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="username" />
+                                    <select class="form-select form-control" placeholder="semester" aria-label="Default select example">
+                                        <option className="color-secondary" value="1">I</option>
+                                        <option className="color-secondary" value="2">II</option>
+                                        <option className="color-secondary" value="3">III</option>
+                                        <option className="color-secondary" value="4">IV</option>
+                                        <option className="color-secondary" value="5">V</option>
+                                        <option className="color-secondary" value="6">VI</option>
+                                        <option className="color-secondary" value="7">VII</option>
+                                        <option className="color-secondary" value="8">VIII</option>
+                                    </select>    
                                 </div>
                             </div>
                             <div className="row py-2 ls-1 fs-6">
                                 <div className="col-lg-3">
-                                    <label for="Username">Username: </label>
+                                    <label for="Username">Discord Id (user#1234): </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="username" />
+                                    <input className="form-control p-3 border-0" type="text" name="discordId" placeholder="user#1234" required/>
                                 </div>
                             </div>
                             <div className="row py-4">
                                 <div className="col">
-                                    <button className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Save Changes</button>
+                                    <button className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Update Profile</button>
                                 </div>
                                 <div className="col">
-                                    <button className="w-100 rounded bg-secondary color-white fs-6 border-0 ls-1 fw-bold py-3">Cancel</button>
+                                    <button className="w-100 rounded bg-secondary color-white fs-6 border-0 ls-1 fw-bold py-3">Clear</button>
                                 </div>
                             </div>
                         </form>
@@ -85,6 +114,7 @@ const UserDashBoard= () => {
                                 Paid Status
                             </div>
                         </div>
+                        
                         <div className="row py-2 ls-1">
                             <div className="col">
                                 1.

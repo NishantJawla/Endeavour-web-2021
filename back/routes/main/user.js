@@ -89,7 +89,7 @@ router.post("/updateProfile",[
 ],passport.authenticate('jwt', {session: false,failureRedirect : '/failurejson',}),updateProfileHandler);
 
 router.get("/getUser",passport.authenticate('jwt', {session: false,
-    failureRedirect : '/failurejson',}),getUserHandler)
+    failureRedirect : '/failurejson',}),getUserHandler);
 
 
 module.exports = router;

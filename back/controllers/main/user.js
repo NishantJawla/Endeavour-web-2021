@@ -403,14 +403,14 @@ exports.updateProfileHandler = (req,res) => {
 }
 
 exports.getUserHandler = (req, res) => {
-    let messenger = req.user
-    messenger.encryptedPassword = undefined
-    messenger.uniqueString = undefined
-    messenger.resetPassword = undefined
-    messenger.__v = undefined
-    messenger.createdAt = undefined
-    messenger.updatedAt = undefined
-    res.status(200).json(messenger)
+    let messenger = req.user;
+    messenger.encryptedPassword = undefined;
+    messenger.uniqueString = undefined;
+    messenger.resetPassword = undefined;
+    messenger.__v = undefined;
+    messenger.createdAt = undefined;
+    messenger.updatedAt = undefined;
+    res.status(200).json(messenger);
 }
 
 exports.isProfileCompleteHandler = (req, res,next) => {

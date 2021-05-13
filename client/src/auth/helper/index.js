@@ -130,3 +130,57 @@ export const resetPasswordHandler = (data) => {
         return err;
     })
 }
+
+export const getUserData = (setUserData) => {
+    const { user, token } = isAuthenticated();
+    fetch(`${API}user/getUSer`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+        }
+    })
+    .then(response => {
+        if(response.ok)
+            return response.json();
+        else 
+            throw new Error("Not able to get user data");
+    })
+    .then(data => {
+        console.log(data);
+        setUserData(data);
+        return;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+
+export const getEventData = (eventId ,setEvents) => {
+    const { user, token } = isAuthenticated();
+    fetch(`${API}getEvent/${eventId}`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        }
+    })
+    .then(response => {
+        if (response.ok){
+            return response.json();
+        } else {
+            throw new Error("Not able to fetch events Data");
+        }
+    })
+    .then(data => {
+        setEvents(event => {
+            return [...event, data];
+        });
+        return;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
