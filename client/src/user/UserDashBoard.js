@@ -2,12 +2,73 @@
 import React, { useState, useEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
 import { API } from "./../backend";
-import { getUserData, getEventData } from "./../auth/helper/index";
+import { getUserData, getEventData, updateProfile } from "./../auth/helper/index";
 
-const UserDashBoard= () => {
+const UserDashBoard = (props) => {
 
     const [userData, setUserData] = useState({});
     const [events, setEvents] = useState([]);
+    const [updatedData, setUpdatedData] = useState({
+        branch: "",
+        libId: "",
+        college: "",
+        discord: "",
+        semester: "1"
+    });
+
+    function handleChange(event){
+        const {name, value} = event.target;
+        setUpdatedData(prevData => {
+            if(name === "branch"){
+                return {
+                    ...prevData,
+                    branch: value
+                }
+            } else if(name === "libId"){
+                return {
+                    ...prevData,
+                    libId: value
+                }
+            } else if(name === "clgName"){
+                return {
+                    ...prevData,
+                    college: value
+                }
+            } else if(name === "semester"){
+                return {
+                    ...prevData,
+                    semester: value
+                }
+            } else if(name === "discordId"){
+                return {
+                    ...prevData,
+                    discord: value
+                }
+            } 
+        });
+    }
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        if(userData.profile){
+            //profile is already updated add toster
+            console.log("profile already updated");
+        } else {
+            updateProfile(updatedData);
+            console.log("updatiung");
+        }
+      };
+
+    // function updateProfile (event){
+    //     event.preventDefault();
+    //     if(userData.profile){
+    //         //profile is already updated add toster
+    //         console.log("profile already updated");
+    //     } else {
+    //         updateProfile(updatedData);
+    //         console.log("updatiung");
+    //     }
+    // }
 
     useEffect(() => {
         getUserData(setUserData);
@@ -37,7 +98,7 @@ const UserDashBoard= () => {
                                     <label for="Username">Branch: </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="branch" placeholder="Branch" required/>
+                                    <input onChange={handleChange} value={updatedData.branch} className="form-control p-3 border-0" type="text" name="branch" placeholder="Branch" required/>
                                 </div>
                             </div>
 
@@ -46,7 +107,7 @@ const UserDashBoard= () => {
                                     <label for="Username">Library Id (Only for KIET Students): </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="libId" placeholder="Library Id" />
+                                    <input onChange={handleChange} value={updatedData.libId} className="form-control p-3 border-0" type="text" name="libId" placeholder="Library Id" />
                                 </div>
                             </div>
                             <div className="row py-2 ls-1 fs-6">
@@ -54,7 +115,7 @@ const UserDashBoard= () => {
                                     <label for="Username">College Name: </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="clgName" placeholder="College Name" required />
+                                    <input onChange={handleChange} value={updatedData.college} className="form-control p-3 border-0" type="text" name="clgName" placeholder="College Name" required />
                                 </div>
                             </div>
                             <div className="row py-2 ls-1 fs-6">
@@ -62,15 +123,15 @@ const UserDashBoard= () => {
                                     <label for="Username">Semester: </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <select class="form-select form-control" placeholder="semester" aria-label="Default select example">
-                                        <option className="color-secondary" value="1">I</option>
-                                        <option className="color-secondary" value="2">II</option>
-                                        <option className="color-secondary" value="3">III</option>
-                                        <option className="color-secondary" value="4">IV</option>
-                                        <option className="color-secondary" value="5">V</option>
-                                        <option className="color-secondary" value="6">VI</option>
-                                        <option className="color-secondary" value="7">VII</option>
-                                        <option className="color-secondary" value="8">VIII</option>
+                                    <select onChange={handleChange} name="semester" class="form-select form-control" placeholder="semester" aria-label="Default select example">
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "1" ? true : false} value="1">I</option>
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "2" ? true : false} value="2">II</option>
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "3" ? true : false} value="3">III</option>
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "4" ? true : false} value="4">IV</option>
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "5" ? true : false} value="5">V</option>
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "6" ? true : false} value="6">VI</option>
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "7" ? true : false} value="7">VII</option>
+                                        <option className="color-secondary" selected={updatedData.semester.toString() === "8" ? true : false} value="8">VIII</option>
                                     </select>    
                                 </div>
                             </div>
@@ -79,15 +140,15 @@ const UserDashBoard= () => {
                                     <label for="Username">Discord Id (user#1234): </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <input className="form-control p-3 border-0" type="text" name="discordId" placeholder="user#1234" required/>
+                                    <input onChange={handleChange} value={updatedData.discord} className="form-control p-3 border-0" type="text" name="discordId" placeholder="user#1234" required/>
                                 </div>
                             </div>
                             <div className="row py-4">
                                 <div className="col">
-                                    <button className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Update Profile</button>
+                                    <button type="submit" onClick={onSubmit} className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Update Profile</button>
                                 </div>
                                 <div className="col">
-                                    <button className="w-100 rounded bg-secondary color-white fs-6 border-0 ls-1 fw-bold py-3">Clear</button>
+                                    <button type="reset" className="w-100 rounded bg-secondary color-white fs-6 border-0 ls-1 fw-bold py-3">Clear</button>
                                 </div>
                             </div>
                         </form>
@@ -146,4 +207,4 @@ const UserDashBoard= () => {
     );
 }
 
-export default UserDashBoard
+export default UserDashBoard;

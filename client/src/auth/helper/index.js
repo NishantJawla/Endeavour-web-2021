@@ -210,3 +210,22 @@ export const registerEvent = (eventId, userData) => {
         console.log(error);
     });
 };
+
+export const updateProfile = (data) => {
+    const {user, token} = isAuthenticated();
+    fetch(`${API}user/updateProfile`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(error => {
+        console.log(error);
+    });
+};
