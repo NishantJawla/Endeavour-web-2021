@@ -1,7 +1,6 @@
 //jshint esversion: 8
 import React, { useState, useEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
-import { API } from "./../backend";
 import { getUserData, getEventData, updateProfile } from "./../auth/helper/index";
 
 const UserDashBoard = (props) => {

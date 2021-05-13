@@ -159,7 +159,7 @@ export const getUserData = (setUserData) => {
 
 export const getEventData = (eventId ,setEvents) => {
     const { user, token } = isAuthenticated();
-    fetch(`${API}getEvent/${eventId}`, {
+    return fetch(`${API}getEvent/${eventId}`, {
         mode: "cors",
         method: "GET",
         headers: {
@@ -187,7 +187,7 @@ export const getEventData = (eventId ,setEvents) => {
 
 export const registerEvent = (eventId, userData) => {
     const { user, token } = isAuthenticated();
-    fetch(`${API}register/${eventId}`, {
+    return fetch(`${API}register/${eventId}`, {
         mode: "cors",
         method: "POST",
         headers: {
@@ -213,7 +213,7 @@ export const registerEvent = (eventId, userData) => {
 
 export const updateProfile = (data) => {
     const {user, token} = isAuthenticated();
-    fetch(`${API}user/updateProfile`, {
+    return fetch(`${API}user/updateProfile`, {
         mode: "cors",
         method: "POST",
         headers: {

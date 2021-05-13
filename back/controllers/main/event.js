@@ -81,5 +81,4 @@ exports.getEventHandler = (req,res) => {
             content
         })
     })
-}
-
+};

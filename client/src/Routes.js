@@ -18,7 +18,7 @@ import ResetPassword from "./user/ResetPassword";
 import EventRegister from "./user/EventRegister";
 import SpeakersPage from "./core/components/SpeakersPage";
 import AdminRoute from "./auth/helper/AdminRoutes";
-import AdminDashBoard from "./user/AdminDashBoard";
+import AdminDashBoard from "./admin/AdminDashboard";
 
 const Routes = () => {
 
@@ -46,6 +46,7 @@ const Routes = () => {
           <Route path="/events" render={(props) => <EventRegister {...props} />}/> 
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
           <PrivateRoute path="/changepassword" exact component={ChangePassword} />
+          <PrivateRoute path="/admin/superMan" exact component={ChangePassword} />
           <AdminRoute path="/admin/dashboard" exact component={AdminDashBoard} />
           <Route path="/:random" component={NotFoundPage}/>
         </Switch>
