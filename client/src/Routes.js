@@ -42,7 +42,8 @@ const Routes = () => {
           <Route path="/forgotpassword" exact component={ForgotPassword} />
           <Route path="/resetpassword" exact component={ResetPassword} />
           <Route path="/guests" exact component={SpeakersPage} />
-          <Route path="/events/:eventId" exact component={EventRegister} />   
+          {/* <Route path="/events"  component={EventRegister} />    */}
+          <Route path="/events" render={(props) => <EventRegister {...props} />}/> 
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
           <PrivateRoute path="/changepassword" exact component={ChangePassword} />
           <AdminRoute path="/admin/dashboard" exact component={AdminDashBoard} />

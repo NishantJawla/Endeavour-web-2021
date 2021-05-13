@@ -1,42 +1,75 @@
 //jshint esversion: 8
-import React, { useState } from "react";
+import React,{useEffect,useState}from "react";
 import EventPopup from "./../core/components/sub-components/EventPopup";
+import firebase from "../firebase"
 
 
-function EventRegister(){
+const  EventRegister = (props) => {
     //evets ka data
-
+    const eventParam = props.location.pathname.split("/")
+    const idParam = eventParam[eventParam.length-1]
+    console.log(idParam)
     const [showPopUp, setShowPopup] = useState(false);
-
+    const [eventData, seteventData] = useState(true);
+ useEffect(() => {
+   const eventRef = firebase.database().ref('eventsMain');
+   eventRef.on('value', (snapshot) => {
+   const events = snapshot.val();
+   const eventData = [];
+   for (let id in events) {
+    
+    if(events[id].eventId.toString() === idParam.toString()){
+        eventData.push({ id, ...events[id] });
+    }
+   }
+   seteventData(eventData);
+   });
+ }, []);
+ console.log({
+     "eventData": eventData
+ });
     function changeShowPopup(props){
         setShowPopup(true);
     }
     function hidePopup(props){
         setShowPopup(false);
     }
-
+    const getEventStructure = () => {
+        let result = eventData[0].eventStructure.split("--")
+        return(
+            result
+            ? result.map((todo, index) => <li>{todo}</li>)
+            : '')
+    }
+    const splitString = (s) => {
+        let result = s.split("--")
+        return(
+            result
+            ? result.map((todo, index) => <li>{todo}</li>)
+            : '')
+    }
     return (
         <React.Fragment>
             <div className="event-register py-5 bg-sec-pattern bg-norepeat">
                 <div className="container py-5">
-                    <div className="heading-font pt-3 text-center color-white fw-bold">Event Name</div>
+                    <div className="heading-font pt-3 text-center color-white fw-bold">{eventData[0] ? eventData[0].eventName :""}</div>
                     <div className="event-desc color-white pt-3 px-5 mx-5">
                         <div className="py-3 px-4">
                             <div className="fs-5 fw-bold pb-2 ls-1">Description</div>
                             <div className="fs-6 color-white ls-1">
-                                What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?
+                            {eventData[0] ? eventData[0].eventDesc : ""}
                             </div>
                         </div>
                         <div className="py-3 px-4">
                             <div className="fs-5 fw-bold pb-2 ls-1">Structure</div>
                             <div className="fs-6 color-white ls-1">
-                                What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?
+                            {eventData[0] ? getEventStructure() : ""}
                             </div>
                         </div>
                         <div className="py-3 px-4">
                             <div className="fs-5 fw-bold pb-2 ls-1">Rounds</div>
                             <div className="fs-6 color-white ls-1">
-                                What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?
+                            Pranav bhai write rounds logic here please!!!!
                             </div>
                         </div>
                         <div className="py-3 px-4">
