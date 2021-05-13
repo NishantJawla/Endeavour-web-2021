@@ -521,6 +521,7 @@ exports.registerEvent = async (req, res, next) => {
     let user3 = null;
     let user4 = null;
     if(req.body.member2){
+        console.log("Member 2 here")
         user2 = await User.findOne({endvrid: req.body.member2});
         user2.registerd.forEach(team => {
             if(team.event.toString() === req.params.eventId){
@@ -674,7 +675,7 @@ exports.saveRegisteredTeamToEventSchema = async (req,res) => {
                             error: "Event not found",
                         })
                     }
-                    event.registered.push(team.teams.toString())
+                    event.registered.push(team.teams)
                     event.save((err,event) => {
                         if(err || !event) {
                             return res.status(400).json({
