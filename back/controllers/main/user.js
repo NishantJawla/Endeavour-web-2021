@@ -450,30 +450,55 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                 error: "User not found!"
             })
         }
-        user.registerd.forEach(item => {
-            if(item.event.toString() === req.params.eventId.toString()){
-            Team.findById(item.teams.toString()).exec((err, team) => {
-                if(team.paidStatus === true){
-                    return res.status(200).json({
-                        paid: true,
-                        registered: true,
-                        msg: "User have already paid for this event"
-                    })
-                }else{
-                    return res.status(200).json({
-                        paid: false,
-                        registered: true,
-                        msg: "User have registered but not yet paid for this event"
-                    })
-                }
-            })
+        function include(arr, obj) {
+            for (var i = 0; i < arr.length; i++) {
+            if (arr[i].event.toString() == obj) return true;
             }
-        });
-        return res.send(200).json({
-            registered: false,
-            paid: false,
-            msg: "User have not registered for this event"
-        })
+        }
+        if (typeof user.registerd !== 'undefined' && user.registerd.length === 0) {
+            return res.status(200).json({
+                registerd: false,
+                paid: false,
+                msg: "User have not registered"
+            })
+        }
+        else if(include(user.registerd,req.params.eventId.toString())){
+            user.registerd.forEach(item => {
+                if(item.event.toString() === req.params.eventId.toString()){
+                Team.findById(item.teams.toString()).exec((err, team) => {
+                    if(err || !team) {
+                        return res.status(400).json({
+                            status: 'Team Not Found!',
+                            error: "Team not found!"
+                        })
+                    }
+                    if(team.paidStatus === true){
+                        return res.status(200).json({
+                            paid: true,
+                            registered: true,
+                            msg: "User have already paid for this event"
+                        })
+                    }
+                    else {
+                        return res.status(200).json({
+                            paid: false,
+                            registered: true,
+                            msg: "User have registered but not yet paid for this event"
+                        })
+                    }
+                })
+                }
+            });
+        }else{
+            return res.status(200).json({
+                registerd: false,
+                paid: false,
+                msg: "User have not registered"
+            })
+        }
+
+        
 
     })
 }
+
