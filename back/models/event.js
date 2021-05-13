@@ -30,6 +30,12 @@ const eventSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: "Team"
         }
+    ],
+    registered: [
+        {
+                type: Schema.Types.ObjectId,
+                ref: "Team"
+        }
     ]
 },
 {
