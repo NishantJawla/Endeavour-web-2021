@@ -451,8 +451,10 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
             })
         }
         function include(arr, obj) {
-            for (var i = 0; i < arr.length; i++) {
-            if (arr[i].event.toString() == obj) return true;
+            if (typeof arr !== 'undefined' && arr.length === 0){
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].event.toString() == obj) return true;
+                    }
             }
         }
         if (typeof user.registerd !== 'undefined' && user.registerd.length === 0) {
