@@ -504,6 +504,7 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
 
 exports.registerEventOne  = async (req,res,next) => {
     let status = true;
+    var teamId = undefined;
     if(req.user.profile === false){
         status = false;
         return res.status(400).json({
@@ -524,6 +525,7 @@ exports.registerEventOne  = async (req,res,next) => {
             } else {
                 user1.registered.forEach(team => {
                     if(team.event.toString() === req.params.eventId){
+                        teamId = team.teams
                         if(team.editable === false) {
                             return res.status(400).json({
                                 status: 400,
@@ -532,7 +534,7 @@ exports.registerEventOne  = async (req,res,next) => {
                             })
                         }
                     }
-                });
+                }); 
             }
         }catch (err) {
             status = false;
@@ -611,13 +613,75 @@ exports.registerEventOne  = async (req,res,next) => {
         }
     
     }
+
+    if(teamId === undefined) {
+        let data = {
+            event: req.params.eventId,
+            leader: req.user._id,
+            teamMembers: []
+        };
+        data.teamMembers.push(user1._id);
+        if(user2) {
+            data.teamMembers.push(user2._id);
+        }
+        if(user3) {
+            data.teamMembers.push(user3._id);
+        }
+        let team = new Team(data);
+        try{
+            const teamCreated = await team.save();
+            teamId = teamCreated._id
+            console.log(teamId)
+        }catch (err) {
+            return res.json({
+                status: 400,
+                msg: "Failed to save Team",
+                error: " Failed to save Team"
+            })
+        }
+    } else {
+        try {
+            let team = await Team.findById(TeamId).exec();
+            while(team.teamMembers.length > 0) {
+                team.teamMembers.pop();
+            }
+        team.teamMembers.push(user1._id);
+        if(user2) {
+            team.teamMembers.push(user2._id);
+        }
+        if(user3) {
+            team.teamMembers.push(user3._id);
+        }
+        try{
+            const teamUpdated = await team.save();
+            teamId = teamCreated._id
+            console.log(teamId)
+        }catch (err) {
+            return res.json({
+                status: 400,
+                msg: "Failed to save Team",
+                error: " Failed to save Team"
+            })
+        }
+        }catch (err) {
+            return res.status(400).json({
+                status: 400,
+                msg: "Team not found",
+                error: "Team not found"
+            })
+        }
+        
+
+    }
+
+
     if(status){
         console.log("wtf i m doing herre")
         next();
     }
     
 }
-
+    
 exports.registerEventTwo = (req,res) => {
     res.json({
         "msg": "Successfully Reached to Part 2"
