@@ -619,7 +619,7 @@ exports.registerEventOne  = async (req,res,next) => {
         }
     
     }
-    console.log(teamId)
+    ////////// ----------------------------Verified Users -------------------------///
     if(teamId === undefined) {
         let data = {
             event: req.params.eventId,
@@ -637,7 +637,6 @@ exports.registerEventOne  = async (req,res,next) => {
         try{
             const teamCreated = await team.save();
             teamId = teamCreated._id
-            console.log(teamId)
         }catch (err) {
             return res.json({
                 status: 400,
@@ -648,6 +647,38 @@ exports.registerEventOne  = async (req,res,next) => {
     } else {
         try {
             var team = await Team.findOne({_id:teamId.toString()});
+            for(let i = 0; i<team.teamMembers.length; i++){
+                let counter = 1;
+                if(team.teamMembers[i].toString() === (user1._id).toString()){
+                    counter = 0;
+                }
+                if(req.body.member2){
+                    if(team.teamMembers[i].toString() === (user2._id).toString()){
+                        counter = 0;
+                    }
+                }
+                if(req.body.member3){
+                    if(team.teamMembers[i].toString() === (user3._id).toString()){
+                        counter = 0;
+                    }
+                }
+                if(counter) {
+                    try{
+                    let tempUser = await  User.getUserById(team.teamMembers[i].toString());
+                    let filtered = tempUser.registered.filter(function(value, index, arr){ 
+                        return value.teams.toString() != teamId.toString();
+                    });
+                    tempUser.registered = filtered;
+                    try{
+                        tempUser.save()
+                    } catch(err){
+                        console.log(err)
+                    }
+                    } catch (err) {
+                        console.log(err)
+                    }
+                }
+            }
             while(team.teamMembers.length > 0) {
                 team.teamMembers.pop();
             }
@@ -662,7 +693,7 @@ exports.registerEventOne  = async (req,res,next) => {
             teamId = team._id
             console.log("new team id" + teamId);
             team.save();
-            console.log(teamId)
+        
         }catch (err) {
             return res.json({
                 status: 400,
@@ -780,8 +811,19 @@ exports.registerEventOne  = async (req,res,next) => {
         
     }
 
+    try{
+        const eventSaveHandle = await Event.findById(req.params.eventId).exec();
+        eventSaveHandle.registered.push(teamId)
+        try{
+            let saveEvent = await eventSaveHandle.save();
+        } catch (err) {
+            console.log(err)
+        }
+    } catch (err) {
+
+    }
+    
     if(status){
-        console.log("wtf i m doing herre")
         next();
     }
     
