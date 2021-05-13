@@ -9,12 +9,8 @@ const UserDashBoard= () => {
     const [userData, setUserData] = useState({});
     const [events, setEvents] = useState([]);
 
-
     useEffect(() => {
         getUserData(setUserData);
-        userData.registerd.forEach(event => {
-            getEventData(event.event.toString(), setEvents);
-        });
     }, []);
 
     return (

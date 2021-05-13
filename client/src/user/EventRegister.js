@@ -4,6 +4,7 @@ import EventPopup from "./../core/components/sub-components/EventPopup";
 
 
 function EventRegister(){
+    //evets ka data
 
     const [showPopUp, setShowPopup] = useState(false);
 

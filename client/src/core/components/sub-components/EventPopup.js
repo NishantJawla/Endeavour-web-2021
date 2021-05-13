@@ -1,12 +1,39 @@
 //jshint esversion: 8
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import closeIcon from "./../../../assets/img/icons/cancel.png";
-import {isAuthenticated} from "../../../auth/helper/index"
+import {isAuthenticated, registerEvent} from "../../../auth/helper/index";
 function EventPopup(props){
+
+    const [userData, setUserData] = useState({
+        endvrId2: "",
+        endvrId3: ""
+    });
+
+    function handleChange(event){
+        const {name, value} = event.target;
+        setUserData(prevState => {
+            if(name === "endvrId2"){
+                return {
+                    ...prevState,
+                    endvrId2: value
+                }
+            } else if(name === "endvrId3"){
+                return {
+                    ...prevState,
+                    endvrId3: value
+                }
+            }
+        });
+    }
 
     function startHidePopup(){
         props.hidePopup();
+    }
+
+    function register(event){
+        event.preventDefault();
+        registerEvent(props.eventId, userData);
     }
 
     const showSlowly = {
@@ -39,13 +66,13 @@ function EventPopup(props){
                     Hackathon
                 </div>
 
-                <form className="px-5 py-3">
+                <form className="px-5 py-3" method="POST" >
                 <div className="row py-2 ls-1 fs-6 my-2">
                     <div className="col-lg-3">
                             <label for="Username">EndvrId 2: </label>
                         </div>
                         <div className="col-lg-9">
-                            <input className="form-control p-3 border-0" type="text" name="username" autoComplete="off" />
+                            <input onChange={handleChange} className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={userData.endvrid2} />
                         </div>
                     </div>
 
@@ -56,7 +83,7 @@ function EventPopup(props){
                                 <label for="Username">EndvrId 3: </label>
                             </div>
                             <div className="col-lg-9">
-                                <input className="form-control p-3 border-0" type="text" name="username" autoComplete="off" />
+                                <input onChange={handleChange} className="form-control p-3 border-0" type="text" name="endvrId3" autoComplete="off" value={userData.endvrid3} />
                             </div>
                         </div>
                         : 
@@ -66,9 +93,7 @@ function EventPopup(props){
                     isAuthenticated() && (
                         <React.Fragment>
                             <div className="register-button py-3">
-                                <Link to="/register/eventId">
-                                    <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
-                                </Link>
+                                <button onclick={register} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
                             </div>
                         </React.Fragment>
                     )

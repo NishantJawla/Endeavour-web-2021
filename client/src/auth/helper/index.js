@@ -124,7 +124,7 @@ export const resetPasswordHandler = (data) => {
         body: JSON.stringify(data)
     })
     .then(response => {
-        return response.json()
+        return response.json();
     })
     .catch(err => {
         return err;
@@ -179,6 +179,32 @@ export const getEventData = (eventId ,setEvents) => {
             return [...event, data];
         });
         return;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+
+export const registerEvent = (eventId, userData) => {
+    const { user, token } = isAuthenticated();
+    fetch(`${API}register/${eventId}`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => {
+        if(response.ok){
+            //registed successfully
+            return response.json();
+            
+        } else{
+            //not registed
+            throw new Error("User not registered SuccessFully");
+        }
     })
     .catch(error => {
         console.log(error);

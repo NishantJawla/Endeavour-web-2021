@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import EachEvent from './sub-components/EachEvent';
 
 function Event() {
-
+ //require events data form firebase
     
 
     return (
