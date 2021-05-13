@@ -77,7 +77,7 @@ if (!errors.isEmpty()) {
                     pass: process.env.GMAIL_PASS,
                 },
             });
-            const url = `http://localhost:7000/main/auth/confirmation/${user.uniqueString}`;
+            const url = `${process.env.DOMAIN}main/auth/confirmation/${user.uniqueString}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -262,7 +262,7 @@ exports.forgotPasswordHandler = (req,res) => {
             var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
             user.resetPassword.passCode = seq;
             user.resetPassword.use = true;
-            const url = `http://localhost:3000/resetpassword`;
+            const url = `${process.env.DOMAIN}resetpassword`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -402,7 +402,7 @@ exports.resetPasswordHandler = (req,res) => {
                             pass: process.env.GMAIL_PASS,
                         },
                     });
-                    const url = `http://localhost:7000/main/auth/confirmation/${user.uniqueString}`;
+                    const url = `${process.env.DOMAIN}main/auth/confirmation/${user.uniqueString}`;
                     let info = await transporter.sendMail({
                     from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
                     to: user.email, 
