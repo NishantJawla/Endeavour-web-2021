@@ -70,7 +70,7 @@ const userSchema = new Schema({
             type:Boolean
         }
     },
-    registerd: [{
+    registered: [{
         teams: {
             type: Schema.Types.ObjectId,
             ref: "Team"

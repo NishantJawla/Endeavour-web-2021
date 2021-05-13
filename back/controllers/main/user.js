@@ -502,196 +502,79 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
     })
 }
 
-exports.registerEvent = async (req, res, next) => {
-    let user1 = await User.findOne({_id: req.user._id});
-    // console.log(user1.registerd);
-    user1.registerd.forEach(team => {
-        if(team.event.toString() === req.params.eventId){
-            if(!team.editable){
-                return res.status(400).json({
+exports.registerEventOne  = async (req,res,next) => {
+    let status = true;
+        try {
+            var user1 = await User.findOne({endvrid : req.user.endvrid}).exec();
+            if(user1.profile === false){
+                status = false;
+                return res.json(400).json({
                     status: 400,
-                    msg: "Team leader already present in a paid team.",
-                    error: "Team leader already present in a paid team."
-                });
+                    msg:  "Please Complete Your Profile to Continue",
+                    error:  "Please Complete Your Profile to Continue"
+                })
             }
+        }catch (err) {
+            status = false;
+            return res.status(400).json({
+                status: 404,
+                msg: "Member 1 not found",
+                error: "Member 1 not found"
+            })
+        }
+
+        if(req.body.member2) {
+    try {
+        var user2 = await User.findOne({endvrid : req.body.member2}).exec();
+        if(user2.profile === false){
+            status = false;
+            return res.json(400).json({
+                status: 400,
+                msg: "Member 2 Complete Your Profile to Continue",
+                error: "Member 2 Complete Your Profile to Continue"
+            })
+        }
+    }catch (err) {
+        status = false;
+        return res.status(400).json({
+            status: 404,
+            msg: "Member 2 not found",
+            error: "Member 2 not found"
+        })
+    }
         
         }
-    });
-    let user2 = null;
-    let user3 = null;
-    let user4 = null;
-    if(req.body.member2){
-        console.log("Member 2 here")
-        user2 = await User.findOne({endvrid: req.body.member2});
-        user2.registerd.forEach(team => {
-            if(team.event.toString() === req.params.eventId){
-                if(!team.editable){
-                    return res.status(400).json({
+
+        if(req.body.member3) {
+            try {
+                var user3 = await User.findOne({endvrid : req.body.member3}).exec();
+                if(user3.profile === false){
+                    status = false;
+                    return res.json(400).json({
                         status: 400,
-                        msg: "Member 2 already present in a paid team.",
-                        error: "Member 2 already present in a paid team."
-                    });
-                }
-            }
-        });
-    }
-    if(req.body.member3){
-        user3 = await User.findOne({endvrid: req.body.member3});
-        user3.registerd.forEach(team => {
-            if(team.event.toString() === req.params.eventId){
-                if(!team.editable){
-                    return res.status(400).json({
-                        status: 400,
-                        msg: "Member 3 already present in a paid team.",
-                        error: "Member 3 already present in a paid team."
-                    });
-                }
-            }
-        });
-    }
-    if(req.body.member4){
-        user4 = await User.findOne({endvrid: req.body.member4});
-        user4.registerd.forEach(team => {
-            if(team.event.toString() === req.params.eventId){
-                if(!team.editable){
-                    return res.status(400).json({
-                        status: 400,
-                        msg: "Member 4 already present in a paid team.",
-                        error: "Member 4 already present in a paid team."
-                    });
-                }
-            }
-        });
-    }
-    const data = {
-        event: req.params.eventId,
-        leader: req.user._id,
-        teamMembers: []
-    };
-    data.teamMembers.push(user1._id.toString());
-    if(user2) {
-        data.teamMembers.push(user2._id.toString());
-    }
-    if(user3) {
-        data.teamMembers.push(user3._id.toString());
-    }
-    if(user4) {
-        data.teamMembers.push(user4._id.toString());
-    }
-    const team = new Team(data);
-    team.save((err,team) => {
-        if(err || !team){
-            return res.status(500).json({
-                status: 500,
-                msg: "Could Not Save Team",
-                error: "Could not Save Team"
-            })
-        }
-    });
-
-    if(user1){
-        user1.registerd.push({
-            teams: team._id,
-            event: req.params.eventId
-        });
-        user1.save((err, user) => {
-            if(err || !user){
-                return res.status(500).json({
-                    status: 500,
-                    msg: "Failed to save user",
-                    error: "Failed to save user"
-                })
-            }
-        });
-    }
-
-    if(user2){
-        user2.registerd.push({
-            teams: team._id,
-            event: req.params.eventId
-        });
-        user2.save((err, user) => {
-            if(err || !user){
-                return res.status(500).json({
-                    status: 500,
-                    msg: "Failed to save user",
-                    error: "Failed to save user"
-                })
-            }
-        });
-    }
-
-    if(user3){
-        user3.registerd.push({
-            teams: team._id,
-            event: req.params.eventId
-        });
-        user3.save((err, user) => {
-            if(err || !user){
-                return res.status(500).json({
-                    status: 500,
-                    msg: "Failed to save user",
-                    error: "Failed to save user"
-                })
-            }
-        });
-    }
-
-    if(user4){
-        user4.registerd.push({
-            teams: team._id,
-            event: req.params.eventId
-        });
-        user4.save((err, user) => {
-            if(err || !user){
-                return res.status(500).json({
-                    status: 500,
-                    msg: "Failed to save user",
-                    error: "Failed to save user"
-                })
-            }
-        });
-    }
-    next();
-};
-
-exports.saveRegisteredTeamToEventSchema = async (req,res) => {
-    let user1 = await User.findOne({_id: req.user._id});
-    user1.registerd.forEach(team => {
-        if(team.event.toString() === req.params.eventId){
-            Team.findById(team.teams.toString()).exec((err,team) => {
-                if(err || !team){
-                    return res.status(400).json({
-                        status: 400,
-                        msg: "Team not found",
-                        error: "Team not found",
+                        msg: "Member 2 Complete Your Profile to Continue",
+                        error: "Member 2 Complete Your Profile to Continue"
                     })
                 }
-                Event.findById(req.params.eventId).exec((err,event) => {
-                    if(err || !event){
-                        return res.status(400).json({
-                            status: 400,
-                            msg: "Event not found",
-                            error: "Event not found",
-                        })
-                    }
-                    event.registered.push(team.teams)
-                    event.save((err,event) => {
-                        if(err || !event) {
-                            return res.status(400).json({
-                                status: 400,
-                                msg: "Failed to Update event",
-                                error: "Failed to Update event"
-                            })
-                        }
-                        else{
-                            return res.status(200).json({
-                                msg: "Successfully Registerd"
-                            })
-                        }
-                    })
+            }catch (err) {
+                status = false;
+                return res.status(400).json({
+                    status: 404,
+                    msg: "Member 3 not found",
+                    error: "Member 3 not found"
                 })
-            })
+            }
         }
-    });
+    
+    if(status){
+        console.log("wtf i m doing herre")
+        next();
+    }
+    
+}
+
+exports.registerEventTwo = (req,res) => {
+    res.json({
+        "msg": "Successfully Reached to Part 2"
+    })
 }
