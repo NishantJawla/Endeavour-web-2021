@@ -70,7 +70,7 @@ const userSchema = new Schema({
             type:Boolean
         }
     },
-    registerd: [{
+    registered: [{
         teams: {
             type: Schema.Types.ObjectId,
             ref: "Team"
@@ -78,6 +78,10 @@ const userSchema = new Schema({
         event: {
             type: Schema.Types.ObjectId,
             ref: "Event"
+        },
+        editable: {
+            type: Boolean,
+            default: true
         }
     }  
     ]
