@@ -119,7 +119,6 @@ pauseOnHover
     return (
         <span>
         {contactusform()}
-        <p className="text-white text-center">{JSON.stringify(values)}</p>
         </span>
     ); 
 }

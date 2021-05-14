@@ -146,7 +146,6 @@ pauseOnHover
                 <div className="bg-transparent text-white text-center p-5">
                   <div class="heading-font text-center pb-4 fw-bold color-white ls-2">SignUp</div>
                     {signUpForm()}
-                    <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
             </div>
         </div>
