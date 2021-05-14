@@ -1,14 +1,74 @@
 //jshint esversion: 8
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./css/admin.css";
 import profileImg from "./../assets/img/icons/profilepic.jpg";
+import { getEventId } from "./helper/EventIds";
+import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers } from "./helper/adminapicall"; 
 
 function AdminDashboard() {
 
-    function handleClick(event){
-        console.log("clicked");
-        console.log(event.target.value);
+    const [data, setData] = useState([]);
+    
+    const [usersPerEvent, setUsersPerEvent] = useState({});
+
+    const [totalUsers, setTotalUsers] = useState({});
+
+    const [endvrId, setEndvrId] = useState("");
+
+    const [mobileno, setMobileNo] = useState("");
+
+    const [paidStatus, setPaidStatus] = useState(false);
+
+    function changePaidStatus(event) {
+        const {value} = event.target;
+        setPaidStatus(value);
     }
+
+    function changeEndvrId(event){
+        const {value} = event.target;
+        setEndvrId(value);
+    }
+
+    function changeMobileno(event){
+        const { value } = event.target;
+        setMobileNo(value);
+    }
+
+    useEffect(() => {
+        registrationsPerEvent(setUsersPerEvent);
+        getUsersCount(setTotalUsers);
+    }, []);
+
+    function getusersByEvent(event){
+        const { value } = event.target;
+        const eventId = getEventId(value);
+        getUsersByEvent(eventId, paidStatus, setData);
+    } 
+
+    function getTeamheads(event){
+        const { value } = event.target;
+        if(value === "all"){
+            getTeamHeadsAll(paidStatus, setData);
+        } else {
+            const eventId = getEventId(value);
+            getTeamHeads(eventId, paidStatus, setData);
+        }
+    }
+
+    function getUsersByEndvrId(){
+        getUserFromEndvrId(endvrId, setData);
+    }
+
+    function getUsersByMobile(){
+        getUserFromMobile(mobileno, setData);
+    }
+
+    function getUsersData(event){
+        const { value } = event.target;
+        getUsers(value, setData);
+    }
+
+
 
     return (
         <React.Fragment>
@@ -59,53 +119,51 @@ function AdminDashboard() {
                         <div className="">
                             <div className="fs-4 fw-bold pb-2 ls-1">Filters</div>
                             <div className="">
-                                <div className="fw-bold fs-5">Get Paid Users By Event</div>
+                                <div className="fw-bold fs-5">Get Users By Event</div>
                                 <div className="d-flex ">
-                                    <input name="paidstatus" value="paid" type="radio" />Paid
-                                    <input name="paidstatus" value="unpaid" type="radio" className="ms-4" />Unpaid
+                                    <input onChange={changePaidStatus} name="paidstatus" value="all" type="radio" />All
+                                    <input onChange={changePaidStatus} name="paidstatus" value="paid" type="radio" className="ms-4"  />Paid
+                                    <input onChange={changePaidStatus} name="paidstatus" value="unpaid" type="radio" className="ms-4" />Unpaid
                                     </div>
                                 <div className="">
-                                    <button onClick={handleClick} value="bpaln" className="btn btn-secondary mx-3 my-3 color-white">B Plan</button>
-                                    <button onClick={handleClick} value="bquiz" className="btn btn-secondary mx-3 my-3 color-white">B Quiz</button>
-                                    <button onClick={handleClick} value="hackathon" className="btn btn-secondary mx-3 my-3 color-white">Hackathon</button>
+                                    <button onClick={getusersByEvent} value="bpaln" className="btn btn-secondary mx-3 my-3 color-white">B Plan</button>
+                                    <button onClick={getusersByEvent} value="bquiz" className="btn btn-secondary mx-3 my-3 color-white">B Quiz</button>
+                                    <button onClick={getusersByEvent} value="hackathon" className="btn btn-secondary mx-3 my-3 color-white">Hackathon</button>
                                 </div>
-                            </div>
-                            <div className="py-4">
-                                <div className="fw-bold fs-5">Get all users who have paid</div>
-                                <button onClick={handleClick} className="btn btn-secondary">By Payment</button>
                             </div>
                             <div className="py-4">
                                 <div className="fw-bold fs-5">Get Team heads</div>
                                 <div className="d-flex ">
-                                    <input name="paidstatus" value="paid" type="radio" />Paid
-                                    <input name="paidstatus" value="unpaid" type="radio" className="ms-4" />Unpaid
+                                    <input onChange={changePaidStatus} name="paidstatus" value="all" type="radio" />All
+                                    <input onChange={changePaidStatus} name="paidstatus" value="paid" type="radio" className="ms-4" />Paid
+                                    <input onChange={changePaidStatus} name="paidstatus" value="unpaid" type="radio" className="ms-4" />Unpaid
                                     </div>
                                 <div className="">
-                                    <button onClick={handleClick} name="all" className="btn btn-secondary mx-3 my-3 color-white">All</button>
-                                    <button onClick={handleClick} name="bpaln" className="btn btn-secondary mx-3 my-3 color-white">B Plan</button>
-                                    <button onClick={handleClick} name="bquiz" className="btn btn-secondary mx-3 my-3 color-white">B Quiz</button>
-                                    <button onClick={handleClick} name="hackathon" className="btn btn-secondary mx-3 my-3 color-white">Hackathon</button>
+                                    <button onClick={getTeamheads} name="all" className="btn btn-secondary mx-3 my-3 color-white">All Events</button>
+                                    <button onClick={getTeamheads} name="bpaln" className="btn btn-secondary mx-3 my-3 color-white">B Plan</button>
+                                    <button onClick={getTeamheads} name="bquiz" className="btn btn-secondary mx-3 my-3 color-white">B Quiz</button>
+                                    <button onClick={getTeamheads} name="hackathon" className="btn btn-secondary mx-3 my-3 color-white">Hackathon</button>
                                 </div>
                             </div>
                             <div className="py-4">
                                 <div className="fw-bold fs-5">Get User using endeavour ID</div>
                                 <div>
-                                    <input type="text" name="endvrid" placeholder="endeavour id" />
-                                    <button onClick={handleClick} className="btn btn-secondary">Search</button>
+                                    <input onChange={changeEndvrId} type="text" name="endvrid" value={endvrId} placeholder="endeavour id" />
+                                    <button onClick={getUsersByEndvrId} className="btn btn-secondary">Search</button>
                                 </div>
                             </div>
                             <div className="py-4">
                                 <div className="fw-bold fs-5">Get User using mobile Number</div>
-                                <input type="text" name="mobileno" placeholder="endeavour id" />
-                                <button onClick={handleClick} className="btn btn-secondary">Search</button>
+                                <form>
+                                    <input onChange={changeMobileno} value={mobileno} type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" name="mobileno" placeholder="mobileno" />
+                                    <button onClick={getUsersByMobile} className="btn btn-secondary">Search</button>
+                                </form>
                             </div>
                             <div className="py-4">
-                                <div className="fw-bold fs-5">Get all users</div>
-                                <div className="d-flex ">
-                                    <input name="paidstatus" value="paid" type="radio" />Paid
-                                    <input name="paidstatus" value="unpaid" type="radio" className="ms-4" />Unpaid
-                                </div>
-                                <button onClick={handleClick} className="btn btn-secondary">Search</button>
+                                <div className="fw-bold fs-5">Get users</div>
+                                <button onClick={getUsersData} value="all" className="btn btn-secondary">All</button>
+                                <button onClick={getUsersData} value="paid" className="btn btn-secondary mx-3 my-3 color-white">Paid</button>
+                                <button onClick={getUsersData} value="unpaid" className="btn btn-secondary mx-3 my-3 color-white">Unpaid</button>
                             </div>
                         </div>
                     </div>

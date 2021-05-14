@@ -40,8 +40,8 @@ if (!errors.isEmpty()) {
             user.encryptedPassword = hash;
             
                 const randString = () => {
-                    const len = 64
-                    let randStr = ''
+                    const len = 64;
+                    let randStr = '';
                     for(let i = 0; i<len; i++){
                         const ch = Math.floor((Math.random()*10)+1)
                         randStr += ch

@@ -72,7 +72,7 @@ pauseOnHover
             />
             </div>
             <div className="form-group py-2">
-            <label className="fs-6 ls-1">Password</label>
+            <label className="fs-6 ls-1">New Password</label>
             <input
                 className="form-control"
                 onChange={handleChange("plainPassword")}

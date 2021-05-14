@@ -64,7 +64,7 @@ const Navbar = () =>  {
                                     <Dropdown.Toggle id="dropdown-custom-1" className="bg-transparent border-0"><img src={profileImg} width="24px" alt="user profile img" /></Dropdown.Toggle>
                                     <Dropdown.Menu className="bg-secondary color-white">
                                     <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">
-                                        <Link to="/user/dashboard" className="color-white ls-1 profile-dropdown text-decoration-none"> 
+                                        <Link to="/user/dashboard" className="px-5 color-white ls-1 profile-dropdown text-decoration-none"> 
                                         Profile
                                         </Link>
                                         </Dropdown.Item>
