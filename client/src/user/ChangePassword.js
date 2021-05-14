@@ -1,5 +1,6 @@
 //jshint esversion: 8
 import React, { useState } from "react";
+// eslint-disable-next-line
 import { Link } from "react-router-dom";
 import { changePasswordHandler } from "../auth/helper";
 import  "./css/signup.css"
@@ -12,7 +13,7 @@ const ChangePassword = () => {
     error: "",
     success: false,
   });
-
+  // eslint-disable-next-line
   const { oldPassword, plainPassword, error, success } = values;
 
   const handleChange = (name) => (event) => {
@@ -124,7 +125,6 @@ pauseOnHover
                 <div className="bg-transparent text-white text-center p-5">
                   <div class="heading-font text-center pb-4 fw-bold color-white ls-2">Change Password</div>
                     {changePasswordForm()}
-                    <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
             </div>
         </div>

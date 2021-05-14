@@ -1,6 +1,5 @@
 //jshint esversion: 8
 import React from "react";
-import sponserImg from "./../../../assets/img/sponser/dubulletin.jpg";
 
 const EachSponser = (props) => {
     return(

@@ -1,6 +1,5 @@
 //jshint esversion: 8
 import React from "react";
-import teamImg from "./../../../assets/img/team-img/nishant.jpeg";
 import facebookIcon from "./../../../assets/img/icons/facebook.png";
 import linkedinIcon from "./../../../assets/img/icons/linkedin.png";
 

@@ -41,6 +41,7 @@ const  EventRegister = (props) => {
             ? result.map((todo, index) => <li>{todo}</li>)
             : '')
     }
+    // eslint-disable-next-line
     const splitString = (s) => {
         let result = s.split("--")
         return(

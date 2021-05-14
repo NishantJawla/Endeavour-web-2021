@@ -1,6 +1,5 @@
 //jshint esversion: 8
 import React from "react";
-import speakerImg from "./../../../assets/img/speaker/aditiohri.png";
 import facebookIcon from "./../../../assets/img/icons/facebook.svg";
 import linkedinIcon from "./../../../assets/img/icons/linkedin.svg";
 

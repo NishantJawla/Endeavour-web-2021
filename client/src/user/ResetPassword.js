@@ -161,7 +161,6 @@ return (
                 <div className="bg-transparent text-white text-center p-5">
                 <div className="heading-font text-center color-white fw-bold">Reset Password</div>
                     {resetPasswordForm()}
-                    <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
             </div>
         </div>

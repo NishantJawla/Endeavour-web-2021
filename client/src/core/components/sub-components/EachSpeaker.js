@@ -1,6 +1,5 @@
 //jshint esversion: 8
 import React from 'react';
-import SpeakerImage from "./../../../assets/img/speaker/aditiohri.png";
 
 const  EachSpeaker = (props) => {
     return (

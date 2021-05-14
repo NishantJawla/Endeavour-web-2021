@@ -4,18 +4,18 @@ import EachEvent from './sub-components/EachEvent';
 import firebase from "../../firebase"
 const Event = () => {
  //require events data form firebase
- const [eventData, seteventData] = useState();
- useEffect(() => {
-   const eventRef = firebase.database().ref('eventsMain');
-   eventRef.on('value', (snapshot) => {
-   const events = snapshot.val();
-   const eventData = [];
-   for (let id in events) {
-       eventData.push({ id, ...events[id] });
-   }
-   seteventData(eventData);
-   });
- }, []);
+const [eventData, seteventData] = useState();
+useEffect(() => {
+const eventRef = firebase.database().ref('eventsMain');
+eventRef.on('value', (snapshot) => {
+const events = snapshot.val();
+const eventData = [];
+for (let id in events) {
+    eventData.push({ id, ...events[id] });
+}
+seteventData(eventData);
+});
+}, []);
     console.log({
         "events": eventData
     })

@@ -1,6 +1,7 @@
 //jshint esversion: 8
 import React, { useState } from 'react';
 import {contactus} from '../helper/contact'
+// eslint-disable-next-line
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
@@ -57,7 +58,7 @@ const  ContactUsForm = () => {
       };
       const errorMessage = () => {
         
-       if(error){
+      if(error){
         toast.error(error, {
           position: 'top-right',
           autoClose: 5000,
@@ -67,7 +68,7 @@ const  ContactUsForm = () => {
           draggable: true,
           progress: undefined,
           });
-       }
+      }
         
       };
       const contactusform = () => {
@@ -118,7 +119,6 @@ pauseOnHover
     return (
         <span>
         {contactusform()}
-        <p className="text-white text-center">{JSON.stringify(values)}</p>
         </span>
     ); 
 }

@@ -1,14 +1,9 @@
 //jshint esversion: 8
 import React from 'react';
 import { Link } from 'react-router-dom';
-import EventIcon from "./../../../assets/img/icons/hack.png";
+
 
 const  EachEvent = (props) => {
-
-    function showPopup(){
-        // console.log(props);
-        props.changeShowPopup(props.id);
-    }
     const url = `/events/${props.data.eventId}`;
     return (
         <div className="py-5 each-event">
@@ -18,8 +13,11 @@ const  EachEvent = (props) => {
                 </div>
                 <div className="event-title fw-bolder ls-1 fs-5 py-2">{props.data.eventName}</div>
                 <div className="event-desc py-2">{props.data.eventTagline}</div>
-               
-                <Link to={url} className="learn-more border-0 bg-transparent p-0 fw-bold ls-1 mt-2 color-primary" data={props}>Read More</Link>
+                {
+                    (props.data.isOpen === "true") && (<Link to={url} className="learn-more border-0 bg-transparent p-0 fw-bold ls-1 mt-2 color-primary" 
+                    data={props}>Read More</Link>)
+                }
+                
             </div>
         </div>
     );

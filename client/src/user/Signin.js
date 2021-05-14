@@ -7,13 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 const Signin = () => {
   const [values, setValues] = useState({
-    email: "test@gmail.com",
-    plainPassword: "123456",
+    email: "",
+    plainPassword: "",
     error: "",
     loading: false,
     didRedirect: false,
   });
-
+  // eslint-disable-next-line
   const { email, plainPassword, error, loading, didRedirect } = values;
 
   const { user } = isAuthenticated();
@@ -148,7 +148,6 @@ pauseOnHover
       {
         isAuthenticated() && dorun
       }
-      <p className="text-white text-center">{JSON.stringify(values)}</p>
                 </div>
             </div>
         </div>
