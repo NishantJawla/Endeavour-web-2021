@@ -10,8 +10,8 @@ function SocialLinks() {
     return (
         <div className="social-media">
             <div className="fs-4 color-white py-3 fw-bold ls-1">Social Links</div>
-            <div className="d-flex">
-                <a href="https://www.facebook.com/ecellkiet/" className="facebook pe-5" >
+            <div className="d-flex justify-content-between">
+                <a href="https://www.facebook.com/ecellkiet/" className="facebook pe-5" target="_blank">
                     <img src={facebookIcon} width="20px" height="20px" alt="facebook link" />
                 </a>
                 <a href="https://www.linkedin.com/company/e-cell-kiet/" className="linkedin pe-5" >

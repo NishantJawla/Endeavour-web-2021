@@ -75,7 +75,7 @@ function ContactUs(){
                             </div>
                         </span>
                     </div>
-                    <div className="col-md-6 col-sm-12 px-5 color-white">
+                    <div className="form-container col-lg-6 col-sm-12 px-5 color-white">
                         <ContactUsForm />
                     </div>
                 </div>

@@ -149,8 +149,8 @@ a:hover {
   padding: 15px 0;
 }
 .navbar .navbar-nav .nav-link {
-  margin-right: 32.1px;
-  margin-left: 32.1px;
+  /* margin-right: 32.1px;
+  margin-left: 32.1px; */
 }
 .navbar .navbar-nav .nav-link:hover {
   color: var(--primary-color) !important;
@@ -175,15 +175,12 @@ z .nav-lines {
   background-image: url("./assets/img/mybackground.jpg");
   background: url("./assets//img/BackMain.gif");
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: left;
   background-size: cover;
 }
 .header .header-overlay {
   background: rgba(15, 15, 15, 0.57);
   z-index: -1;
-}
-.header-content {
-  padding-top: 30%;
 }
 .header-content .head {
   font-size: 3.7rem;
@@ -222,7 +219,7 @@ z .nav-lines {
   opacity: 0;
   z-index: -1;
 }
-.event-popup > div {
+.event-popup > div > div {
   background: rgba(32, 32, 32, 0.97);
   /* z-index: 100; */
   top: 12.5%;
