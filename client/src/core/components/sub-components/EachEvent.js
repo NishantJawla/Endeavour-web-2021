@@ -1,14 +1,9 @@
 //jshint esversion: 8
 import React from 'react';
 import { Link } from 'react-router-dom';
-import EventIcon from "./../../../assets/img/icons/hack.png";
+
 
 const  EachEvent = (props) => {
-
-    function showPopup(){
-        // console.log(props);
-        props.changeShowPopup(props.id);
-    }
     const url = `/events/${props.data.eventId}`;
     return (
         <div className="py-5 each-event">

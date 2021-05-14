@@ -1,11 +1,14 @@
 //jshint esversion: 8
 import React, { useState, useEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
+// eslint-disable-next-line
 import { getUserData, getEventData, updateProfile ,isAuthenticated} from "./../auth/helper/index";
 
 const UserDashBoard = (props) => {
+    // eslint-disable-next-line
     const { user, token } = isAuthenticated();
     const [userData, setUserData] = useState({});
+    // eslint-disable-next-line
     const [events, setEvents] = useState([]);
     const [updatedData, setUpdatedData] = useState({
         branch: user.branch ? user.branch : "",

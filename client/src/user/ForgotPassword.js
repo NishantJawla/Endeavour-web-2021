@@ -1,5 +1,6 @@
 //jshint esversion: 8
 import React, { useState } from "react";
+// eslint-disable-next-line
 import { Link } from "react-router-dom";
 import { forgotPasswordHandler } from "../auth/helper";
 import  "./css/signup.css"
@@ -11,7 +12,7 @@ const ForgotPassword = () => {
     error: "",
     success: false,
   });
-
+  // eslint-disable-next-line
   const { email, error, success } = values;
 
   const handleChange = (name) => (event) => {

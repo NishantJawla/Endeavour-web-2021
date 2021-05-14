@@ -1,5 +1,6 @@
 //jshint esversion: 8
 import React, { useState } from "react";
+// eslint-disable-next-line
 import { Link } from "react-router-dom";
 import { signup } from "../auth/helper";
 import  "./css/signup.css"
