@@ -31,7 +31,7 @@ const Navbar = () =>  {
             <div className="container">
                 <Link className="navbar-brand d-flex align-items-center" to="/">
                     <img src={EcellLogo} width="50px" height="50px" alt="logo" />
-                    <div className="color-white px-3 fs-6 ls-1 fw-bold">
+                    <div className="color-white px-3 fs-6 ls-1 fw-bold d-lg-none d-xl-block">
                         <div className="fs-4">E-Summit'21</div>
                         COHORT OF PATHFINDERS
                     </div>
@@ -51,11 +51,11 @@ const Navbar = () =>  {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav w-100 d-flex justify-content-end">
-                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/geteventpass">Get Event Pass</NavLink>
-                    <Link activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/">Home</Link>
-                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/guests">Speakers</NavLink>
-                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/sponsers">Sponsers</NavLink>
-                    <NavLink activeClassName="active" className="nav-link ls-1 fs-6 color-white fw-bold" to="/team">Team</NavLink>
+                    <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/geteventpass">Get Event Pass</NavLink>
+                    <Link activeClassName="active"    className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/">Home</Link>
+                    <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/guests">Speakers</NavLink>
+                    <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/sponsers">Sponsers</NavLink>
+                    <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/team">Team</NavLink>
                     {
                         isAuthenticated() && (
                             <React.Fragment>

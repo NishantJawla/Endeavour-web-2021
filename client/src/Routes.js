@@ -1,6 +1,8 @@
 //jshint esversion: 8
 import React, {useState} from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import "./styles.css";
+import "./responsive.css";
 import Home from "./core/Home";
 import Signin from "./user/Signin";
 import Signup from "./user/Signup";
@@ -44,10 +46,10 @@ const Routes = () => {
           <Route path="/guests" exact component={SpeakersPage} />
           {/* <Route path="/events"  component={EventRegister} />    */}
           <Route path="/events" render={(props) => <EventRegister {...props} />}/> 
-          <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
-          <PrivateRoute path="/changepassword" exact component={ChangePassword} />
-          <PrivateRoute path="/admin/superMan" exact component={ChangePassword} />
-          <AdminRoute path="/admin/dashboard" exact component={AdminDashBoard} />
+          <Route path="/user/dashboard" exact component={UserDashBoard} />
+          <Route path="/changepassword" exact component={ChangePassword} />
+          <Route path="/admin/superMan" exact component={ChangePassword} />
+          <Route path="/admin/dashboard" exact component={AdminDashBoard} />
           <Route path="/:random" component={NotFoundPage}/>
         </Switch>
       <Footer />

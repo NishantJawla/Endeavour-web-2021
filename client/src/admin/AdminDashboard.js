@@ -9,7 +9,7 @@ function AdminDashboard() {
 
     const [data, setData] = useState([]);
     
-    const [usersPerEvent, setUsersPerEvent] = useState({});
+    const [usersPerEvent, setUsersPerEvent] = useState(["fweg", "fewgweg", "Gwgewg","gwegewg"]);
 
     const [totalUsers, setTotalUsers] = useState({});
 
@@ -68,8 +68,6 @@ function AdminDashboard() {
         getUsers(value, setData);
     }
 
-
-
     return (
         <React.Fragment>
             <div className="admin-portal bg-sec-pattern bg-norepeat py-5">
@@ -95,11 +93,7 @@ function AdminDashboard() {
                                 <div className="ls-1 fs-5 py-4 fw-bold">Registrations Per Event
                                 </div>
                                 <div className="users-by-events d-flex justify-content-between flex-wrap">
-                                    <div className="py-3 d-flex">
-                                        <div className="ls-1 fw-6 pe-3">Total no of Uses Registerd: </div>
-                                        <div className="ls-1 fw-6 fw-bold">45</div>
-                                    </div>
-                                    <div className="py-3 d-flex">
+                                    {/* <div className="py-3 d-flex">
                                         <div className="ls-1 fs-6 pe-3">Total no of Uses Registerd: </div>
                                         <div className="ls-1 fs-6 fw-bold">45</div>
                                     </div>
@@ -110,7 +104,7 @@ function AdminDashboard() {
                                     <div className="py-3 d-flex">
                                         <div className="ls-1 fs-6 pe-3">Total no of Uses Registerd: </div>
                                         <div className="ls-1 fs-6 fw-bold">45</div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

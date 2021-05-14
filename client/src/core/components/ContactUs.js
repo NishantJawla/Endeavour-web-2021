@@ -9,10 +9,10 @@ function ContactUs(){
             <div className="container">
                 <div className="heading-font text-center fw-bold color-white">Get In Touch</div>
                 <div className="row py-3">
-                    <div className="col-md-6 d-md-block d-none">
+                    <div className="col-md-6 d-lg-block d-none">
                         <div className="p-3">
                             <div className="contact-image">
-                                <img src={ContactUsImage} alt="contact us img"/>
+                                <img className="img-fluid" src={ContactUsImage} alt="contact us img"/>
                             </div>
                         </div>
                         <div className="contact-details p-3 color-white">
@@ -24,7 +24,7 @@ function ContactUs(){
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-6 col-sm-12 px-5 color-white">
+                    <div className="form-container col-lg-6 col-sm-12 px-5 color-white">
                         <ContactUsForm />
                     </div>
                 </div>

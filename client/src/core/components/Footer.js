@@ -10,17 +10,17 @@ function Footer() {
         <footer className="pt-4 bg-secondary position-relative">
             <div className="container py-3">
                 <div className="row">
-                    <div className="col-md-7 d-sm-none d-md-block">
+                    <div className="col-xl-7 col-lg-7 col-md-8">
                         <div className="address">
                             <div className="fs-4 color-white py-3 fw-bold ls-1">Address</div>
                             <iframe title="address" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d874.4751148729615!2d77.4986140292191!3d28.75238877465378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf471f7307f87%3A0xa4a1095abb33f9ac!2sTBI%20KIET!5e0!3m2!1sen!2sin!4v1620477652006!5m2!1sen!2sin" width="100%" height="390" style={{border: 0}} allowFullScreen={true} loading="lazy"></iframe>
                         </div>
                     </div>
-                    <div className="col-md-4 col-sm-8 offset-md-1 offset-sm-2">
+                    <div className="col-md-4 col-lg-5 col-xl-4 col-xxl-4 offset-xl-0 offset-lg-0 offset-xl-1">
                         <div className="contact-info">
                             <div className="fs-4 color-white py-3 fw-bold ls-1">Contact Info</div>
                             <div className="d-flex justify-content-between">
-                                <div className="each-contact color-grey p-3 ls-1">
+                                <div className="each-contact color-grey p-3 ls-1 d-md-none d-lg-block">
                                     <div className="pt-3 pb-4 d-flex justify-content-center">
                                         <img src={personIcon1} height="150px" alt="person" />
                                     </div>

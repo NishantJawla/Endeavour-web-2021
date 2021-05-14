@@ -1,0 +1,128 @@
+@media (max-width: 575px){
+	body{
+        font-size: 16px !important;
+    }
+	.navbar-brand > div{
+        font-size: small;
+    }
+    .event-popup .popup-heading,
+    .event-popup form{
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+    .event-desc{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .event-popup{
+        width: 96% !important;
+        left: 2% !important;
+    }
+    .form-container{
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    footer .each-contact{
+        padding-bottom: 0px !important;
+    }
+    .events .each-event{
+        margin: auto;
+    }
+    .aboutus-content{
+        font-size: 0.98rem !important;
+    }
+    .speaker-outer-box .each-speakerpage{
+        margin: auto !important;
+        margin-top: 2.5rem !important;
+    }
+    .team .each-member{
+        margin: auto !important;
+        margin-top: 2.5rem !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+	body{
+        font-size: 16px !important;
+    }
+	.navbar-brand > div{
+        font-size: small;
+    }
+    .event-popup .popup-heading,
+    .event-popup form{
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+    .event-desc{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .event-popup{
+        width: 75% !important;
+        left: 12.5% !important;
+    }
+    .form-container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    footer .each-contact{
+        padding-bottom: 0px !important;
+    }
+    .events .each-event{
+        margin: auto;
+    }
+    .speaker-outer-box .each-speakerpage{
+        margin: auto !important;
+        margin-top: 2.5rem !important;
+    }
+    .team .each-member{
+        margin: auto !important;
+        margin-top: 2.5rem !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+    body{
+        font-size: 14px !important;
+    }
+	.navbar-brand > div{
+        font-size: small;
+    }
+    .event-popup .popup-heading,
+    .event-popup form{
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+    .event-desc{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .event-popup{
+        width: 75% !important;
+        left: 12.5% !important;
+    }
+    .form-container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    footer .each-contact{
+        padding-bottom: 0px !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px){
+    .navbar-brand > div{
+        font-size: small;
+    }
+    .event-popup .popup-heading,
+    .event-popup form{
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
