@@ -76,6 +76,10 @@ const UserDashBoard = (props) => {
         getUserData(setUserData);
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
+
     return (
         <div className="profile-container py-5 bg-sec-pattern bg-norepeat">
             <div className="container py-5">

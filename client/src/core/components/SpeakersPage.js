@@ -17,6 +17,9 @@ const SpeakersPage = () => {
       setspeakerData(speakerData);
     });
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
     return (
         <div className="py-5 position-relative speakers bg-sec-pattern">
             <div className="container py-5">

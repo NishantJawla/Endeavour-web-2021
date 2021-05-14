@@ -49,6 +49,9 @@ const  EventRegister = (props) => {
             ? result.map((todo, index) => <li>{todo}</li>)
             : '')
     }
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
     return (
         <React.Fragment>
             <div className="event-register py-5 bg-sec-pattern bg-norepeat">

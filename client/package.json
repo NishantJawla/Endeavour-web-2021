@@ -21,6 +21,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
     "react-toastify": "^7.0.4",
+    "reactjs-popup": "^2.0.4",
     "swiper": "^6.5.9",
     "toastr": "^2.1.4"
   },

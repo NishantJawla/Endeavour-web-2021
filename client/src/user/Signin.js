@@ -1,5 +1,5 @@
 //jshint esversion: 8
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 //eslint-disable-next-line
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
@@ -135,6 +135,9 @@ pauseOnHover
   {
     window.location.reload(false);
   } 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div>
     {/* <Base title="Sign up page" description="A page for user to sign up!"> */}

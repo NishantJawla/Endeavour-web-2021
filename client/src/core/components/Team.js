@@ -17,6 +17,10 @@ function Team(){
     });
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
     return(
         <div className="team py-5 bg-sec-pattern bg-norepeat" id="events">
             <div className="container py-5 mt-5">

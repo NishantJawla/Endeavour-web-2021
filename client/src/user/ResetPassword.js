@@ -1,5 +1,5 @@
 //jshint esversion: 8
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { resetPasswordHandler} from "../auth/helper";
 import  "./css/signup.css"
@@ -153,6 +153,9 @@ const errorMessage2 = (data) => {
       });
   
 };
+useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
 return (
     <div>
     {/* <Base title="Sign up page" description="A page for user to sign up!"> */}
