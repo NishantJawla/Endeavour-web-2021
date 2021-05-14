@@ -451,8 +451,10 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
             })
         }
         function include(arr, obj) {
-            for (var i = 0; i < arr.length; i++) {
-            if (arr[i].event.toString() == obj) return true;
+            if (typeof arr !== 'undefined' && arr.length === 0){
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].event.toString() == obj) return true;
+                    }
             }
         }
         if (typeof user.registerd !== 'undefined' && user.registerd.length === 0) {
@@ -504,6 +506,10 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
 
 exports.registerEventOne  = async (req,res,next) => {
     let status = true;
+    var teamId = undefined;
+    var hasuserone = false;
+    var hasusertwo = false;
+    var hasuserthree = false;
     if(req.user.profile === false){
         status = false;
         return res.status(400).json({
@@ -524,6 +530,8 @@ exports.registerEventOne  = async (req,res,next) => {
             } else {
                 user1.registered.forEach(team => {
                     if(team.event.toString() === req.params.eventId){
+                        teamId = team.teams
+                        hasuserone = true;
                         if(team.editable === false) {
                             return res.status(400).json({
                                 status: 400,
@@ -532,7 +540,7 @@ exports.registerEventOne  = async (req,res,next) => {
                             })
                         }
                     }
-                });
+                }); 
             }
         }catch (err) {
             status = false;
@@ -556,6 +564,7 @@ exports.registerEventOne  = async (req,res,next) => {
         } else {
             user2.registered.forEach(team => {
                 if(team.event.toString() === req.params.eventId){
+                    hasusertwo = true;
                     if(team.editable === false) {
                         return res.status(400).json({
                             status: 400,
@@ -590,6 +599,7 @@ exports.registerEventOne  = async (req,res,next) => {
                 } else {
                     user3.registered.forEach(team => {
                         if(team.event.toString() === req.params.eventId){
+                            hasuserthree = true
                             if(team.editable === false) {
                                 return res.status(400).json({
                                     status: 400,
@@ -611,13 +621,216 @@ exports.registerEventOne  = async (req,res,next) => {
         }
     
     }
+    ////////// ----------------------------Verified Users -------------------------///
+    if(teamId === undefined) {
+        let data = {
+            event: req.params.eventId,
+            leader: req.user._id,
+            teamMembers: []
+        };
+        data.teamMembers.push(user1._id);
+        if(user2) {
+            data.teamMembers.push(user2._id);
+        }
+        if(user3) {
+            data.teamMembers.push(user3._id);
+        }
+        let team = new Team(data);
+        try{
+            const teamCreated = await team.save();
+            teamId = teamCreated._id
+        }catch (err) {
+            return res.json({
+                status: 400,
+                msg: "Failed to save Team",
+                error: " Failed to save Team"
+            })
+        }
+    } else {
+        try {
+            var team = await Team.findOne({_id:teamId.toString()});
+            for(let i = 0; i<team.teamMembers.length; i++){
+                let counter = 1;
+                if(team.teamMembers[i].toString() === (user1._id).toString()){
+                    counter = 0;
+                }
+                if(req.body.member2){
+                    if(team.teamMembers[i].toString() === (user2._id).toString()){
+                        counter = 0;
+                    }
+                }
+                if(req.body.member3){
+                    if(team.teamMembers[i].toString() === (user3._id).toString()){
+                        counter = 0;
+                    }
+                }
+                if(counter) {
+                    try{
+                    let tempUser = await  User.getUserById(team.teamMembers[i].toString());
+                    let filtered = tempUser.registered.filter(function(value, index, arr){ 
+                        return value.teams.toString() != teamId.toString();
+                    });
+                    tempUser.registered = filtered;
+                    try{
+                        tempUser.save()
+                    } catch(err){
+                        console.log(err)
+                    }
+                    } catch (err) {
+                        console.log(err)
+                    }
+                }
+            }
+            while(team.teamMembers.length > 0) {
+                team.teamMembers.pop();
+            }
+        team.teamMembers.push(user1._id);
+        if(user2) {
+            team.teamMembers.push(user2._id);
+        }
+        if(user3) {
+            team.teamMembers.push(user3._id);
+        }
+        try{
+            teamId = team._id
+            console.log("new team id" + teamId);
+            team.save();
+        
+        }catch (err) {
+            return res.json({
+                status: 400,
+                msg: "Failed to save Team",
+                error: " Failed to save Team"
+            })
+        }
+        }catch (err) {
+            return res.status(400).json({
+                status: 400,
+                msg: "Team not found",
+                error: "Team not found"
+            })
+        }
+        
+
+    }
+
+    /////////save to user //////////////
+    if(hasuserone) {
+        try{
+            user1.registered.forEach(team => {
+                if(team.event.toString() === req.params.eventId){
+                    team.teams = teamId
+                }
+            }); 
+            try{
+                let saveuserone = await user1.save();
+            } catch (err) {
+                console.log(err)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }else{
+        try {
+            user1.registered.push({
+                teams: teamId,
+                event: req.params.eventId
+            })
+            try{
+                let saveuserone = await user1.save();
+            } catch (err) {
+                console.log(err)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    if(hasusertwo) {
+        try{
+            user2.registered.forEach(team => {
+                if(team.event.toString() === req.params.eventId){
+                    team.teams = teamId
+                }
+            }); 
+            try{
+                let saveuserone = await user2.save();
+            } catch (err) {
+                console.log(err)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }else{
+        if(req.body.member2) {
+            try {
+                user2.registered.push({
+                    teams: teamId,
+                    event: req.params.eventId
+                })
+                try{
+                    let saveuserone = await user2.save();
+                } catch (err) {
+                    console.log(err)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
+
+    if(hasuserthree) {
+        try{
+            user3.registered.forEach(team => {
+                if(team.event.toString() === req.params.eventId){
+                    team.teams = teamId
+                }
+            }); 
+            try{
+                let saveuserone = await user3.save();
+            } catch (err) {
+                console.log(err)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }else{
+        if(req.body.member3){
+            try {
+                user3.registered.push({
+                    teams: teamId,
+                    event: req.params.eventId
+                })
+                try{
+                    let saveuserone = await user3.save();
+                } catch (err) {
+                    console.log(err)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        
+    }
+
+    try{
+        const eventSaveHandle = await Event.findById(req.params.eventId).exec();
+        eventSaveHandle.registered.push(teamId)
+        try{
+            let saveEvent = await eventSaveHandle.save();
+        } catch (err) {
+            console.log(err)
+        }
+    } catch (err) {
+
+    }
+    
     if(status){
-        console.log("wtf i m doing herre")
         next();
     }
     
 }
-
+    
 exports.registerEventTwo = (req,res) => {
     res.json({
         "msg": "Successfully Reached to Part 2"
