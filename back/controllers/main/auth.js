@@ -153,11 +153,14 @@ exports.loginHandler = (req,res) =>{
                         process.env.SECRET,
                         {expiresIn : 3600},
                         (err,token) => {
-                            const { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno, profile } = user;
+                            user.__v = undefined;
+                            user.encryptedPassword = undefined;
+                            user.createdAt = undefined;
+                            user.updatedAt = undefined;
                             return res.status(200).json({
                                 status: 200,
                                 token: 'Bearer '+token,
-                                user: { _id, name, email, role, phoneNumber, evdvrid, college, branch, registerd, univRollno, profile },
+                                user,
                                 msg: 'User succesfully loggedin!'
                             });
                         });

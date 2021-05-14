@@ -1,18 +1,18 @@
 //jshint esversion: 8
 import React, { useState, useEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
-import { getUserData, getEventData, updateProfile } from "./../auth/helper/index";
+import { getUserData, getEventData, updateProfile ,isAuthenticated} from "./../auth/helper/index";
 
 const UserDashBoard = (props) => {
-
+    const { user, token } = isAuthenticated();
     const [userData, setUserData] = useState({});
     const [events, setEvents] = useState([]);
     const [updatedData, setUpdatedData] = useState({
-        branch: "",
-        libId: "",
-        college: "",
-        discord: "",
-        semester: "1"
+        branch: user.branch ? user.branch : "",
+        libId: user.libId ? user.libId : "",
+        college: user.college ? user.college : "",
+        discord: user.discord ? user.discord : "",
+        semester: user.semester ? user.semester :"1"
     });
 
     function handleChange(event){
