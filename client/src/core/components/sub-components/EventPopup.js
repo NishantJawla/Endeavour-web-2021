@@ -1,16 +1,22 @@
 //jshint esversion: 8
-import React, { useState } from 'react';
+import React, { useState ,useEffect,useRef} from 'react';
 // eslint-disable-next-line
 import { Link } from 'react-router-dom';
 import closeIcon from "./../../../assets/img/icons/cancel.png";
 import {isAuthenticated, registerEvent} from "../../../auth/helper/index";
+import {API} from "../../../backend"
+import axios from "axios"
 function EventPopup(props){
 
     const [userData, setUserData] = useState({
         endvrId2: "",
         endvrId3: ""
     });
-
+    const [data, setdata] = useState({
+        member2: "",
+        member3: ""
+    })
+    const {member2,member3} = data;
     function handleChange(event){
         const {name, value} = event.target;
         setUserData(prevState => {
@@ -55,7 +61,9 @@ function EventPopup(props){
         transitionDuration:" 0.5s",
     };
     console.log(props)
-    const {user} = isAuthenticated();
+   
+    
+    const {user, token} = isAuthenticated();
     console.log(user);
     return (
         <div className="event-popup container w-50 h-100 position-fixed m-auto p-0 top-0" style={props.showSlowly ? showSlowly : hideSlowly}>
@@ -70,7 +78,7 @@ function EventPopup(props){
 
                         <div className="px-0">
                             <div className="popup-heading fs-5 py-3 fw-bold ls-1"> 
-                               {props.data.eventName}
+                            {props.data.eventName}
                             </div>
 
                             <form className=" py-3" method="POST" >
@@ -79,7 +87,7 @@ function EventPopup(props){
                                             <label for="Username">EndvrId 1: </label>
                                     </div>
                                     <div className="col-lg-8">
-                                        <input  className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={user.endvrid} />
+                                        <input  className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={user.endvrid} readonly/>
                                     </div>
                                 </div>
                                 <div className="row py-2 ls-1 fs-6 my-2">
@@ -94,10 +102,10 @@ function EventPopup(props){
                                 {
                                     props.memberCount.toString() === "3" ? 
                                     <div className="row py-2 ls-1 fs-6 my-2">
-                                        <div className="col-lg-3">
+                                        <div className="col-lg-4">
                                             <label for="Username">EndvrId 3: </label>
                                         </div>
-                                        <div className="col-lg-9">
+                                        <div className="col-lg-8">
                                             <input onChange={handleChange} className="form-control p-3 border-0" type="text" name="endvrId3" autoComplete="off" value={userData.endvrid3} />
                                         </div>
                                     </div>
@@ -107,9 +115,15 @@ function EventPopup(props){
                                 {
                                     isAuthenticated() && (
                                         <React.Fragment>
-                                            <div className="register-button py-3">
+                                            <div className="d-flex justify-space-between">
+                                            <div className="register-button py-3 px-5">
                                                 <button onclick={register} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
                                             </div>
+                                            <div className="register-button py-3 px-5">
+                                                <button onclick={register} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
+                                            </div>
+                                            
+                                        </div>
                                         </React.Fragment>
                                     )
                                 }

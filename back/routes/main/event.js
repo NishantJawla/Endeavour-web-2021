@@ -10,6 +10,7 @@ require('../../config/passport')(passport)
 const {signupHandler,loginHandler,confirmUserHandler,signoutHandler, isAdmin,adminHandler} = require('../../controllers/main/auth');
 const {getUserById,isProfileCompleteHandler} = require('../../controllers/main/user');
 const {createEventHandler,getEventHandler} = require('../../controllers/main/event');
+const {getTeamHandler} = require('../../controllers/main/team')
 //params
 router.param("userId",getUserById);
 
@@ -36,4 +37,5 @@ passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',})
 router.get('/getEvent/:eventId',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),
 isProfileCompleteHandler,getEventHandler);
 
+router.get('/getTeam/:teamId',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),getTeamHandler);
 module.exports = router; 

@@ -38,3 +38,21 @@ exports.changePaidStatusHandler = (req,res,next) => {
         })
     })
 }
+
+exports.getTeamHandler = (req, res) => {
+
+    Team.findOne({_id: req.params.teamId}).exec((err,team) => {
+        if(err || !team) {
+            return res.status(400).json({
+                status: 400,
+                error: "Team Not Found!",
+                msg: "Team not found!"
+            })
+        }
+        return res.json({
+            teamMembers: team.teamMembers,
+            status: false
+        })
+    })
+    
+}

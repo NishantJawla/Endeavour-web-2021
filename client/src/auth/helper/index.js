@@ -232,15 +232,16 @@ export const updateProfile = (data) => {
 
 export const getEventHandler = async (data) => {
     const {user, token} = isAuthenticated();
-   await axios.get(`${API}event/getEvent/${data}`, {
-  headers: {
+await axios.get(`${API}event/getEvent/${data}`, {
+headers: {
     'Authorization': `${token}`
-  }
+}
 })
 .then((res) => {
-  console.log(res);
+console.log(res);
 })
 .catch((error) => {
-  return error
+return error
 })
 }
+

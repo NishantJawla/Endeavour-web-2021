@@ -3,13 +3,25 @@ import React,{useEffect,useState,useRef}from "react";
 import EventPopup from "./../core/components/sub-components/EventPopup";
 import firebase from "../firebase"
 import {getEventHandler,isAuthenticated} from "../auth/helper/index";
+import { Route, Redirect } from "react-router-dom";
 import axios from "axios"
 import {API} from "../backend"
 const  EventRegister = (props) => {
     //evets ka data
     const eventParam = props.location.pathname.split("/")
     const idParam = eventParam[eventParam.length-1]
-    console.log(idParam)
+    !isAuthenticated() &&  (<Redirect
+        to={{
+            pathname: "/signin",
+        }}
+        />)
+
+        idParam === undefined &&  (<Redirect
+            to={{
+                pathname: "/signin",
+            }}
+            />)
+
     const [showPopUp, setShowPopup] = useState(false);
     const [eventData, seteventData] = useState(true);
     const [eventPay, seteventPay] = useState({
@@ -35,12 +47,20 @@ const  EventRegister = (props) => {
    seteventData(eventData);
    });
  }, []);
+
+ eventData.length === 0 && (
+    <Redirect
+    to={{
+        pathname: "/signin",
+    }}
+    />
+ )
+
  var eventDataFromServer = undefined;
  useEffect(() => {
     const  someFunction = async  () => {
         // var eventDataFromServer = await getEventHandler(idParam.toString())
         const {user, token} = isAuthenticated();
-        console.log("inhere!")
         await axios.get(`${API}event/getEvent/${idParam.toString()}`, {
             headers: {
               'Authorization': `${token}`
@@ -49,10 +69,6 @@ const  EventRegister = (props) => {
           .then((res) => {
             // eventDataFromServer= res.data.json();
             // console.log("qwertyuiop" + eventDataFromServer)
-            console.log("inhere2!")
-            console.log({
-                "res": res.data.content
-            });
             seteventPay({
                 eventName: res.data.content.eventName,
                 launched: res.data.content.launched,
@@ -68,9 +84,16 @@ const  EventRegister = (props) => {
     }
     someFunction();
   }, []);
-  console.log({
-    "eventDataFromServer": eventDataFromServer
-  })
+  const {user, token} = isAuthenticated();
+  var teamID = undefined;
+  if(typeof user.registered !== 'undefined' && user.registered.length === 0){
+      user.registered.forEach (p => {
+          if(p.eventId.toString() === props.id) {
+              console.log("team"+p.teams.toString())
+              teamID = p.teams.toString()
+          }
+      })
+  }
     function changeShowPopup(props){
         setShowPopup(true);
     }
@@ -95,6 +118,30 @@ const  EventRegister = (props) => {
     useEffect(() => {
         window.scrollTo(0, 0)
       }, [])
+
+      useEffect(() => {
+        console.log("inhere!12345")
+        const  someFunction = async  () => {
+            console.log("inhere!")
+            if(teamID){
+                await axios.get(`${API}event/getTeam/${teamID}`, {
+                    headers: {
+                    'Authorization': `${token}`
+                    }
+                })
+                .then((res) => {
+                    console.log({
+                        "response": res
+                    });
+                })
+                .catch((error) => {
+                    return error
+                })
+            }
+        }
+        someFunction();
+    }, []);
+    
     return (
         <React.Fragment>
             <div className="event-register py-5 bg-sec-pattern bg-norepeat">
@@ -130,8 +177,9 @@ const  EventRegister = (props) => {
             <EventPopup 
                 showSlowly={showPopUp}
                 hidePopup={hidePopup}
-                memberCount={2}
+                memberCount={eventPay.membersCount}
                 data = {eventPay}
+                id={idParam.toString()}
             />
         </React.Fragment>
     );
