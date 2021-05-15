@@ -462,16 +462,18 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                     }
             }
         }
-        if (typeof user.registered !== 'undefined' && user.registered.length === 0) {
+        if (typeof user.registered === 'undefined' || user.registered.length === 0) {
             return res.status(200).json({
                 registered: false,
                 paid: false,
                 msg: "User have not registered"
             })
         }
-        else if(user.registered.indexOf(req.params.eventId.toString()) !== -1){
+        else{
+            let c = 1;
             user.registered.forEach(item => {
                 if(item.event.toString() === req.params.eventId.toString()){
+                    c=0;
                 Team.findById(item.teams.toString()).exec((err, team) => {
                     if(err || !team) {
                         return res.status(400).json({
@@ -493,16 +495,20 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                             msg: "User have registered but not yet paid for this event"
                         })
                     }
-                })
-                }
+
+                })   
+            }
             });
-        }else{
-            return res.status(200).json({
-                registered: false,
-                paid: false,
-                msg: "User have not registered"
-            })
+            if (c){
+                return res.status(200).json({
+                    registered: false,
+                    paid: false,
+                    msg: "User have not registered"
+                })
+            } 
+
         }
+
 
         
 
@@ -705,11 +711,11 @@ exports.registerEventOne  = async (req,res,next) => {
             var team = await Team.findOne({_id:teamId.toString()});
             for(let i = 0; i<team.teamMembers.length; i++){
                 let counter = 1;
-                if(team.teamMembers[i].toString() === (user1._id).toString()){
+                if(team.teamMembers[i].toString() === (user1.endvrid).toString()){
                     counter = 0;
                 }
                 if(req.body.member2){
-                    if(team.teamMembers[i].toString() === (user2._id).toString()){
+                    if(team.teamMembers[i].toString() === (user2.endvrid).toString()){
                         counter = 0;
                     }
                 }
@@ -720,7 +726,7 @@ exports.registerEventOne  = async (req,res,next) => {
                 }
                 if(counter) {
                     try{
-                    let tempUser = await  User.getUserById(team.teamMembers[i].toString());
+                    let tempUser = await  User.findOne({endvrid:team.teamMembers[i].toString()});
                     let filtered = tempUser.registered.filter(function(value, index, arr){ 
                         return value.teams.toString() != teamId.toString();
                     });
@@ -889,6 +895,6 @@ exports.registerEventOne  = async (req,res,next) => {
     
 exports.registerEventTwo = (req,res) => {
     res.json({
-        "msg": "Successfully Reached to Part 2"
+        "msg": "Successfully Registered"
     })
 }

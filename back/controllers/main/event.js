@@ -87,10 +87,12 @@ exports.getEventHandler = (req,res) => {
 // const  changeTeamPaidStatus = async (teamId) => {
 // await Team.findById(teamId).exec((err, team) => {
 //     team.paidStatus = true
-//     await Event.findById(team.event.toString()).exec((err, event) => {
+//     Event.findById(team.event.toString()).exec((err, event) => {
 //         event.paid.push(teamId);
 //         event.save();
 //     })
+
+//     for(let i = 0 ; i < team.teamMembers.length ; i++)
 
 //     })
 // } 
