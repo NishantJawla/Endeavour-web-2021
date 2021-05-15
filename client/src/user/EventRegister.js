@@ -3,12 +3,25 @@ import React,{useEffect,useState,useRef}from "react";
 import EventPopup from "./../core/components/sub-components/EventPopup";
 import firebase from "../firebase"
 import {getEventHandler,isAuthenticated} from "../auth/helper/index";
+import { Route, Redirect } from "react-router-dom";
 import axios from "axios"
 import {API} from "../backend"
 const  EventRegister = (props) => {
     //evets ka data
     const eventParam = props.location.pathname.split("/")
     const idParam = eventParam[eventParam.length-1]
+    !isAuthenticated() &&  (<Redirect
+        to={{
+            pathname: "/signin",
+        }}
+        />)
+
+        idParam === undefined &&  (<Redirect
+            to={{
+                pathname: "/signin",
+            }}
+            />)
+
     const [showPopUp, setShowPopup] = useState(false);
     const [eventData, seteventData] = useState(true);
     const [eventPay, seteventPay] = useState({
@@ -34,6 +47,15 @@ const  EventRegister = (props) => {
    seteventData(eventData);
    });
  }, []);
+
+ eventData.length === 0 && (
+    <Redirect
+    to={{
+        pathname: "/signin",
+    }}
+    />
+ )
+
  var eventDataFromServer = undefined;
  useEffect(() => {
     const  someFunction = async  () => {
