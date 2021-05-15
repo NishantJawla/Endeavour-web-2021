@@ -392,9 +392,14 @@ exports.updateProfileHandler = (req,res) => {
                         error: "Server Error"
                     })
                 }
+                user.__v = undefined;
+                user.encryptedPassword = undefined;
+                user.createdAt = undefined;
+                user.updatedAt = undefined;
                 return res.status(200).json({
                     status: 200,
                     msg: "Profile Updated Succesfully",
+                    user
                 })
             })
             

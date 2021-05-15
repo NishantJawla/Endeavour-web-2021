@@ -1,8 +1,10 @@
 //jshint esversion: 8
 import React, { useState, useEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 // eslint-disable-next-line
-import { getUserData, getEventData, updateProfile ,isAuthenticated} from "./../auth/helper/index";
+import { getUserData, getEventData,authenticate, updateProfile ,isAuthenticated} from "./../auth/helper/index";
 
 const UserDashBoard = (props) => {
     // eslint-disable-next-line
@@ -15,9 +17,10 @@ const UserDashBoard = (props) => {
         libId: user.libId ? user.libId : "",
         college: user.college ? user.college : "",
         discord: user.discord ? user.discord : "",
-        semester: user.semester ? user.semester :"1"
+        semester: user.semester ? user.semester :"1",
+        error: ""
     });
-
+    const {branch,libId,college,discord,semester,error} = updatedData;
     function handleChange(event){
         const {name, value} = event.target;
         setUpdatedData(prevData => {
@@ -54,12 +57,62 @@ const UserDashBoard = (props) => {
         event.preventDefault();
         if(userData.profile){
             //profile is already updated add toster
-            console.log("profile already updated");
+            successMessage2()
         } else {
-            updateProfile(updatedData);
+            updateProfile(updatedData).then(data => {
+                if(data.error){
+                    errorMessage()
+                    setUpdatedData({
+                        ...updatedData,
+                        error: data.error
+                    });
+                } else {
+                    authenticate(data, () => {
+                        setUpdatedData({
+                        ...updatedData,
+                        });
+                    });
+                    successMessage()
+                }
+            });
             console.log("updatiung");
         }
-      };
+    };
+    const successMessage2 = () => {
+        toast.success('Profile Already Upto date', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    };
+    const successMessage = () => {
+        toast.success('Profile Updated successfully', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    };
+    const errorMessage = () => {
+        if(error){
+        toast.error(error, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        }
+    };
 
     // function updateProfile (event){
     //     event.preventDefault();
@@ -96,6 +149,17 @@ const UserDashBoard = (props) => {
                         </div>
                     </div>
                     <div className="col-lg-7 col-md-10">
+                    <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
                         <div className="fs-5 fw-bold pb-3 ls-1">Update Profile</div>
                         <div className="profile-update-note py-3 color-white italic ls-1 fw-bold">The Profile can be only updated once. Make sure to enter the Correct Data.</div>
                         <form className="edit-details" action="" method="">
