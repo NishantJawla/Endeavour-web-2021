@@ -151,9 +151,6 @@ pauseOnHover
                 </div>
             </div>
         </div>
-      
-      
-   
     </div>
   );
 };

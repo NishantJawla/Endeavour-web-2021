@@ -197,14 +197,7 @@ export const registerEvent = (eventId, userData) => {
         body: JSON.stringify(userData)
     })
     .then(response => {
-        if(response.ok){
-            //registed successfully
-            return response.json();
-            
-        } else{
-            //not registed
-            throw new Error("User not registered SuccessFully");
-        }
+        return response.json()
     })
     .catch(error => {
         console.log(error);
