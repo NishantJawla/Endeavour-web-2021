@@ -4,8 +4,7 @@ import React, { useState ,useEffect,useRef} from 'react';
 import { Link } from 'react-router-dom';
 import closeIcon from "./../../../assets/img/icons/cancel.png";
 import {isAuthenticated, registerEvent} from "../../../auth/helper/index";
-import {API} from "../../../backend"
-import axios from "axios"
+
 function EventPopup(props){
 
     const [userData, setUserData] = useState({
@@ -64,7 +63,6 @@ function EventPopup(props){
    
     
     const {user, token} = isAuthenticated();
-    console.log(user);
     return (
         <div className="event-popup container w-50 h-100 position-fixed m-auto p-0 top-0" style={props.showSlowly ? showSlowly : hideSlowly}>
             <div className="d-flex w-100 h-100 justify-content-center">
