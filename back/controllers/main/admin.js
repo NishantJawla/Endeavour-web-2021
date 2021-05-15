@@ -274,6 +274,11 @@ exports.getUserFromEndvrId = async (req, res) => {
         discord: user.discord || "null",
         events: registeredEvents
     });
+    res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        users: responseData
+    });
 };
 
 exports.getUserFromMobile = async (req, res) => {
@@ -283,8 +288,8 @@ exports.getUserFromMobile = async (req, res) => {
     const registeredEvents = [];
     user.registered.forEach(event => {
         Event.findOne({_id: event.event}, (err, event) => {
-            if(error) {
-                console.log(error);
+            if(err) {
+                console.log(err);
                 return res.status(500).json({
                     status: 500,
                     msg: 'Something Went Wrong',
@@ -309,15 +314,23 @@ exports.getUserFromMobile = async (req, res) => {
         discord: user.discord || "null",
         events: registeredEvents
     });
+    res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        users: responseData
+    });
 };
 
 exports.getAllUsersByPaidStatus = async (req, res) => {
-    const users = await Users.find({});
+    const users = await User.find({});
     const responseData = [];
     users.forEach(user => {
         const registerdEvents = [];
         user.registered.forEach(async event => {
             const e = await Event.find({_id: event.event});
+            console.log("fuck me");
+            console.log(e);
+            console.log(e.eventName);
             registerdEvents.push(e.eventName);
         });
         responseData.push({
@@ -331,7 +344,12 @@ exports.getAllUsersByPaidStatus = async (req, res) => {
             branch: user.branch || "null",
             libId: user.libId || "null",
             discord: user.discord || "null",
-            events: registeredEvents
+            events: registerdEvents
         });
+    });
+    res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        users: responseData
     });
 };

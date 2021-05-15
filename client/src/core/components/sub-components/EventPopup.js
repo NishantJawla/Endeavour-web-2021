@@ -41,6 +41,8 @@ const EventPopup = (props) => {
         if(member3 !== ""){
             Sendingdata.member3 = member3;
         }
+        console.log("fucking sick");
+        console.log(Sendingdata);
         registerEvent(props.data.eventId, Sendingdata)
         .then((data) => {
             if (data.error) {
@@ -74,24 +76,22 @@ const EventPopup = (props) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
-};
+            });
+    };
 
-const errorMessage = () => {
-    if(error){
-    toast.error(error, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-    }
-};
-
-
+    const errorMessage = () => {
+        if(error){
+        toast.error(error, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        }
+    };
 
     const showSlowly = {
         opacity: "1",
@@ -113,8 +113,7 @@ const errorMessage = () => {
     console.log(props)
 
     const formfill = () => ( 
-    <form className="py-3" action="">
-
+    <form className=" py-3">
     <div className="row py-2 ls-1 fs-6 my-2">
         <div className="col-lg-4">
                 <label for="Username">Leader: </label>
@@ -189,18 +188,17 @@ const errorMessage = () => {
                             {props.data.eventName}
                             </div>
                             <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-/>
-                        {formfill()}
-                        <p className="text-white text-center">{JSON.stringify(userData)}</p>
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            />
+                            {formfill()}
                         </div>
                     </div> 
                 </div>   
