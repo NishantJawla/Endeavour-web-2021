@@ -519,6 +519,7 @@ exports.registerEventOne  = async (req,res,next) => {
     console.log(req.body.member2)
     console.log("Reached here!")
     console.log(req.body.member3)
+    console.log(req.user)
     let status = true;
     var teamId = undefined;
     var hasuserone = false;
@@ -533,7 +534,8 @@ exports.registerEventOne  = async (req,res,next) => {
         })
     }else{
         try {
-            var user1 = await User.findOne({endvrid : req.user.endvrid}).exec();
+            var user1 = await User.findById(req.user._id).exec();
+            const eventSaveHandle = await Event.findById(req.params.eventId).exec();
             if(user1.profile === false){
                 status = false;
                 return res.json(400).json({
@@ -561,7 +563,7 @@ exports.registerEventOne  = async (req,res,next) => {
             })
         }
 
-        if(req.body.member2) {
+        if(req.body.member2 != undefined) {
     try {
         var user2 = await User.findOne({endvrid : req.body.member2}).exec();
         if(user2.profile === false){
@@ -592,7 +594,7 @@ exports.registerEventOne  = async (req,res,next) => {
         
         }
 
-        if(req.body.member3) {
+        if(req.body.member3 != undefined) {
             try {
                 var user3 = await User.findOne({endvrid : req.body.member3}).exec();
                 if(user3.profile === false){
@@ -625,8 +627,8 @@ exports.registerEventOne  = async (req,res,next) => {
     }
     ////////// ----------------------------Verified Users -------------------------///
     let data = {
-        event: req.params.eventId.toString(),
-        leader: req.user._id.toString(),
+        event: eventSaveHandle._id,
+        leader: req.user._id,
         teamMembers: []
     };
     data.teamMembers.push(user1.endvrid);
@@ -696,7 +698,7 @@ exports.registerEventOne  = async (req,res,next) => {
             console.log(err)
         }
     }else{
-        if(req.body.member2) {
+        if(req.body.member2 !== undefined) {
             try {
                 user2.registered.push({
                     teams: teamId,
@@ -748,7 +750,6 @@ exports.registerEventOne  = async (req,res,next) => {
     }
 
     try{
-        const eventSaveHandle = await Event.findById(req.params.eventId).exec();
         if(eventSaveHandle.registered.indexOf(teamId) === -1) {
             eventSaveHandle.registered.push(teamId)
             console.log("Saved to event");
