@@ -462,16 +462,18 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                     }
             }
         }
-        if (typeof user.registered !== 'undefined' && user.registered.length === 0) {
+        if (typeof user.registered === 'undefined' || user.registered.length === 0) {
             return res.status(200).json({
                 registered: false,
                 paid: false,
                 msg: "User have not registered"
             })
         }
-        else if(user.registered.indexOf(req.params.eventId.toString()) !== -1){
+        else{
+            let c = 1;
             user.registered.forEach(item => {
                 if(item.event.toString() === req.params.eventId.toString()){
+                    c=0;
                 Team.findById(item.teams.toString()).exec((err, team) => {
                     if(err || !team) {
                         return res.status(400).json({
@@ -496,7 +498,9 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                 })
                 }
             });
-        }else{
+        }
+
+        if (c){
             return res.status(200).json({
                 registered: false,
                 paid: false,
