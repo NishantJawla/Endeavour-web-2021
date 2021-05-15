@@ -2,26 +2,14 @@
 import React,{useEffect,useState,useRef}from "react";
 import EventPopup from "./../core/components/sub-components/EventPopup";
 import firebase from "../firebase"
-import {getEventHandler,isAuthenticated} from "../auth/helper/index";
-import { Route, Redirect } from "react-router-dom";
+import {getEventHandler, isAuthenticated} from "../auth/helper/index";
+import { Redirect, Link } from "react-router-dom";
 import axios from "axios"
 import {API} from "../backend"
 const  EventRegister = (props) => {
     //evets ka data
     const eventParam = props.location.pathname.split("/")
-    const idParam = eventParam[eventParam.length-1]
-    !isAuthenticated() &&  (<Redirect
-        to={{
-            pathname: "/signin",
-        }}
-        />)
-
-        idParam === undefined &&  (<Redirect
-            to={{
-                pathname: "/signin",
-            }}
-            />)
-
+    const idParam = eventParam[eventParam.length-1];
     const [showPopUp, setShowPopup] = useState(false);
     const [eventData, seteventData] = useState(true);
     const [eventPay, seteventPay] = useState({
@@ -32,75 +20,85 @@ const  EventRegister = (props) => {
         error: "",
         success: false,
       });
-      const { eventName,launched,  membersCount,price,error, success } = eventPay;
- useEffect(() => {
-   const eventRef = firebase.database().ref('eventsMain');
-   eventRef.on('value', (snapshot) => {
-   const events = snapshot.val();
-   const eventData = [];
-   for (let id in events) {
-    
-    if(events[id].eventId.toString() === idParam.toString()){
-        eventData.push({ id, ...events[id] });
+    const { eventName,launched,  membersCount,price,error, success } = eventPay;
+    useEffect(() => {
+    const eventRef = firebase.database().ref('eventsMain');
+    eventRef.on('value', (snapshot) => {
+    const events = snapshot.val();
+    const eventData = [];
+    for (let id in events) {
+        
+        if(events[id].eventId.toString() === idParam.toString()){
+            eventData.push({ id, ...events[id] });
+        }
     }
-   }
-   seteventData(eventData);
-   });
- }, []);
+    seteventData(eventData);
+    });
+    }, []);
 
- eventData.length === 0 && (
-    <Redirect
-    to={{
-        pathname: "/signin",
-    }}
-    />
- )
+//  eventData.length === 0 && (
+//     <Redirect
+//     to={{
+//         pathname: "/signin",
+//     }}
+//     />
+//  )
 
- var eventDataFromServer = undefined;
- useEffect(() => {
-    const  someFunction = async  () => {
-        // var eventDataFromServer = await getEventHandler(idParam.toString())
-        const {user, token} = isAuthenticated();
-        await axios.get(`${API}event/getEvent/${idParam.toString()}`, {
-            headers: {
-              'Authorization': `${token}`
-            }
-          })
-          .then((res) => {
-            // eventDataFromServer= res.data.json();
-            // console.log("qwertyuiop" + eventDataFromServer)
-            seteventPay({
-                eventName: res.data.content.eventName,
-                launched: res.data.content.launched,
-                membersCount:res.data.content.membersCount,
-                price: res.data.content.price,
-                error: "",
-                success: true,
-            })
-          })
-          .catch((error) => {
-            return error
-          })
+    // var eventDataFromServer = undefined;
+    // useEffect(() => {
+    //     const  someFunction = async  () => {
+    //         // var eventDataFromServer = await getEventHandler(idParam.toString())
+    //         const {user, token} = isAuthenticated();
+    //         await axios.get(`${API}event/getEvent/${idParam.toString()}`, {
+    //             headers: {
+    //             'Authorization': `${token}`
+    //             }
+    //         })
+    //         .then((res) => {
+    //             // eventDataFromServer= res.data.json();
+    //             // console.log("qwertyuiop" + eventDataFromServer)
+    //             seteventPay({
+    //                 eventName: res.data.content.eventName,
+    //                 launched: res.data.content.launched,
+    //                 membersCount:res.data.content.membersCount,
+    //                 price: res.data.content.price,
+    //                 error: "",
+    //                 success: true,
+    //             })
+    //         })
+    //         .catch((error) => {
+    //             return error
+    //         })
+    //     }
+    //     someFunction();
+    // }, []);
+//   const {user, token} = isAuthenticated();
+    var teamID = undefined;
+//   if(typeof user.registered !== 'undefined' && user.registered.length === 0){
+//       user.registered.forEach (p => {
+//           if(p.eventId.toString() === props.id) {
+//               console.log("team"+p.teams.toString())
+//               teamID = p.teams.toString()
+//           }
+//       })
+//   }
+    function showButton(){
+        const { user } = isAuthenticated();
+        if(user){
+            return (
+                <button onClick={changeShowPopup} className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Register Now</button>
+            );
+        } else {
+            return(
+                <Link to="/signin" className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3 px-3 text-decoration-none">Register Now</Link>
+            );
+        }
     }
-    someFunction();
-  }, []);
-  const {user, token} = isAuthenticated();
-  var teamID = undefined;
-  user &&  (<Redirect
-    to={{
-        pathname: "/signin",
-    }}
-    />)
-  if(typeof user.registered !== 'undefined' && user.registered.length === 0){
-      user.registered.forEach (p => {
-          if(p.eventId.toString() === props.id) {
-              console.log("team"+p.teams.toString())
-              teamID = p.teams.toString()
-          }
-      })
-  }
     function changeShowPopup(props){
-        setShowPopup(true);
+        const {user} = isAuthenticated();
+        if(user){
+            setShowPopup(true);
+        }
     }
     function hidePopup(props){
         setShowPopup(false);
@@ -124,28 +122,52 @@ const  EventRegister = (props) => {
         window.scrollTo(0, 0)
       }, [])
 
-      useEffect(() => {
-        console.log("inhere!12345")
-        const  someFunction = async  () => {
-            console.log("inhere!")
-            if(teamID){
-                await axios.get(`${API}event/getTeam/${teamID}`, {
-                    headers: {
-                    'Authorization': `${token}`
-                    }
-                })
-                .then((res) => {
-                    console.log({
-                        "response": res
-                    });
-                })
-                .catch((error) => {
-                    return error
-                })
-            }
+    //   useEffect(() => {
+    //     console.log("inhere!12345")
+    //     const  someFunction = async  () => {
+    //         console.log("inhere!")
+    //         if(teamID){
+    //             await axios.get(`${API}event/getTeam/${teamID}`, {
+    //                 headers: {
+    //                 'Authorization': `${token}`
+    //                 }
+    //             })
+    //             .then((res) => {
+    //                 console.log({
+    //                     "response": res
+    //                 });
+    //             })
+    //             .catch((error) => {
+    //                 return error
+    //             })
+    //         }
+    //     }
+    //     someFunction();
+    // }, []);
+
+    function allowPopup(){
+        const {user} = isAuthenticated();
+        if(user){ 
+            console.log(user);
+            console.log("returning things");
+            return (
+                <EventPopup 
+                    showSlowly={showPopUp}
+                    hidePopup={hidePopup}
+                    memberCount={eventPay.membersCount}
+                    data = {eventPay}
+                    id={idParam.toString()}
+                />
+            );
+        } else {
+            <Redirect
+            to={{
+                pathname: "/signin",
+            }}
+            />
         }
-        someFunction();
-    }, []);
+        
+    }
     
     return (
         <React.Fragment>
@@ -172,20 +194,20 @@ const  EventRegister = (props) => {
                             </div>
                         </div>
                         <div className="py-3 px-4">
-                           {
-                               success && ( <button onClick={changeShowPopup} className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Register Now</button>)
-                           }
+                            {showButton()}
                         </div>
                     </div>
                 </div>
             </div>
-            <EventPopup 
+            {allowPopup()}
+            
+            {/* <EventPopup 
                 showSlowly={showPopUp}
                 hidePopup={hidePopup}
                 memberCount={eventPay.membersCount}
                 data = {eventPay}
                 id={idParam.toString()}
-            />
+            /> */}
         </React.Fragment>
     );
 }

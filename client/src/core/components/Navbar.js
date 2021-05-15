@@ -68,19 +68,20 @@ const Navbar = () =>  {
                                     <Dropdown as={ButtonGroup}>
                                         <Dropdown.Toggle id="dropdown-custom-1" className="bg-transparent border-0"><img src={profileImg} width="24px" alt="user profile img" /></Dropdown.Toggle>
                                         <Dropdown.Menu className="bg-secondary color-white">
-                                        <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">
-                                            <Link to="/user/dashboard" className="px-5 color-white ls-1 profile-dropdown text-decoration-none"> 
-                                            Profile
-                                            </Link>
+                                            <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="2">
+                                                <Link to="/user/dashboard" className="pe-5 color-white ls-1 profile-dropdown text-decoration-none"> 
+                                                Profile
+                                                </Link>
+                                                </Dropdown.Item>
+                                            <Dropdown.Item  eventKey="3" className=" color-white ls-1 profile-dropdown"><Link to="/changepassword" className="color-white ls-1 profile-dropdown text-decoration-none">  Change Password</Link></Dropdown.Item>
+                                            <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
+                                                onClick={() => {
+                                                    fun1()
+                                                    fun2()
+                                                
+                                                }}
+                                            >Signout
                                             </Dropdown.Item>
-                                        <Dropdown.Item  eventKey="3" className="color-white ls-1 profile-dropdown"><Link to="/changepassword" className="color-white ls-1 profile-dropdown text-decoration-none">  Change Password</Link></Dropdown.Item>
-                                    <Dropdown.Item className="color-white ls-1 profile-dropdown" eventKey="1" 
-                                        onClick={() => {
-                                            fun1()
-                                            fun2()
-                                        
-                                        }}
-                                    >Signout</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </React.Fragment>
