@@ -4,43 +4,95 @@ import React, { useState ,useEffect,useRef} from 'react';
 import { Link } from 'react-router-dom';
 import closeIcon from "./../../../assets/img/icons/cancel.png";
 import {isAuthenticated, registerEvent} from "../../../auth/helper/index";
-
-function EventPopup(props){
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const EventPopup = (props) => {
 
     const [userData, setUserData] = useState({
-        endvrId2: "",
-        endvrId3: ""
-    });
-    const [data, setdata] = useState({
         member2: "",
-        member3: ""
-    })
-    const {member2,member3} = data;
-    function handleChange(event){
-        const {name, value} = event.target;
-        setUserData(prevState => {
-            if(name === "endvrId2"){
-                return {
-                    ...prevState,
-                    endvrId2: value
-                }
-            } else if(name === "endvrId3"){
-                return {
-                    ...prevState,
-                    endvrId3: value
-                }
-            }
-        });
-    }
+        member3: "",
+        error: "",
+        success: false,
+    });
+    
+    const {member2,member3,error,success} = userData;
 
-    function startHidePopup(){
+    const handleChange = (name) => (event) => {
+        setUserData({ ...userData, error: false, [name]: event.target.value });
+    };
+
+    const  startHidePopup = (event) => {
+        event.preventDefault();
         props.hidePopup();
     }
 
-    function register(event){
+    // function register(event){
+    //     event.preventDefault();
+    //     registerEvent(props.eventId, userData);
+    // }
+    const onSubmit = (event) => {
         event.preventDefault();
-        registerEvent(props.eventId, userData);
+        setUserData({ ...userData, error: false });
+        var Sendingdata = {
+        }
+        if(member2 !== ""){
+            Sendingdata.member2 = member2;
+        }
+        if(member3 !== ""){
+            Sendingdata.member3 = member3;
+        }
+        registerEvent(props.data.eventId, Sendingdata)
+        .then((data) => {
+            if (data.error) {
+            errorMessage()
+            setUserData({ ...userData, error: data.error, success: false });
+            } else {
+            successMessage()
+            setUserData({
+                ...userData,
+                member2: "",
+                member3: "",
+                error: "",
+                success: true,
+            });
+            }
+        })
+        .catch( () =>{
+            errorMessage()
+            console.log("Error in signup")
+        }
+            );
+    };
+
+
+    const successMessage = () => {
+    
+        toast.success('Registration Successfull', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+};
+
+const errorMessage = () => {
+    if(error){
+    toast.error(error, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }
+};
+
+
 
     const showSlowly = {
         opacity: "1",
@@ -60,7 +112,64 @@ function EventPopup(props){
         transitionDuration:" 0.5s",
     };
     console.log(props)
-   
+
+    const formfill = () => ( <form className=" py-3">
+    <div className="row py-2 ls-1 fs-6 my-2">
+        <div className="col-lg-4">
+                <label for="Username">Leader: </label>
+        </div>
+        <div className="col-lg-8">
+            <input  className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={user.endvrid} readonly/>
+        </div>
+    </div>
+    <div className="row py-2 ls-1 fs-6 my-2">
+        <div className="col-lg-4">
+                <label for="Username">EndvrId 2: </label>
+        </div>
+        <div className="col-lg-8">
+            <input onChange={handleChange("member2")} className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={member2} />
+        </div>
+    </div>
+
+    {
+        props.memberCount.toString() === "3" ? 
+        <div className="row py-2 ls-1 fs-6 my-2">
+            <div className="col-lg-4">
+                <label for="Username">EndvrId 3: </label>
+            </div>
+            <div className="col-lg-8">
+                <input onChange={handleChange("member3")} className="form-control p-3 border-0" type="text" name="endvrId3" 
+                autoComplete="off" value={member3} />
+            </div>
+        </div>
+        : 
+        null
+    }
+    {
+        isAuthenticated() && (
+            <React.Fragment>
+                <div className="d-flex justify-space-between">
+                <div className="register-button py-3 px-5">
+                    <button onclick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
+                </div>
+                <div className="register-button py-3 px-5">
+                    <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
+                </div>
+                
+            </div>
+            </React.Fragment>
+        )
+    }
+    {
+        !isAuthenticated() && (
+            <React.Fragment>
+                <div className="register-button py-3">
+                    <Link to="/signin" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white">SignIn</Link>
+                </div>
+            </React.Fragment>
+        )
+    }
+</form>)
     
     const {user, token} = isAuthenticated();
     return (
@@ -73,68 +182,22 @@ function EventPopup(props){
                                 <img src={closeIcon} width="20px" height="20px" alt="cancel button" />
                             </button>
                         </div>
-
                         <div className="px-0">
                             <div className="popup-heading fs-5 py-3 fw-bold ls-1"> 
                             {props.data.eventName}
                             </div>
-
-                            <form className=" py-3" method="POST" >
-                                <div className="row py-2 ls-1 fs-6 my-2">
-                                    <div className="col-lg-4">
-                                            <label for="Username">EndvrId 1: </label>
-                                    </div>
-                                    <div className="col-lg-8">
-                                        <input  className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={user.endvrid} readonly/>
-                                    </div>
-                                </div>
-                                <div className="row py-2 ls-1 fs-6 my-2">
-                                    <div className="col-lg-4">
-                                            <label for="Username">EndvrId 2: </label>
-                                    </div>
-                                    <div className="col-lg-8">
-                                        <input onChange={handleChange} className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={userData.endvrid2} />
-                                    </div>
-                                </div>
-
-                                {
-                                    props.memberCount.toString() === "3" ? 
-                                    <div className="row py-2 ls-1 fs-6 my-2">
-                                        <div className="col-lg-4">
-                                            <label for="Username">EndvrId 3: </label>
-                                        </div>
-                                        <div className="col-lg-8">
-                                            <input onChange={handleChange} className="form-control p-3 border-0" type="text" name="endvrId3" autoComplete="off" value={userData.endvrid3} />
-                                        </div>
-                                    </div>
-                                    : 
-                                    null
-                                }
-                                {
-                                    isAuthenticated() && (
-                                        <React.Fragment>
-                                            <div className="d-flex justify-space-between">
-                                            <div className="register-button py-3 px-5">
-                                                <button onclick={register} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
-                                            </div>
-                                            <div className="register-button py-3 px-5">
-                                                <button onclick={register} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
-                                            </div>
-                                            
-                                        </div>
-                                        </React.Fragment>
-                                    )
-                                }
-                                {
-                                    !isAuthenticated() && (
-                                        <React.Fragment>
-                                            <div className="register-button py-3">
-                                                <Link to="/signin" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white">Register</Link>
-                                            </div>
-                                        </React.Fragment>
-                                    )
-                                }
-                            </form>
+                            <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
+                        {formfill()}
                         </div>
                     </div> 
                 </div>   
