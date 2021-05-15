@@ -495,18 +495,19 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                             msg: "User have registered but not yet paid for this event"
                         })
                     }
+
                 })
-                }
+                if (c){
+                    return res.status(200).json({
+                        registered: false,
+                        paid: false,
+                        msg: "User have not registered"
+                    })
+                }    
+            }
             });
         }
 
-        if (c){
-            return res.status(200).json({
-                registered: false,
-                paid: false,
-                msg: "User have not registered"
-            })
-        }
 
         
 
