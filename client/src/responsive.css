@@ -41,6 +41,9 @@
         margin: auto !important;
         margin-top: 2.5rem !important;
     }
+    .navbar-content{
+        display: none;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px){

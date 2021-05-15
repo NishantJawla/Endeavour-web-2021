@@ -325,6 +325,18 @@ z .nav-lines {
 .each-speakerpage > div:last-child{
   width: 250px;
 }
+.navbar-content{
+  display: block;
+}
+.show-mobile-navbar{
+  display: block;
+  position: absolute;
+  right: 0.5rem;
+  top: 6rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: var(--secondary-color);
+}
 /*-----swiper slide-------*/
 .swiper-container {
   width: 100%;

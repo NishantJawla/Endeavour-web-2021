@@ -88,7 +88,7 @@ const Signin = () => {
   const signInForm = () => {
     return (
       <div className="row">
-        <div className="col-md-4 col-sm-10 offset-md-4 offset-sm-1 text-left">
+        <div className="col-lg-6 col-xl-4 col-sm-10 offset-lg-3 offset-xl-4 offset-sm-1 text-left">
         <ToastContainer
 position="top-right"
 autoClose={5000}
