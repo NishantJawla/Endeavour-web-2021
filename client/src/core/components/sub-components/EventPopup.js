@@ -41,6 +41,8 @@ const EventPopup = (props) => {
         if(member3 !== ""){
             Sendingdata.member3 = member3;
         }
+        console.log("fucking sick");
+        console.log(Sendingdata);
         registerEvent(props.data.eventId, Sendingdata)
         .then((data) => {
             if (data.error) {
@@ -75,24 +77,22 @@ const EventPopup = (props) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
-};
+            });
+    };
 
-const errorMessage = () => {
-    if(error){
-    toast.error(error, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-    }
-};
-
-
+    const errorMessage = () => {
+        if(error){
+        toast.error(error, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        }
+    };
 
     const showSlowly = {
         opacity: "1",
@@ -113,7 +113,8 @@ const errorMessage = () => {
     };
     console.log(props)
 
-    const formfill = () => ( <form className=" py-3">
+    const formfill = () => ( 
+    <form className=" py-3">
     <div className="row py-2 ls-1 fs-6 my-2">
         <div className="col-lg-4">
                 <label for="Username">Leader: </label>
@@ -150,7 +151,7 @@ const errorMessage = () => {
             <React.Fragment>
                 <div className="d-flex justify-space-between">
                 <div className="register-button py-3 px-5">
-                    <button onclick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
+                    <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
                 </div>
                 <div className="register-button py-3 px-5">
                     <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
@@ -187,17 +188,17 @@ const errorMessage = () => {
                             {props.data.eventName}
                             </div>
                             <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-/>
-                        {formfill()}
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            />
+                            {formfill()}
                         </div>
                     </div> 
                 </div>   

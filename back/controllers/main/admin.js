@@ -288,8 +288,8 @@ exports.getUserFromMobile = async (req, res) => {
     const registeredEvents = [];
     user.registered.forEach(event => {
         Event.findOne({_id: event.event}, (err, event) => {
-            if(error) {
-                console.log(error);
+            if(err) {
+                console.log(err);
                 return res.status(500).json({
                     status: 500,
                     msg: 'Something Went Wrong',
@@ -328,6 +328,9 @@ exports.getAllUsersByPaidStatus = async (req, res) => {
         const registerdEvents = [];
         user.registered.forEach(async event => {
             const e = await Event.find({_id: event.event});
+            console.log("fuck me");
+            console.log(e);
+            console.log(e.eventName);
             registerdEvents.push(e.eventName);
         });
         responseData.push({
