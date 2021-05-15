@@ -1,9 +1,10 @@
 //jshint esversion: 8
-import React,{useEffect,useState}from "react";
+import React,{useEffect,useState,useRef}from "react";
 import EventPopup from "./../core/components/sub-components/EventPopup";
 import firebase from "../firebase"
-
-
+import {getEventHandler,isAuthenticated} from "../auth/helper/index";
+import axios from "axios"
+import {API} from "../backend"
 const  EventRegister = (props) => {
     //evets ka data
     const eventParam = props.location.pathname.split("/")
@@ -11,6 +12,15 @@ const  EventRegister = (props) => {
     console.log(idParam)
     const [showPopUp, setShowPopup] = useState(false);
     const [eventData, seteventData] = useState(true);
+    const [eventPay, seteventPay] = useState({
+        eventName: "",
+        launched: "",
+        membersCount:"",
+        price: "",
+        error: "",
+        success: false,
+      });
+      const { eventName,launched,  membersCount,price,error, success } = eventPay;
  useEffect(() => {
    const eventRef = firebase.database().ref('eventsMain');
    eventRef.on('value', (snapshot) => {
@@ -25,9 +35,42 @@ const  EventRegister = (props) => {
    seteventData(eventData);
    });
  }, []);
- console.log({
-     "eventData": eventData
- });
+ var eventDataFromServer = undefined;
+ useEffect(() => {
+    const  someFunction = async  () => {
+        // var eventDataFromServer = await getEventHandler(idParam.toString())
+        const {user, token} = isAuthenticated();
+        console.log("inhere!")
+        await axios.get(`${API}event/getEvent/${idParam.toString()}`, {
+            headers: {
+              'Authorization': `${token}`
+            }
+          })
+          .then((res) => {
+            // eventDataFromServer= res.data.json();
+            // console.log("qwertyuiop" + eventDataFromServer)
+            console.log("inhere2!")
+            console.log({
+                "res": res.data.content
+            });
+            seteventPay({
+                eventName: res.data.content.eventName,
+                launched: res.data.content.launched,
+                membersCount:res.data.content.membersCount,
+                price: res.data.content.price,
+                error: "",
+                success: true,
+            })
+          })
+          .catch((error) => {
+            return error
+          })
+    }
+    someFunction();
+  }, []);
+  console.log({
+    "eventDataFromServer": eventDataFromServer
+  })
     function changeShowPopup(props){
         setShowPopup(true);
     }
@@ -77,7 +120,9 @@ const  EventRegister = (props) => {
                             </div>
                         </div>
                         <div className="py-3 px-4">
-                            <button onClick={changeShowPopup} className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Register Now</button>
+                           {
+                               success && ( <button onClick={changeShowPopup} className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Register Now</button>)
+                           }
                         </div>
                     </div>
                 </div>
@@ -86,6 +131,7 @@ const  EventRegister = (props) => {
                 showSlowly={showPopUp}
                 hidePopup={hidePopup}
                 memberCount={2}
+                data = {eventPay}
             />
         </React.Fragment>
     );

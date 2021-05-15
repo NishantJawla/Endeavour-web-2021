@@ -54,7 +54,9 @@ function EventPopup(props){
         transition: "all ease-out",
         transitionDuration:" 0.5s",
     };
-    
+    console.log(props)
+    const {user} = isAuthenticated();
+    console.log(user);
     return (
         <div className="event-popup container w-50 h-100 position-fixed m-auto p-0 top-0" style={props.showSlowly ? showSlowly : hideSlowly}>
             <div className="d-flex w-100 h-100 justify-content-center">
@@ -68,16 +70,16 @@ function EventPopup(props){
 
                         <div className="px-0">
                             <div className="popup-heading fs-5 py-3 fw-bold ls-1"> 
-                                Hackathon
+                               {props.data.eventName}
                             </div>
 
                             <form className=" py-3" method="POST" >
                                 <div className="row py-2 ls-1 fs-6 my-2">
                                     <div className="col-lg-4">
-                                            <label for="Username">EndvrId 2: </label>
+                                            <label for="Username">EndvrId 1: </label>
                                     </div>
                                     <div className="col-lg-8">
-                                        <input onChange={handleChange} className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={userData.endvrid2} />
+                                        <input  className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={user.endvrid} />
                                     </div>
                                 </div>
                                 <div className="row py-2 ls-1 fs-6 my-2">

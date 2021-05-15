@@ -1,6 +1,6 @@
 //jshint esversion: 8
 import {API} from "../../backend";
-
+import axios from 'axios';
 export const signup = user => {
     return fetch(`${API}auth/signup`,{
         mode: 'cors',
@@ -229,3 +229,18 @@ export const updateProfile = (data) => {
         console.log(error);
     });
 };
+
+export const getEventHandler = async (data) => {
+    const {user, token} = isAuthenticated();
+   await axios.get(`${API}event/getEvent/${data}`, {
+  headers: {
+    'Authorization': `${token}`
+  }
+})
+.then((res) => {
+  console.log(res);
+})
+.catch((error) => {
+  return error
+})
+}
