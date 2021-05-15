@@ -538,6 +538,23 @@ exports.registerEventOne  = async (req,res,next) => {
                                 msg: "You are already registered in a team",
                                 error: "You are already registered in a team"
                             })
+                        } else {
+                            try {
+                            let myFunction =  async () => {
+                                let someTeam = await Team.findOne({_id:team.teams.toString()}).exec();
+                                if(someTeam.leader.toString() !== user1._id.toString()) {
+                                    teamId = undefined
+                                    var filtered = someTeam.teamMembers.filter(function(value, index, arr){ 
+                                        return value.toString() !== user1._id.toString();
+                                    });
+                                    someTeam.teamMembers = filtered;
+                                    someTeam.save();
+                                }
+                                }
+                                myFunction();
+                            } catch(err) {
+                                console.log(err);
+                            }
                         }
                     }
                 }); 
@@ -571,6 +588,22 @@ exports.registerEventOne  = async (req,res,next) => {
                             msg: "You are already registered in a team",
                             error: "You are already registered in a team"
                         })
+                    } else {
+                        try{
+                            let myFunction =  async () => {
+                                let someTeam = await Team.findOne({_id:team.teams.toString()}).exec();
+                                if(someTeam._id.toString() !== teamId.toString()) {
+                                    var filtered = someTeam.teamMembers.filter(function(value, index, arr){ 
+                                        return value.toString() !== user2._id.toString();
+                                    });
+                                    someTeam.teamMembers = filtered;
+                                    someTeam.save();
+                                }
+                                }
+                                myFunction();
+                        } catch (err) {
+                            console.log(err);
+                        }
                     }
                 }
             });
@@ -606,6 +639,22 @@ exports.registerEventOne  = async (req,res,next) => {
                                     msg: "You are already registered in a team",
                                     error: "You are already registered in a team"
                                 })
+                            }else {
+                                try{
+                                    let myFunction =  async () => {
+                                        let someTeam = await Team.findOne({_id:team.teams.toString()}).exec();
+                                        if(someTeam._id.toString() !== teamId.toString()) {
+                                            var filtered = someTeam.teamMembers.filter(function(value, index, arr){ 
+                                                return value.toString() !== user2._id.toString();
+                                            });
+                                            someTeam.teamMembers = filtered;
+                                            someTeam.save();
+                                        }
+                                        }
+                                        myFunction();
+                                } catch (err) {
+                                    console.log(err);
+                                }
                             }
                         }
                     });
@@ -693,7 +742,6 @@ exports.registerEventOne  = async (req,res,next) => {
         }
         try{
             teamId = team._id
-            console.log("new team id" + teamId);
             team.save();
         
         }catch (err) {
@@ -815,7 +863,10 @@ exports.registerEventOne  = async (req,res,next) => {
 
     try{
         const eventSaveHandle = await Event.findById(req.params.eventId).exec();
-        eventSaveHandle.registered.push(teamId)
+        if(eventSaveHandle.registered.indexOf(teamId) === -1) {
+            eventSaveHandle.registered.push(teamId)
+            console.log("Saved to event");
+        }
         try{
             let saveEvent = await eventSaveHandle.save();
         } catch (err) {
