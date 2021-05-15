@@ -26,14 +26,14 @@ exports.getUserById = (req, res, next, id) => {
 
 // exports.registerEvent = async (req, res) => {
 //     let user1 = await User.findOne({_id: req.user._id});
-//     // console.log(user1.registerd);
+//     // console.log(user1.registered);
 //     if(!user1){
 //         return res.json({
 //             status: 404,
 //             msg: "User not found"
 //         })
 //     }
-//     user1.registerd.forEach(team => {
+//     user1.registered.forEach(team => {
 //         if(team.event.toString() === req.params.eventId){
 //             res.json({
 //                 status: 401,
@@ -49,7 +49,7 @@ exports.getUserById = (req, res, next, id) => {
 //     data.teamMembers.push(user1._id.toString());
 //     const team = new Team(data);
 //     team.save();
-//     user1.registerd.push({
+//     user1.registered.push({
 //         teams: team._id,
 //         event: req.params.eventId
 //     });
@@ -99,7 +99,7 @@ exports.addTeamMember = async (req, res) => {
         });
     }else{
         let c = 1;
-        user.registerd.forEach(item => {
+        user.registered.forEach(item => {
             if(item.teams.toString() === req.params.teamId){
                 c = 0;
                 return res.json({
@@ -123,7 +123,7 @@ exports.addTeamMember = async (req, res) => {
                 });
             } else{
                 team.teamMembers.push(user._id.toString());
-                user.registerd.push({
+                user.registered.push({
                     teams: req.params.teamId,
                     event: team._id
                 });
@@ -159,12 +159,12 @@ exports.removeTeamMember = async (req, res) => {
         team.save();
         //remove event from the user;
         const events = [];
-        user.registerd.forEach(item => {
+        user.registered.forEach(item => {
             if(item.teams.toString() !== req.params.teamId){
                 events.push(item);
             }
         });
-        user.registerd = events;
+        user.registered = events;
         user.save();
         res.json({
             status: 200,
@@ -191,12 +191,12 @@ exports.unregisterEvent = async (req, res) => {
     team.teamMembers.forEach(async (member) => {
         const tevents = [];
         const user = await User.findOne({_id: member});
-        user.registerd.forEach(item => {
+        user.registered.forEach(item => {
             if(item.teams.toString() !== req.params.teamId){
                 tevents.push(item);
             }
         });
-        user.registerd = tevents;
+        user.registered = tevents;
         user.save();
     });
     //delete team from the database
@@ -462,15 +462,15 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                     }
             }
         }
-        if (typeof user.registerd !== 'undefined' && user.registerd.length === 0) {
+        if (typeof user.registered !== 'undefined' && user.registered.length === 0) {
             return res.status(200).json({
-                registerd: false,
+                registered: false,
                 paid: false,
                 msg: "User have not registered"
             })
         }
-        else if(user.registerd.indexOf(req.params.eventId.toString()) !== -1){
-            user.registerd.forEach(item => {
+        else if(user.registered.indexOf(req.params.eventId.toString()) !== -1){
+            user.registered.forEach(item => {
                 if(item.event.toString() === req.params.eventId.toString()){
                 Team.findById(item.teams.toString()).exec((err, team) => {
                     if(err || !team) {
@@ -498,7 +498,7 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
             });
         }else{
             return res.status(200).json({
-                registerd: false,
+                registered: false,
                 paid: false,
                 msg: "User have not registered"
             })
