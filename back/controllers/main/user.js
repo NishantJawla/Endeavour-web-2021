@@ -469,7 +469,7 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
                 msg: "User have not registered"
             })
         }
-        else if(include(user.registerd,req.params.eventId.toString())){
+        else if(user.registerd.indexOf(req.params.eventId.toString()) !== -1){
             user.registerd.forEach(item => {
                 if(item.event.toString() === req.params.eventId.toString()){
                 Team.findById(item.teams.toString()).exec((err, team) => {
