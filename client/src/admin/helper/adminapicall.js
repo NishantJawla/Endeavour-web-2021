@@ -210,6 +210,7 @@ export const getUsers = (paidStatus, setData) => {
         }
     })
     .then(response => {
+        console.log("got response");
         return response.json();
     })
     .then(data => {

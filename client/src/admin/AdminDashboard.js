@@ -63,9 +63,8 @@ function AdminDashboard() {
         getUserFromMobile(mobileno, setData);
     }
 
-    function getUsersData(event){
-        const { value } = event.target;
-        getUsers(value, setData);
+    function getUsersData(){
+        getUsers(setData);
     }
 
     function showUsersPerEvent(event) {
@@ -168,8 +167,8 @@ function AdminDashboard() {
                             <div className="py-4">
                                 <div className="fw-bold fs-5">Get users</div>
                                 <button onClick={getUsersData} value="all" className="btn btn-secondary">All</button>
-                                <button onClick={getUsersData} value="paid" className="btn btn-secondary mx-3 my-3 color-white">Paid</button>
-                                <button onClick={getUsersData} value="unpaid" className="btn btn-secondary mx-3 my-3 color-white">Unpaid</button>
+                                {/* <button onClick={getUsersData} value="paid" className="btn btn-secondary mx-3 my-3 color-white">Paid</button>
+                                <button onClick={getUsersData} value="unpaid" className="btn btn-secondary mx-3 my-3 color-white">Unpaid</button> */}
                             </div>
                         </div>
                     </div>

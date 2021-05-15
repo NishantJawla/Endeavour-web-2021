@@ -274,6 +274,11 @@ exports.getUserFromEndvrId = async (req, res) => {
         discord: user.discord || "null",
         events: registeredEvents
     });
+    res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        users: responseData
+    });
 };
 
 exports.getUserFromMobile = async (req, res) => {
@@ -309,10 +314,15 @@ exports.getUserFromMobile = async (req, res) => {
         discord: user.discord || "null",
         events: registeredEvents
     });
+    res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        users: responseData
+    });
 };
 
 exports.getAllUsersByPaidStatus = async (req, res) => {
-    const users = await Users.find({});
+    const users = await User.find({});
     const responseData = [];
     users.forEach(user => {
         const registerdEvents = [];
@@ -331,7 +341,12 @@ exports.getAllUsersByPaidStatus = async (req, res) => {
             branch: user.branch || "null",
             libId: user.libId || "null",
             discord: user.discord || "null",
-            events: registeredEvents
+            events: registerdEvents
         });
+    });
+    res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        users: responseData
     });
 };
