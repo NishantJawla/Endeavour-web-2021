@@ -32,7 +32,6 @@ const EventPopup = (props) => {
     // }
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log("herrrreee")
         setUserData({ ...userData, error: false });
         var Sendingdata = {
         }
