@@ -32,6 +32,7 @@ const EventPopup = (props) => {
     // }
     const onSubmit = (event) => {
         event.preventDefault();
+        console.log("herrrreee")
         setUserData({ ...userData, error: false });
         var Sendingdata = {
         }
@@ -68,7 +69,6 @@ const EventPopup = (props) => {
 
 
     const successMessage = () => {
-    
         toast.success('Registration Successfull', {
         position: 'top-right',
         autoClose: 5000,
@@ -120,15 +120,16 @@ const EventPopup = (props) => {
                 <label for="Username">Leader: </label>
         </div>
         <div className="col-lg-8">
-            <input  className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={user.endvrid} readonly/>
+            <input  className="form-control p-3 border-0" type="text" autoComplete="off" value={user.endvrid} readonly />
         </div>
     </div>
+
     <div className="row py-2 ls-1 fs-6 my-2">
         <div className="col-lg-4">
                 <label for="Username">EndvrId 2: </label>
         </div>
         <div className="col-lg-8">
-            <input onChange={handleChange("member2")} className="form-control p-3 border-0" type="text" name="endvrId2" autoComplete="off" value={member2} />
+            <input onChange={handleChange("member2")} className="form-control p-3 border-0" type="text" autoComplete="off" value={member2} />
         </div>
     </div>
 
@@ -139,7 +140,7 @@ const EventPopup = (props) => {
                 <label for="Username">EndvrId 3: </label>
             </div>
             <div className="col-lg-8">
-                <input onChange={handleChange("member3")} className="form-control p-3 border-0" type="text" name="endvrId3" 
+                <input onChange={handleChange("member3")} className="form-control p-3 border-0"  name="member3" 
                 autoComplete="off" value={member3} />
             </div>
         </div>
