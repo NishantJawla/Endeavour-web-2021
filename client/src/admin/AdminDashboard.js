@@ -11,7 +11,7 @@ function AdminDashboard() {
     
     const [usersPerEvent, setUsersPerEvent] = useState(["fweg", "fewgweg", "Gwgewg","gwegewg"]);
 
-    const [totalUsers, setTotalUsers] = useState({});
+    const [totalUsers, setTotalUsers] = useState(0);
 
     const [endvrId, setEndvrId] = useState("");
 
@@ -68,6 +68,15 @@ function AdminDashboard() {
         getUsers(value, setData);
     }
 
+    function showUsersPerEvent(event) {
+        return (
+            <div className="py-3 d-flex">
+                <div className="ls-1 fs-6 pe-3">Total no of Uses Registerd in </div>
+                <div className="ls-1 fs-6 fw-bold">{event.teamCountRegisterd}</div>
+            </div>
+        );
+    }
+
     return (
         <React.Fragment>
             <div className="admin-portal bg-sec-pattern bg-norepeat py-5">
@@ -88,7 +97,7 @@ function AdminDashboard() {
                             <div className="admin-info px-3">
                                 <div className="py-3 d-flex">
                                     <div className="ls-1 fs-5 fw-bold pe-3">Total no of Uses Registerd: </div>
-                                    <div className="ls-1 fs-5 fw-bold">45</div>
+                                    <div className="ls-1 fs-5 fw-bold">{totalUsers}</div>
                                 </div>
                                 <div className="ls-1 fs-5 py-4 fw-bold">Registrations Per Event
                                 </div>
@@ -105,6 +114,9 @@ function AdminDashboard() {
                                         <div className="ls-1 fs-6 pe-3">Total no of Uses Registerd: </div>
                                         <div className="ls-1 fs-6 fw-bold">45</div>
                                     </div> */}
+                                    {usersPerEvent.forEach(event => {
+                                        showUsersPerEvent(event)
+                                    })}
                                 </div>
                             </div>
                         </div>

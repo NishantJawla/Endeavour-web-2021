@@ -9,7 +9,8 @@ export const registrationsPerEvent = (setUsersPerEvent) => {
         output format is an obeject
         {
             eventName: 'name of the event',
-            teamCount: "count"
+            teamCountRegisterd: count,
+            teamCountPaid: count
         }  
     */
     return fetch(`${API}admin/api/registrationPerEvent`, {
@@ -25,7 +26,7 @@ export const registrationsPerEvent = (setUsersPerEvent) => {
         return response.json();
     })
     .then(data => {
-        setUsersPerEvent(data);
+        setUsersPerEvent(data.registrationCount);
         return;
     })
     .catch(error => {
@@ -55,7 +56,8 @@ export const getUsersCount = (setData) => {
         return response.json();
     })
     .then(data => {
-        setData(data);
+        console.log(data);
+        setData(data.usersCount);
         return;
     })
     .catch(error => {
@@ -83,6 +85,7 @@ export const getUsersByEvent = (eventId, paidStatus, setData) =>{
         return response.json();
     })
     .then(data => {
+        console.log(data);
         setData(data);
         return;
     })
@@ -110,6 +113,8 @@ export const getTeamHeads = (eventId, paidStatus, setData) =>{
         return response.json();
     })
     .then(data => {
+        console.log("getTeamHeads");
+        console.log(data);
         setData(data);
         return;
     })
@@ -133,6 +138,8 @@ export const getTeamHeadsAll = (paidStatus, setData) =>{
         return response.json();
     })
     .then(data => {
+        console.log("getTeamHeadsall");
+        console.log(data);
         setData(data);
         return;
     })
@@ -156,6 +163,8 @@ export const getUserFromEndvrId = (endvrId, setData) =>{
         return response.json();
     })
     .then(data => {
+        console.log("getUserFromEndvrId");
+        console.log(data);
         setData(data);
         return;
     })
@@ -179,6 +188,8 @@ export const getUserFromMobile = (mobile, setData) => {
         return response.json();
     })
     .then(data => {
+        console.log("getUserFromMobile");
+        console.log(data);
         setData(data);
         return;
     })
@@ -189,7 +200,7 @@ export const getUserFromMobile = (mobile, setData) => {
 
 export const getUsers = (paidStatus, setData) => {
     const { user, token } = isAuthenticated();
-    return fetch(`${API}admin/api/getUser/all/${paidStatus}`, {
+    return fetch(`${API}admin/api/getUser/all`, {
         mode: "cors",
         method: "GET",
         headers: {
@@ -202,6 +213,8 @@ export const getUsers = (paidStatus, setData) => {
         return response.json();
     })
     .then(data => {
+        console.log("getUsers");
+        console.log(data);
         setData(data);
         return;
     })
