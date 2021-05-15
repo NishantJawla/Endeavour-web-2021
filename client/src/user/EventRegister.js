@@ -86,6 +86,11 @@ const  EventRegister = (props) => {
   }, []);
   const {user, token} = isAuthenticated();
   var teamID = undefined;
+  user &&  (<Redirect
+    to={{
+        pathname: "/signin",
+    }}
+    />)
   if(typeof user.registered !== 'undefined' && user.registered.length === 0){
       user.registered.forEach (p => {
           if(p.eventId.toString() === props.id) {

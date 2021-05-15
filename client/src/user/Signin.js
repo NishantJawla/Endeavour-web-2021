@@ -88,7 +88,7 @@ const Signin = () => {
   const signInForm = () => {
     return (
       <div className="row">
-        <div className="col-md-4 col-sm-10 offset-md-4 offset-sm-1 text-left">
+        <div className="col-lg-6 col-xl-4 col-sm-10 offset-lg-3 offset-xl-4 offset-sm-1 text-left">
         <ToastContainer
 position="top-right"
 autoClose={5000}
@@ -120,8 +120,8 @@ pauseOnHover
               />
             </div>
             <div className="d-flex justify-content-between">
-              <Link className="color-secondary" to="/forgotpassword">Forgot Password ?</Link>
-              <Link className="px-5" to="/signup">Sign Up!</Link>
+              <Link className=" color-white" to="/forgotpassword">Forgot Password ?</Link>
+              <Link className="color-white" to="/signup">Sign Up!</Link>
             </div>
             <button onClick={onSubmit} className="btn btn-success py-3 my-4 fs-7 ls-1 fw-bold border-0 bg-secondary btn-block">
               Submit

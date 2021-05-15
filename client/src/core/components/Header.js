@@ -2,7 +2,7 @@
 import React from 'react';
 import {isAuthenticated} from "../../auth/helper/index"
 import {Link} from "react-router-dom"
-import discordImg from "../../assets/discord.png"
+// import discordImg from "../../assets/discord.png";
 function Header(){
 
     const style = {
@@ -38,20 +38,6 @@ function Header(){
                             </React.Fragment>)
                     }
                     </div>
-                    <div className="content color-white ls-2">
-                        KIET Group Of Institutions
-                    </div>
-                   {
-                    !isAuthenticated() && (<React.Fragment>
-                        <Link to="/signup" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Register </Link>
-                        </React.Fragment>)
-                   }
-                   {
-                    isAuthenticated() && (<React.Fragment>
-                        <a href="https://discord.gg/KwSKQb62Hv" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Join Discord <img src={discordImg} alt = "Discord Logo" width="20px" height="20px"/>
-                        </a>
-                        </React.Fragment>)
-                   }
                 </div>
             </div>
         </div> 

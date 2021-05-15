@@ -48,8 +48,8 @@ const Routes = () => {
           <Route path="/events" render={(props) => <EventRegister {...props} />}/> 
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
           <PrivateRoute path="/changepassword" exact component={ChangePassword} />
-          <Route path="/admin/superMan" exact component={ChangePassword} />
-          <Route path="/admin/dashboard" exact component={AdminDashBoard} />
+          <AdminRoute path="/admin/superMan" exact component={ChangePassword} />
+          <AdminRoute path="/admin/dashboard" exact component={AdminDashBoard} />
           <Route path="/:random" component={NotFoundPage}/>
         </Switch>
       <Footer />

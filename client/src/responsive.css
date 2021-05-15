@@ -41,6 +41,15 @@
         margin: auto !important;
         margin-top: 2.5rem !important;
     }
+    .navbar-content{
+        display: none;
+    }
+    .loader img{
+        transform: scale(2);
+    }
+    .header-content .head{
+        font-size: 3rem !important;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px){
