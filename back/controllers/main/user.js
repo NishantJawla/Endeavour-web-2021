@@ -677,12 +677,12 @@ exports.registerEventOne  = async (req,res,next) => {
             leader: req.user._id,
             teamMembers: []
         };
-        data.teamMembers.push(user1._id);
+        data.teamMembers.push(user1.endvrid);
         if(user2) {
-            data.teamMembers.push(user2._id);
+            data.teamMembers.push(user2.endvrid);
         }
         if(user3) {
-            data.teamMembers.push(user3._id);
+            data.teamMembers.push(user3.endvrid);
         }
         let team = new Team(data);
         try{
@@ -733,12 +733,12 @@ exports.registerEventOne  = async (req,res,next) => {
             while(team.teamMembers.length > 0) {
                 team.teamMembers.pop();
             }
-        team.teamMembers.push(user1._id);
+        team.teamMembers.push(user1.endvrid);
         if(user2) {
-            team.teamMembers.push(user2._id);
+            team.teamMembers.push(user2.endvrid);
         }
         if(user3) {
-            team.teamMembers.push(user3._id);
+            team.teamMembers.push(user3.endvrid);
         }
         try{
             teamId = team._id
