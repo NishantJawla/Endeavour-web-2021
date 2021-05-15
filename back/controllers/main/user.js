@@ -516,6 +516,7 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
 }
 
 exports.registerEventOne  = async (req,res,next) => {
+    console.log("Reached here!")
     let status = true;
     var teamId = undefined;
     var hasuserone = false;
