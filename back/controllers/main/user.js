@@ -711,11 +711,11 @@ exports.registerEventOne  = async (req,res,next) => {
             var team = await Team.findOne({_id:teamId.toString()});
             for(let i = 0; i<team.teamMembers.length; i++){
                 let counter = 1;
-                if(team.teamMembers[i].toString() === (user1._id).toString()){
+                if(team.teamMembers[i].toString() === (user1.endvrid).toString()){
                     counter = 0;
                 }
                 if(req.body.member2){
-                    if(team.teamMembers[i].toString() === (user2._id).toString()){
+                    if(team.teamMembers[i].toString() === (user2.endvrid).toString()){
                         counter = 0;
                     }
                 }
@@ -726,7 +726,7 @@ exports.registerEventOne  = async (req,res,next) => {
                 }
                 if(counter) {
                     try{
-                    let tempUser = await  User.getUserById(team.teamMembers[i].toString());
+                    let tempUser = await  User.findOne({endvrid:team.teamMembers[i].toString()});
                     let filtered = tempUser.registered.filter(function(value, index, arr){ 
                         return value.teams.toString() != teamId.toString();
                     });
@@ -895,6 +895,6 @@ exports.registerEventOne  = async (req,res,next) => {
     
 exports.registerEventTwo = (req,res) => {
     res.json({
-        "msg": "Successfully Reached to Part 2"
+        "msg": "Successfully Registered"
     })
 }
