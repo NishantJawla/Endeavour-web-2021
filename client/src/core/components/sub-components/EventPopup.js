@@ -79,7 +79,7 @@ function EventPopup(props){
                             {props.data.eventName}
                             </div>
 
-                            <form className=" py-3" method="POST" >
+                            <form className=" py-3" method="" >
                                 <div className="row py-2 ls-1 fs-6 my-2">
                                     <div className="col-lg-4">
                                             <label for="Username">EndvrId 1: </label>

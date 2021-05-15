@@ -33,8 +33,7 @@ const userSchema = new Schema({
     },
     semester:{
         type: String
-    }
-    ,
+    },
     confirmed: {
         type: Boolean,
         default: false
