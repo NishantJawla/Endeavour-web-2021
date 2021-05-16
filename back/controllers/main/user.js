@@ -520,6 +520,7 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
 }
 
 exports.registerInEvent = async (req, res) => {
+    var c = 1;
     const eventId = req.params.eventId;
     let memberStatus= {
         leader: false,
@@ -531,7 +532,8 @@ exports.registerInEvent = async (req, res) => {
         console.log(user1);
         if(!user1.profile){
             //profile is not verified
-            // console.log("user1 not verified");
+            // console.log("user1 not verified"); 
+            c = 0;  
             return res.status(400).json({
                 status: 400,
                 msg: "Please Complete Your Profile to Continue",
@@ -541,6 +543,7 @@ exports.registerInEvent = async (req, res) => {
         } else if(!user1.eventPass){
             //user does not have event pass
             // console.log("user have no event pass");
+            c = 0;
             return res.status(402).json({
                 status: 402,
                 msg: "Leader Does not have event pass",
@@ -552,6 +555,7 @@ exports.registerInEvent = async (req, res) => {
                 if(event.event.toString() === eventId){
                     //leader is already registed
                     // console.log("user already registered");
+                    c = 0;
                     return res.status(400).json({
                         status: 400,
                         msg: "Leader is already registerd in the event",
@@ -564,6 +568,7 @@ exports.registerInEvent = async (req, res) => {
     }
     catch(err) {
         console.error(err);
+        c = 0;
         return res.status(500).json({
             status: 500,
             msg: "Something went Wrong",
@@ -580,6 +585,7 @@ exports.registerInEvent = async (req, res) => {
             if(!user2.profile) {
                 //user2 profile not completed
                 // console.log("member 2 profile");
+                c = 0;
                 return res.status(400).json({
                     status: 400,
                     msg: "Member 2's Profile is not Verified",
@@ -588,6 +594,7 @@ exports.registerInEvent = async (req, res) => {
             } else if(!user2.eventPass) {
                 //user2 does not have event pass
                 // console.log("member2 event pass");
+                c = 0;
                 return res.status(402).json({
                     status: 402,
                     msg: "Member 2 Does not have event pass",
@@ -598,6 +605,7 @@ exports.registerInEvent = async (req, res) => {
                     if(event.event.toString() === eventId){
                         //user2 already registerd in the event
                         // console.log("member2 already");
+                        c = 0;
                         return res.status(400).json({
                             status: 400,
                             msg: "Member 2 is already Registered",
@@ -610,6 +618,7 @@ exports.registerInEvent = async (req, res) => {
         }
         catch(err) {
             console.error(err);
+            c = 0;
             return res.status(500).json({
                 status: 500,
                 msg: "Something went Wrong",
@@ -619,7 +628,7 @@ exports.registerInEvent = async (req, res) => {
     }
 
     //all validataions completed
-
+    if(c){
     const members = [];
     members.push(user1.endvrid);
     req.body.member2 && members.push(user2.endvrid);
@@ -652,6 +661,7 @@ exports.registerInEvent = async (req, res) => {
         status: 200,
         msg: "Team registered Successfully"
     });
+    }
 }
 
 // exports.registerEventOne  = async (req,res,next) => {
