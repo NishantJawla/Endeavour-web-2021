@@ -94,6 +94,11 @@ router.post('/verification', (req, res) => {
 	if (digest === req.headers['x-razorpay-signature']) {
 		console.log('request is legit')
 		// process it
+        if(req.body.payload.payment.entity.error_code === null){
+            console.log('It\'s a valid payment')
+        } else {
+            console.log('IT is not a valid payment')
+        }
 		require('fs').writeFileSync('payment.json', JSON.stringify(req.body, null, 4))
 	} else {
 		// pass it

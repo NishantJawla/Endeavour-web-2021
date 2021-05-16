@@ -1,47 +1,46 @@
 {
     "entity": "event",
     "account_id": "acc_HAMVGgp7Zbdqtk",
-    "event": "payment.captured",
+    "event": "payment.failed",
     "contains": [
         "payment"
     ],
     "payload": {
         "payment": {
             "entity": {
-                "id": "pay_HBQWK3kl07cpg7",
+                "id": "pay_HBUoXsPqfftu1h",
                 "entity": "payment",
                 "amount": 15000,
                 "currency": "INR",
-                "status": "captured",
-                "order_id": "order_HBQW0LDugd3Cpw",
+                "status": "failed",
+                "order_id": "order_HBUoCS5SFbiEyt",
                 "invoice_id": null,
                 "international": false,
                 "method": "upi",
                 "amount_refunded": 0,
                 "refund_status": null,
-                "captured": true,
-                "description": "60a0d1f4a45a7705fc059d88",
+                "captured": false,
+                "description": "ENDVR20217054409248",
                 "card_id": null,
                 "bank": null,
                 "wallet": null,
-                "vpa": "success@razorpay",
+                "vpa": "failure@razorpay",
                 "email": "nishantjawla12225@gmail.com",
                 "contact": "+917054409248",
                 "notes": [],
-                "fee": 354,
-                "tax": 54,
-                "error_code": null,
-                "error_description": null,
-                "error_source": null,
-                "error_step": null,
-                "error_reason": null,
+                "fee": null,
+                "tax": null,
+                "error_code": "BAD_REQUEST_ERROR",
+                "error_description": "Payment failed",
+                "error_source": "gateway",
+                "error_step": "payment_response",
+                "error_reason": "payment_failed",
                 "acquirer_data": {
-                    "rrn": "865690088734",
-                    "upi_transaction_id": "E0329167D0C3EE47673A13B0DA9856F7"
+                    "rrn": null
                 },
-                "created_at": 1621160010
+                "created_at": 1621175132
             }
         }
     },
-    "created_at": 1621160010
+    "created_at": 1621175132
 }
