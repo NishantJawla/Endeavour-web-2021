@@ -631,24 +631,38 @@ exports.registerInEvent = async (req, res) => {
     const members = [];
     members.push(user1.endvrid);
     req.body.member2 && members.push(user2.endvrid);
-
     let team = new Team({
         event: eventId,
         leader: user1._id,
         teamMembers: members
     });
+    
+
+    try{
+        const someEvent = await Event.findOne({_id: eventId}).exec();
+        someEvent.paid.push(team._id);
+        var eventName = someEvent.eventName
+        someEvent.save();
+    } catch (err) {
+        console.log(err)
+    }
     //saved team in the database
     team.save();
-
+    let someUserData = {
+        eventName,
+        members
+    };
     user1.registered.push({
         teams: team._id,
         event: eventId,
         editable: false
     });
+    user1.myEvents.push(someUserData);
     user1.save();
 
     //if user2 is present then save in his database also
     if(req.body.member2){
+        user2.myEvents.push(someUserData);
         user2.registered.push({
             teams: team._id,
             event: eventId,
