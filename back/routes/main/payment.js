@@ -105,7 +105,12 @@ router.post('/verification', (req, res) => {
                     })
                 })
             } else if(amount === 5000){
-                console.log("Payment for internship fair")
+                User.findOne({endvrid : endvrId}).exec((err, user) =>{
+                    user.internship = true;
+                    user.save((err, user) => {
+                        console.log("send a mail here")
+                    })
+                })
             }
             
         } else {
