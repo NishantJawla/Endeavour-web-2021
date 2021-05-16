@@ -4,6 +4,7 @@ const Razorpay = require("razorpay");
 const Event = require('../../models/event');
 const Team = require('../../models/team');
 const User = require('../../models/user');
+const Payment = require('../../models/payment');
 const router = express.Router();
 const shortid = require('shortid')
 router.post("/orders/eventpass", async (req, res) => {
@@ -95,6 +96,19 @@ router.post('/verification', (req, res) => {
 		console.log('request is legit')
 		// process it
         if(req.body.payload.payment.entity.error_code === null){
+            const payment = new Payment({
+                email: req.body.payload.payment.entity.email,
+                endvrid: req.body.payload.payment.entity.description,
+                phoneNumber: req.body.payload.payment.entity.contact,
+                transid: req.body.payload.payment.entity.id,
+                amount: req.body.payload.payment.entity.amount,
+                success: true
+            });
+            payment.save((err, payment) => {
+                return res.status(400).json({
+                    "error" : req.body.payload.payment.entity.error_description
+                })
+            })
             var amount = parseInt(req.body.payload.payment.entity.amount)
             var endvrId = req.body.payload.payment.entity.description
             if(amount === 15000){
@@ -114,8 +128,17 @@ router.post('/verification', (req, res) => {
             }
             
         } else {
-            return res.status(400).json({
-                "error" : req.body.payload.payment.entity.error_description
+            const payment = new Payment({
+                email: req.body.payload.payment.entity.email,
+                endvrid: req.body.payload.payment.entity.description,
+                phoneNumber: req.body.payload.payment.entity.contact,
+                amount: req.body.payload.payment.entity.amount,
+                transid: req.body.payload.payment.entity.id
+            });
+            payment.save((err, payment) => {
+                return res.status(400).json({
+                    "error" : req.body.payload.payment.entity.error_description
+                })
             })
         }
 		require('fs').writeFileSync('payment.json', JSON.stringify(req.body, null, 4))
