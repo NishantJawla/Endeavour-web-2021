@@ -626,7 +626,7 @@ exports.registerInEvent = async (req, res) => {
 
     let team = new Team({
         event: eventId,
-        leader: user._id,
+        leader: user1._id,
         teamMembers: members
     });
     //saved team in the database
