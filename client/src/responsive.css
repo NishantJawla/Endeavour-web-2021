@@ -53,6 +53,39 @@
     .header {
         background-position: center;
     }
+    .content {
+        width: 100% !important;
+    }
+    .event-pass-outer-box{
+        width: 100% !important;
+        border-radius: 5px !important;
+    }
+    .event-pass > div > div{
+        width: 90% !important;
+    }
+    .content{
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        border-radius: 5px !important;
+    }
+    .event-pass-img{
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+    .event-pass > div >div{
+        width: 100% !important;
+    }
+    .event-pass li{
+        font-size: 0.9rem !important;
+    }
+    .content > div{
+        font-size: 1.4rem !important;
+    }
+    .event-pass-subhead{
+        font-size: 1.2rem !important;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px){
@@ -95,6 +128,34 @@
         margin: auto !important;
         margin-top: 2.5rem !important;
     }
+    .event-pass-outer-box{
+        width: 100% !important;
+    }
+    .event-pass > div > div{
+        width: 90% !important;
+    }
+    .content{
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+    .event-pass-img{
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+    .event-pass > div >div{
+        width: 100% !important;
+    }
+    .event-pass li{
+        font-size: 0.9rem !important;
+    }
+    .content > div{
+        font-size: 1.4rem !important;
+    }
+    .event-pass-subhead{
+        font-size: 1.2rem !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px){
@@ -126,6 +187,20 @@
     footer .each-contact{
         padding-bottom: 0px !important;
     }
+    .event-pass-outer-box{
+        width: 100% !important;
+    }
+    .event-pass > div > div{
+        width: 90% !important;
+    }
+    .content{
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+    .event-pass-img{
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1200px){
@@ -136,5 +211,12 @@
     .event-popup form{
         padding-left: 1.5rem !important;
         padding-right: 1.5rem !important;
+    }
+    .event-pass-outer-box{
+        width: 100% !important;
+    }
+    .event-pass{
+        padding-top: 4.2rem !important;
+        padding-bottom: 4rem !important;
     }
 }

@@ -2,6 +2,8 @@
 import React from "react";
 import {API} from '../../backend'
 import {isAuthenticated, registerEvent} from "../../auth/helper/index";
+import eventImg from "./../../assets/img/eventpass.png";
+
 function loadScript(src) {
 	return new Promise((resolve) => {
 		const script = document.createElement('script')
@@ -60,27 +62,26 @@ function EventPass() {
 
     return (
         <React.Fragment>
-            <div className="event-pass pb-5 bg-main-pattern bg-norepeat">
-                <div className="container">
-                    {/* <div className="heading-font text-center color-white pt-5 pb-3 fw-bold">Event Pass</div> */}
-                    <div className="d-flex w-100 pb-5 h-100 justify-content-center">
-                        <div className="each-event-pass w-50 align-self-center ">
-                            {/* <div className="w-75 m-auto p-5">
-                                <div className="heading-font color-primary text-center fw-bold">Event Pass</div>
-                                <div className="passbenefits py-2">
-                                    <div className="fs-5 fw-bold pb-3 ls-1">Benefits</div>
+            <div className="event-pass py-5 bg-sec-pattern bg-norepeat">
+                <div className="container py-5 mt-4">
+                    {/* <div className="heading-font text-center color-white pt-5 fw-bold">Event Pass</div> */}
+                    <div className="w-75 m-auto pt-5 h-100">
+                        <div className="d-flex event-pass-outer-box justify-content-center w-75 m-auto h-50 rounded-3 overflow-hidden">
+                            <div className="bg-primary event-pass-img w-50 p-5 d-none d-sm-block rounded-3 overflow-hidden">
+                                <img src={eventImg} alt="event img" width="100%" height="100%" />
+                            </div>
+                            <div className="content w-50 py-4 my-3 me-3 px-5 bg-white rounded-3">
+                                <div className="fw-bold fs-4 text-center ls-1">Event Pass</div>
+                                <div className="event-pass-data">
+                                    <div className="event-pass-subhead fs-5 py-2 fw-bold">Benefits</div>
                                     <ul>
-                                        <li className="ls-1 fs-6 fw-bold color-primary">This is benefit 1</li>
-                                        <li className="ls-1 fs-6 fw-bold color-primary">This is benefit 2</li>
-                                        <li className="ls-1 fs-6 fw-bold color-primary">This is benefit 3</li>
+                                        <li>Access to all Corporate and fun events <span className="color-primary fs-7"> (Excluding Hackathon and Internship Fair)</span></li>
+                                        <li>Free pass of all workshops and speaker sessions.</li>
+                                        <li>Entertain yourself in the entertainment eve.</li>
                                     </ul>
-                                </div>
-                                <div className="getpassbutton">
-                                    <button className="p">Buy Pass</button>
-                                </div>
-                            </div> */}
-                            <div className="position-relative card">
-                                <div className="position-absolute m-auto card-strip bg-secondary">
+                                    <div className="getPassButton text-center">
+                                        <button className="py-2 px-3 fs-6 border-0 color-white rounded-3 bg-primary" onClick={displayRazorpay}>Get Your Pass</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +90,6 @@ function EventPass() {
             </div>
             <form>
                 <div>
-                    <button className = "btn btn-primary py-5 px-5" onClick={displayRazorpay}>Buy Pass</button>
                 </div>
             </form>
 
