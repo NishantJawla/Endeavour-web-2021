@@ -96,8 +96,14 @@ router.post('/verification', (req, res) => {
 		// process it
         if(req.body.payload.payment.entity.error_code === null){
             var amount = parseInt(req.body.payload.payment.entity.amount)
+            var endvrId = req.body.payload.payment.entity.description
             if(amount === 15000){
-                console.log("Payment for event pass")
+                User.findOne({endvrid : endvrId}).exec((err, user) =>{
+                    user.eventPass = true;
+                    user.save((err, user) => {
+                        console.log("send a mail here")
+                    })
+                })
             } else if(amount === 5000){
                 console.log("Payment for internship fair")
             }

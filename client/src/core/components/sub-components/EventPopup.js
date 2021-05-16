@@ -210,18 +210,15 @@ const EventPopup = (props) => {
 			amount: data.amount.toString(),
 			order_id: data.id,
 			name: `${user.name}`,
-			description:`${props.data.eventId}`,
-            product: `${props.data.eventId}`,
-            ENDVRID: `${user.endvrid}`,
+			description:`${user.endvrid}`,
 			image: 'http://localhost:1337/logo.svg',
 			handler: function (response) {
 				alert("Please wait while we are processing the payment")
 			},
 			prefill: {
-				name : user.endvrid,
+				name : user.name,
 				email: user.email,
 				phone_number: user.phoneNumber,
-                ENDVR_ID: ''
 			}
 		}
 		const paymentObject = new window.Razorpay(options)

@@ -50,7 +50,6 @@ function EventPass() {
 				name : user.name,
 				email: user.email,
 				phone_number: user.phoneNumber,
-                ENDVR_ID: ''
 			}
 		}
 		const paymentObject = new window.Razorpay(options)
