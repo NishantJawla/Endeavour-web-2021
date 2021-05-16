@@ -215,7 +215,7 @@ const EventPopup = (props) => {
 		console.log(data)
 
 		const options = {
-			key: __DEV__ ? 'rzp_test_sbRY0oc744nz57' : 'PRODUCTION_KEY',
+			key: 'rzp_test_sbRY0oc744nz57',
 			currency: data.currency,
 			amount: data.amount.toString(),
 			order_id: data.id,
