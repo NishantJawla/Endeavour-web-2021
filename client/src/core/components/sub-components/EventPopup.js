@@ -6,6 +6,23 @@ import closeIcon from "./../../../assets/img/icons/cancel.png";
 import {isAuthenticated, registerEvent} from "../../../auth/helper/index";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {API} from '../../../backend'
+function loadScript(src) {
+	return new Promise((resolve) => {
+		const script = document.createElement('script')
+		script.src = src
+		script.onload = () => {
+			resolve(true)
+		}
+		script.onerror = () => {
+			resolve(false)
+		}
+		document.body.appendChild(script)
+	})
+}
+
+const __DEV__ = document.domain === 'localhost'
+
 const EventPopup = (props) => {
 
     const [userData, setUserData] = useState({
@@ -42,7 +59,6 @@ const EventPopup = (props) => {
         if(member3 !== ""){
             Sendingdata.member3 = member3;
         }
-        console.log(Sendingdata);
         registerEvent(props.id, Sendingdata)
         .then((data) => {
             if (data.error) {
@@ -61,7 +77,7 @@ const EventPopup = (props) => {
         })
         .catch( () =>{
             errorMessage()
-            console.log("Error in signup")
+            console.log("Failed!")
         }
             );
     };
@@ -110,7 +126,6 @@ const EventPopup = (props) => {
         transition: "all ease-out",
         transitionDuration:" 0.5s",
     };
-    console.log(props)
 
     const formfill = () => ( 
     <form className=" py-3">
@@ -154,7 +169,7 @@ const EventPopup = (props) => {
                     <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
                 </div>
                 <div className="register-button py-3 px-5">
-                    <button className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
+                    <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
                 </div>
                 
             </div>
@@ -173,6 +188,49 @@ const EventPopup = (props) => {
 </form>)
     
     const {user, token} = isAuthenticated();
+
+    const  displayRazorpay = async (event)=> {
+        event.preventDefault();
+		const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+		if (!res) {
+			alert('Razorpay SDK failed to load. Are you online?')
+			return
+		}
+
+		const data = await fetch(`${API}payment/orders/${props.data.eventId}`, { method: 'POST' }).then((t) =>
+			t.json()
+		)
+
+		console.log(data)
+
+		const options = {
+			key: __DEV__ ? 'rzp_test_sbRY0oc744nz57' : 'PRODUCTION_KEY',
+			currency: data.currency,
+			amount: data.amount.toString(),
+			order_id: data.id,
+			name: `${user.name}`,
+			description:`${props.data.eventId}`,
+            product: `${props.data.eventId}`,
+            ENDVRID: `${user.endvrid}`,
+			image: 'http://localhost:1337/logo.svg',
+			handler: function (response) {
+				alert("Please wait while we are processing the payment")
+			},
+			prefill: {
+				name : user.endvrid,
+				email: user.email,
+				phone_number: user.phoneNumber,
+                ENDVR_ID: ''
+			}
+		}
+		const paymentObject = new window.Razorpay(options)
+		paymentObject.open()
+	}
+
+
+
+
     return (
         <div className="event-popup container w-50 h-100 position-fixed m-auto p-0 top-0" style={props.showSlowly ? showSlowly : hideSlowly}>
             <div className="d-flex w-100 h-100 justify-content-center">

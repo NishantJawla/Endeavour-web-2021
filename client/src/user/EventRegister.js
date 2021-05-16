@@ -105,7 +105,6 @@ const  EventRegister = (props) => {
     }
     const getEventStructure = () => {
         let result = eventData[0].eventStructure.split("--")
-        console.log(eventData);
         return(
             result
             ? result.map((todo, index) => <li>{todo}</li>)
@@ -149,8 +148,6 @@ const  EventRegister = (props) => {
     function allowPopup(){
         const {user} = isAuthenticated();
         if(user){ 
-            console.log(user);
-            console.log(eventPay);
             return (
                 <EventPopup 
                     showSlowly={showPopUp}

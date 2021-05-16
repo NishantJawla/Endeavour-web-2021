@@ -1,0 +1,47 @@
+{
+    "entity": "event",
+    "account_id": "acc_HAMVGgp7Zbdqtk",
+    "event": "payment.captured",
+    "contains": [
+        "payment"
+    ],
+    "payload": {
+        "payment": {
+            "entity": {
+                "id": "pay_HBQWK3kl07cpg7",
+                "entity": "payment",
+                "amount": 15000,
+                "currency": "INR",
+                "status": "captured",
+                "order_id": "order_HBQW0LDugd3Cpw",
+                "invoice_id": null,
+                "international": false,
+                "method": "upi",
+                "amount_refunded": 0,
+                "refund_status": null,
+                "captured": true,
+                "description": "60a0d1f4a45a7705fc059d88",
+                "card_id": null,
+                "bank": null,
+                "wallet": null,
+                "vpa": "success@razorpay",
+                "email": "nishantjawla12225@gmail.com",
+                "contact": "+917054409248",
+                "notes": [],
+                "fee": 354,
+                "tax": 54,
+                "error_code": null,
+                "error_description": null,
+                "error_source": null,
+                "error_step": null,
+                "error_reason": null,
+                "acquirer_data": {
+                    "rrn": "865690088734",
+                    "upi_transaction_id": "E0329167D0C3EE47673A13B0DA9856F7"
+                },
+                "created_at": 1621160010
+            }
+        }
+    },
+    "created_at": 1621160010
+}
