@@ -95,9 +95,17 @@ router.post('/verification', (req, res) => {
 		console.log('request is legit')
 		// process it
         if(req.body.payload.payment.entity.error_code === null){
-            console.log('It\'s a valid payment')
+            var amount = parseInt(req.body.payload.payment.entity.amount)
+            if(amount === 15000){
+                console.log("Payment for event pass")
+            } else if(amount === 5000){
+                console.log("Payment for internship fair")
+            }
+            
         } else {
-            console.log('IT is not a valid payment')
+            return res.status(400).json({
+                "error" : req.body.payload.payment.entity.error_description
+            })
         }
 		require('fs').writeFileSync('payment.json', JSON.stringify(req.body, null, 4))
 	} else {

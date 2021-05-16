@@ -1,46 +1,47 @@
 {
     "entity": "event",
     "account_id": "acc_HAMVGgp7Zbdqtk",
-    "event": "payment.failed",
+    "event": "payment.captured",
     "contains": [
         "payment"
     ],
     "payload": {
         "payment": {
             "entity": {
-                "id": "pay_HBUoXsPqfftu1h",
+                "id": "pay_HBV5EOG838Lahr",
                 "entity": "payment",
                 "amount": 15000,
                 "currency": "INR",
-                "status": "failed",
-                "order_id": "order_HBUoCS5SFbiEyt",
+                "status": "captured",
+                "order_id": "order_HBV4sNg0Cq3oeR",
                 "invoice_id": null,
                 "international": false,
                 "method": "upi",
                 "amount_refunded": 0,
                 "refund_status": null,
-                "captured": false,
+                "captured": true,
                 "description": "ENDVR20217054409248",
                 "card_id": null,
                 "bank": null,
                 "wallet": null,
-                "vpa": "failure@razorpay",
+                "vpa": "success@razorpay",
                 "email": "nishantjawla12225@gmail.com",
                 "contact": "+917054409248",
                 "notes": [],
-                "fee": null,
-                "tax": null,
-                "error_code": "BAD_REQUEST_ERROR",
-                "error_description": "Payment failed",
-                "error_source": "gateway",
-                "error_step": "payment_response",
-                "error_reason": "payment_failed",
+                "fee": 354,
+                "tax": 54,
+                "error_code": null,
+                "error_description": null,
+                "error_source": null,
+                "error_step": null,
+                "error_reason": null,
                 "acquirer_data": {
-                    "rrn": null
+                    "rrn": "378288531345",
+                    "upi_transaction_id": "BBBD7E247E8D3AD527DC559004B5970A"
                 },
-                "created_at": 1621175132
+                "created_at": 1621176079
             }
         }
     },
-    "created_at": 1621175132
+    "created_at": 1621176080
 }
