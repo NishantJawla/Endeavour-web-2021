@@ -43,7 +43,7 @@ const EventPopup = (props) => {
             Sendingdata.member3 = member3;
         }
         console.log(Sendingdata);
-        registerEvent(props.data.eventId, Sendingdata)
+        registerEvent(props.id, Sendingdata)
         .then((data) => {
             if (data.error) {
             errorMessage()

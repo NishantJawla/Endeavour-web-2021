@@ -150,7 +150,7 @@ const  EventRegister = (props) => {
         const {user} = isAuthenticated();
         if(user){ 
             console.log(user);
-            console.log("returning things");
+            console.log(eventPay);
             return (
                 <EventPopup 
                     showSlowly={showPopUp}
