@@ -224,52 +224,76 @@ export const updateProfile = (data) => {
 
 export const getRegisteredEvents = (setEvents) => {
     const { user, token } = isAuthenticated();
+    console.log("function called");
     const output = [];
-    console.log(user.registered);
-    user.registered.forEach(event => {
-        const eachEvent = {
-            eventName: "",
-            paidStatus: ""
+    const users = [];
+    fetch(`${API}user/getUser`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
         }
-        fetch(`${API}user/checkUser/event/${event.event}`, {
-            mode: "cors",
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                Authorization: `${token}`
-            }
-        })
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            eachEvent.eventName = data.name;
-        })
-        .catch(err => {
-            console.error(err);
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => { 
+        console.log(data.userData);
+        data.userData.registered.forEach(event => {
+            const eachEvent = {
+                eventName: "",
+                paidStatus: ""
+            };
+            fetch(`${API}user/checkUser/event/${event.event}`, {
+                mode: "cors",
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `${token}`
+                }
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                eachEvent.eventName = data.name;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+            fetch(`${API}user/checkUser/team/${event.teams}`, {
+                mode: "cors",
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `${token}`
+                }
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                eachEvent.paidStatus = data.paid;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+            output.push(eachEvent);
         });
-        fetch(`${API}user/checkUser/team/${event.teams}`, {
-            mode: "cors",
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                Authorization: `${token}`
-            }
-        })
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            eachEvent.paidStatus = data.paid;
-        })
-        .catch(err => {
-            console.error(err);
-        });
-        output.push(eachEvent);
+        return ;
     });
-    setEvents(output);
+    // users.forEach(user => {
+    //     console.log("fffffffffff",user);
+    //     user.registered.forEach(event => {
+            
+    //     });
+    //     console.log("setting data");
+    //     setEvents(output);
+    // });
 };
 
 // export const isRegisteredInEvent = (eventId, setStatus) => {

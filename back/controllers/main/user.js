@@ -531,6 +531,7 @@ exports.registerInEvent = async (req, res) => {
         console.log(user1);
         if(!user1.profile){
             //profile is not verified
+            // console.log("user1 not verified");
             return res.status(400).json({
                 status: 400,
                 msg: "Please Complete Your Profile to Continue",
@@ -539,6 +540,7 @@ exports.registerInEvent = async (req, res) => {
 
         } else if(!user1.eventPass){
             //user does not have event pass
+            // console.log("user have no event pass");
             return res.status(402).json({
                 status: 402,
                 msg: "Leader Does not have event pass",
@@ -549,6 +551,7 @@ exports.registerInEvent = async (req, res) => {
             user1.registered.forEach(event => {
                 if(event.event.toString() === eventId){
                     //leader is already registed
+                    // console.log("user already registered");
                     return res.status(400).json({
                         status: 400,
                         msg: "Leader is already registerd in the event",
@@ -576,6 +579,7 @@ exports.registerInEvent = async (req, res) => {
             user2 = await User.findOne({endvrid: req.body.member2}).exec();
             if(!user2.profile) {
                 //user2 profile not completed
+                // console.log("member 2 profile");
                 return res.status(400).json({
                     status: 400,
                     msg: "Member 2's Profile is not Verified",
@@ -583,7 +587,8 @@ exports.registerInEvent = async (req, res) => {
                 });
             } else if(!user2.eventPass) {
                 //user2 does not have event pass
-                return res.status(402).status({
+                // console.log("member2 event pass");
+                return res.status(402).json({
                     status: 402,
                     msg: "Member 2 Does not have event pass",
                     error: "Member 2 Does not have event pass"
@@ -592,6 +597,7 @@ exports.registerInEvent = async (req, res) => {
                 user2.registered.forEach(event => {
                     if(event.event.toString() === eventId){
                         //user2 already registerd in the event
+                        // console.log("member2 already");
                         return res.status(400).json({
                             status: 400,
                             msg: "Member 2 is already Registered",
@@ -634,7 +640,7 @@ exports.registerInEvent = async (req, res) => {
     user1.save();
 
     //if user2 is present then save in his database also
-    if(user2){
+    if(req.body.member2){
         user2.registered.push({
             teams: team._id,
             event: eventId,
@@ -1321,14 +1327,16 @@ exports.checkUserEvent = (req, res) => {
 
 exports.checkUserTeam = (req, res) => {
     const teamId = req.params.teamId;
+    console.log(teamId);
     Team.findOne({_id: teamId}, (err, team) => {
-        if (err) {
+        if (err || !team) {
+            console.log("not taeam found");
             console.log(err);
         } else {
             res.status(200).json({
                 status: 200,
                 msg: "Fetch Successful",
-                paid: team.paidStatus.toString()
+                paid: team.paidStatus
             });
         }
     });

@@ -19,7 +19,7 @@ const teamSchema = new Schema({
     },
     paidStatus: {
         type: Boolean,
-        default:false
+        default:true
     }
 },
 {

@@ -53,6 +53,11 @@ const UserDashBoard = (props) => {
         });
     }
 
+    useEffect(() => {
+        getUserData(setUserData);
+        getRegisteredEvents(setEvents);
+    }, []);
+
     const onSubmit = (event) => {
         event.preventDefault();
         if(userData.profile){
@@ -115,7 +120,6 @@ const UserDashBoard = (props) => {
     };
 
     const showRegistesterdEvents = () => {
-        console.log(events);
         return (
             events ? 
             events.map((event, index) => {
@@ -141,11 +145,6 @@ const UserDashBoard = (props) => {
     //         console.log("updatiung");
     //     }
     // }
-
-    useEffect(() => {
-        getUserData(setUserData);
-        getRegisteredEvents(setEvents);
-    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0)

@@ -61,6 +61,7 @@ const EventPopup = (props) => {
         }
         registerEvent(props.id, Sendingdata)
         .then((data) => {
+            console.log(data);
             if (data.error) {
             errorMessage()
             setUserData({ ...userData, error: data.error, success: false });
