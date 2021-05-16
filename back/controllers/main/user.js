@@ -415,7 +415,11 @@ exports.getUserHandler = (req, res) => {
     messenger.__v = undefined;
     messenger.createdAt = undefined;
     messenger.updatedAt = undefined;
-    res.status(200).json(messenger);
+    res.status(200).json({
+        status: 200,
+        msg: "got userdata",
+        userData: messenger
+    });
 }
 
 exports.isProfileCompleteHandler = (req, res,next) => {
@@ -1165,9 +1169,38 @@ exports.registerEventOne  = async (req,res,next) => {
 }
     
 exports.registerEventTwo = (req,res) => {
-    console.log("he hahah ha");
     res.status(200).json({
         status: 200,
         "msg": "Successfully Registered"
     })
 }
+
+exports.checkUserEvent = (req, res) => {
+    const eventId = req.params.eventId;
+    Event.findOne({_id: eventId}, (err, event) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).json({
+                status: 200,
+                msg: "Fetch Successful",
+                name: event.eventName
+            });
+        }
+    });
+};
+
+exports.checkUserTeam = (req, res) => {
+    const teamId = req.params.teamId;
+    Team.findOne({_id: teamId}, (err, team) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).json({
+                status: 200,
+                msg: "Fetch Successful",
+                paid: team.paidStatus.toString()
+            });
+        }
+    });
+};

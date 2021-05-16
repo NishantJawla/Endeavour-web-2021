@@ -224,7 +224,11 @@ const  EventRegister = (props) => {
                         <div className="py-3 px-4">
                             <div className="fs-5 fw-bold pb-2 ls-1">Description</div>
                             <div className="fs-6 color-white ls-1">
-                            {eventData[0] ? eventData[0].eventDesc : ""}
+                            {eventData[0] ? eventData[0].eventDesc.split("--").map(line => {
+                                return (
+                                    <div className="ls-1 py-1 fs-6">{line}</div>
+                                );
+                            }) : ""}
                             </div>
                         </div>
                         <div className="py-3 px-4">

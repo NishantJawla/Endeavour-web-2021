@@ -7,7 +7,7 @@ require('../../config/passport')(passport);
 
 //imported variables
 
-const {registerEvent, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler, getUserHandler, isRegisteredAndPaidMobileHandler,registerEventTwo,registerEventOne} = require('../../controllers/main/user');
+const {registerEvent, checkUserEvent, checkUserTeam, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler, getUserHandler, isRegisteredAndPaidMobileHandler,registerEventTwo,registerEventOne} = require('../../controllers/main/user');
 
 router.post("/contactUs",[
     check("contactUserName")
@@ -88,8 +88,10 @@ router.post("/updateProfile",[
     .withMessage("Discord Id Field is Required")
 ],passport.authenticate('jwt', {session: false,failureRedirect : '/failurejson',}),updateProfileHandler);
 
-router.get("/getUser",passport.authenticate('jwt', {session: false,
-    failureRedirect : '/failurejson',}),getUserHandler);
+router.get("/getUser",passport.authenticate('jwt', {session: false, failureRedirect : '/failurejson',}),getUserHandler);
+
+router.get("/checkUser/event/:eventId",passport.authenticate('jwt', {session: false, failureRedirect : '/failurejson',}), checkUserEvent);
+router.get("/checkUser/team/:teamId",passport.authenticate('jwt', {session: false, failureRedirect : '/failurejson',}), checkUserTeam);
 
 router.get("/registered/mobile/:eventId",passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isRegisteredAndPaidMobileHandler);
 

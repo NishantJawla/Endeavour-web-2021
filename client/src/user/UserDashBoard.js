@@ -1,10 +1,10 @@
 //jshint esversion: 8
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 // eslint-disable-next-line
-import { getUserData, getEventData,authenticate, updateProfile ,isAuthenticated} from "./../auth/helper/index";
+import { getUserData, getEventData,authenticate, updateProfile ,isAuthenticated, getRegisteredEvents} from "./../auth/helper/index";
 
 const UserDashBoard = (props) => {
     // eslint-disable-next-line
@@ -57,7 +57,7 @@ const UserDashBoard = (props) => {
         event.preventDefault();
         if(userData.profile){
             //profile is already updated add toster
-            successMessage2()
+            successMessage2();
         } else {
             updateProfile(updatedData).then(data => {
                 if(data.error){
@@ -79,7 +79,7 @@ const UserDashBoard = (props) => {
         }
     };
     const successMessage2 = () => {
-        toast.success('Profile Already Upto date', {
+        toast.success('Profile Already updated Once', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -114,6 +114,22 @@ const UserDashBoard = (props) => {
         }
     };
 
+    const showRegistesterdEvents = () => {
+        console.log(events);
+        return (
+            events.map((event, index) => {
+                return (
+                    <tr>
+                        <th scope="row">{index + 1}</th>
+                        <td>{event.eventName}</td>
+                        <td>Registered</td>
+                        <td className={event.paidStatus ? "color-registered" : ""}>{event.paidStatus ? "Paid" : "UnPaid"}</td>
+                    </tr>
+                );
+            })
+        );
+    }
+
     // function updateProfile (event){
     //     event.preventDefault();
     //     if(userData.profile){
@@ -127,6 +143,7 @@ const UserDashBoard = (props) => {
 
     useEffect(() => {
         getUserData(setUserData);
+        getRegisteredEvents(setEvents);
     }, []);
 
     useEffect(() => {
@@ -149,23 +166,23 @@ const UserDashBoard = (props) => {
                         </div>
                     </div>
                     <div className="col-lg-7 col-md-10">
-                    <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-/>
+                        <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        />
                         <div className="fs-5 fw-bold pb-3 ls-1">Update Profile</div>
                         <div className="profile-update-note py-3 color-white italic ls-1 fw-bold">The Profile can be only updated once. Make sure to enter the Correct Data.</div>
                         <form className="edit-details" action="" method="">
                             <div className="row py-2 ls-1 fs-6">
                                 <div className="col-lg-3">
-                                    <label for="Username">Branch: </label>
+                                    <label htmlFor="Username">Branch: </label>
                                 </div>
                                 <div className="col-lg-9">
                                     <input onChange={handleChange} value={updatedData.branch} className="form-control p-3 border-0" type="text" name="branch" placeholder="Branch" required/>
@@ -193,7 +210,7 @@ pauseOnHover
                                     <label for="Username">Semester: </label>
                                 </div>
                                 <div className="col-lg-9">
-                                    <select onChange={handleChange} name="semester" class="form-select form-control" placeholder="semester" aria-label="Default select example">
+                                    <select onChange={handleChange} name="semester" className="form-select form-control" placeholder="semester" aria-label="Default select example">
                                         <option className="color-secondary" selected={updatedData.semester.toString() === "1" ? true : false} value="1">I</option>
                                         <option className="color-secondary" selected={updatedData.semester.toString() === "2" ? true : false} value="2">II</option>
                                         <option className="color-secondary" selected={updatedData.semester.toString() === "3" ? true : false} value="3">III</option>
@@ -224,10 +241,34 @@ pauseOnHover
                         </form>
                     </div>
                 </div>
-                <div class="row pt-5 color-white">
+                <div className="row pt-5 color-white">
                     <div className="fs-5 fw-bold pb-3 ls-1">Registerd Events</div>
                     <div className="events-registerd-table">
-                        <div className="row col-head py-3 ls-1 fw-bold">
+                    <table class="table color-white">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Registered</th>
+                            <th scope="col">Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {events ? showRegistesterdEvents() : ""}
+                            {/* <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">3</th>
+                            <td colspan="2">Larry the Bird</td>
+                            <td>@twitter</td>
+                            </tr> */}
+                        </tbody>
+                    </table>
+                        {/* <div className="row col-head py-3 ls-1 fw-bold">
                             <div className="col">
                                 Serial No.
                             </div>
@@ -240,9 +281,8 @@ pauseOnHover
                             <div className="col">
                                 Paid Status
                             </div>
-                        </div>
-                        
-                        <div className="row py-2 ls-1">
+                        </div>*/ }
+                        {/* <div className="row py-2 ls-1">
                             <div className="col">
                                 1.
                             </div>
@@ -269,7 +309,7 @@ pauseOnHover
                             <div className="col py-1 not-registerd cursor-pointer">
                                 <div className="">Not paid</div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
