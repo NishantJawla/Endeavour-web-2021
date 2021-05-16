@@ -111,6 +111,49 @@ const  EventRegister = (props) => {
             ? result.map((todo, index) => <li>{todo}</li>)
             : '')
     }
+
+    const getRoundsStructure = () => {
+        let results = eventData[0].eventRounds;
+        return (
+            results.map(round => {
+                let roundData = round.content.split("--");
+
+                return (
+                    <React.Fragment>
+                        <div className="fs-6 pt-3 fw-bold">{round.heading} ({round.title})</div>
+                        {roundData.map(eachLine => {
+                            return (<li className="py-2">{eachLine}</li>);
+                        })}
+                    </React.Fragment>
+                );
+            })
+        );
+    };
+    const getEventRules = () => {
+        let result = eventData[0].eventRules.split("--");
+        return (
+            result ?
+            result.map(rule => {
+                return (
+                    <li className="py-2">{rule}</li>
+                );
+            }) : ""
+        );
+    };
+
+    const getEventFaqs = () => {
+        let results = eventData[0].eventFaq;
+        return (
+            results.map(faq => {
+                return (
+                    <div className="py-2">
+                        <div className="fw-bold">Question: <span className="fw-normal">{faq.question}</span></div>
+                        <div className="fw-bold">Answer: <span className="fw-normal">{faq.answer}</span></div>
+                    </div>
+                );
+            })
+        );
+    };
     // eslint-disable-next-line
     const splitString = (s) => {
         let result = s.split("--")
@@ -174,7 +217,9 @@ const  EventRegister = (props) => {
         <React.Fragment>
             <div className="event-register py-5 bg-sec-pattern bg-norepeat">
                 <div className="container py-5">
-                    <div className="heading-font pt-3 text-center color-white fw-bold">{eventData[0] ? eventData[0].eventName :""}</div>
+                    <div className="heading-font pt-3 text-center color-white fw-bold">{eventData[0] ? eventData[0].eventName :""}
+                        <div className="fs-5">{eventData[0] ? eventData[0].eventTagline : ""}</div>
+                    </div>
                     <div className="event-desc color-white pt-3 px-5 mx-5">
                         <div className="py-3 px-4">
                             <div className="fs-5 fw-bold pb-2 ls-1">Description</div>
@@ -191,7 +236,19 @@ const  EventRegister = (props) => {
                         <div className="py-3 px-4">
                             <div className="fs-5 fw-bold pb-2 ls-1">Rounds</div>
                             <div className="fs-6 color-white ls-1">
-                            Pranav bhai write rounds logic here please!!!!
+                                {eventData[0] ? getRoundsStructure() : ""}
+                            </div>
+                        </div>
+                        <div className="py-3 px-4">
+                            <div className="fs-5 fw-bold pb-2 ls-1">Rules</div>
+                            <div className="fs-6 color-white ls-1">
+                                {eventData[0] ? getEventRules() : ""}
+                            </div>
+                        </div>
+                        <div className="py-3 px-4">
+                            <div className="fs-5 fw-bold pb-2 ls-1">FAQ's</div>
+                            <div className="fs-6 color-white ls-1">
+                                {eventData[0] ? getEventFaqs() : ""}
                             </div>
                         </div>
                         <div className="py-3 px-4">

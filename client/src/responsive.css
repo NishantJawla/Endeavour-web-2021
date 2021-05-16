@@ -50,6 +50,9 @@
     .header-content .head{
         font-size: 3rem !important;
     }
+    .header {
+        background-position: center;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px){
