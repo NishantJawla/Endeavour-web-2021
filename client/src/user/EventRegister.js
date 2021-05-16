@@ -155,9 +155,9 @@ const  EventRegister = (props) => {
                 <EventPopup 
                     showSlowly={showPopUp}
                     hidePopup={hidePopup}
-                    memberCount={eventPay.membersCount}
-                    data = {eventPay}
+                    memberCount={eventData[0] ? eventData[0].memberCount :""}
                     id={idParam.toString()}
+                    data={eventData[0] ? eventData[0] :""}
                 />
             );
         } else {

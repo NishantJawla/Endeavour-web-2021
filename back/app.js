@@ -27,11 +27,13 @@ const authRoutes = require('./routes/main/auth');
 const eventRoutes = require('./routes/main/event');
 const userRouters = require('./routes/main/user');
 const adminRouters = require('./routes/main/admin');
+const paymentRoutes = require('./routes/main/payment');
 //Routes
 app.use('/main/auth',authRoutes);
 app.use('/main/event',eventRoutes);
 app.use('/main/user', userRouters);
 app.use('/main/admin', adminRouters);
+app.use('/main/payment', paymentRoutes);
 app.get('/', (req, res) =>{
     res.send('Welcome to the homepage!!');
 })
