@@ -113,8 +113,11 @@ function AdminDashboard() {
                                         <div className="ls-1 fs-6 pe-3">Total no of Uses Registerd: </div>
                                         <div className="ls-1 fs-6 fw-bold">45</div>
                                     </div> */}
-                                    {usersPerEvent.forEach(event => {
-                                        showUsersPerEvent(event)
+                                    {usersPerEvent.map(user => {
+                                        return (<div className="py-3 d-flex">
+                                            <div className="ls-1 fs-6 pe-3">Total no of Uses {user.eventName}: </div>
+                                            <div className="ls-1 fs-6 fw-bold">{user.teamCountRegisterd}</div>
+                                        </div>)
                                     })}
                                 </div>
                             </div>

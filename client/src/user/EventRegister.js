@@ -1,11 +1,11 @@
 //jshint esversion: 8
-import React,{useEffect,useState,useRef}from "react";
+import React, { useEffect, useState, useRef}from "react";
 import EventPopup from "./../core/components/sub-components/EventPopup";
 import firebase from "../firebase"
 import {getEventHandler, isAuthenticated} from "../auth/helper/index";
 import { Redirect, Link } from "react-router-dom";
-import axios from "axios"
-import {API} from "../backend"
+import axios from "axios";
+import {API} from "../backend";
 const  EventRegister = (props) => {
     //evets ka data
     const eventParam = props.location.pathname.split("/")
@@ -105,6 +105,7 @@ const  EventRegister = (props) => {
     }
     const getEventStructure = () => {
         let result = eventData[0].eventStructure.split("--")
+        console.log(eventData);
         return(
             result
             ? result.map((todo, index) => <li>{todo}</li>)

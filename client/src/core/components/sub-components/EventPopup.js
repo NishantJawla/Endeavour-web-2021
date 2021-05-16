@@ -32,17 +32,16 @@ const EventPopup = (props) => {
     // }
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log("herrrreee")
         setUserData({ ...userData, error: false });
         var Sendingdata = {
-        }
+            
+        };
         if(member2 !== ""){
             Sendingdata.member2 = member2;
         }
         if(member3 !== ""){
             Sendingdata.member3 = member3;
         }
-        console.log("fucking sick");
         console.log(Sendingdata);
         registerEvent(props.data.eventId, Sendingdata)
         .then((data) => {
