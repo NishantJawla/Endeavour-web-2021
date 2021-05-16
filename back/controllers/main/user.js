@@ -520,6 +520,7 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
 }
 
 exports.registerInEvent = async (req, res) => {
+    var c = 1;
     const eventId = req.params.eventId;
     let memberStatus= {
         leader: false,
@@ -528,10 +529,10 @@ exports.registerInEvent = async (req, res) => {
     let user1 = undefined;
     try {
         user1 = await User.findOne({_id: req.user._id}).exec();
-        console.log(user1);
         if(!user1.profile){
             //profile is not verified
-            // console.log("user1 not verified");
+            // console.log("user1 not verified"); 
+            c = 0;  
             return res.status(400).json({
                 status: 400,
                 msg: "Please Complete Your Profile to Continue",
@@ -541,6 +542,7 @@ exports.registerInEvent = async (req, res) => {
         } else if(!user1.eventPass){
             //user does not have event pass
             // console.log("user have no event pass");
+            c = 0;
             return res.status(402).json({
                 status: 402,
                 msg: "Leader Does not have event pass",
@@ -552,6 +554,7 @@ exports.registerInEvent = async (req, res) => {
                 if(event.event.toString() === eventId){
                     //leader is already registed
                     // console.log("user already registered");
+                    c = 0;
                     return res.status(400).json({
                         status: 400,
                         msg: "Leader is already registerd in the event",
@@ -564,6 +567,7 @@ exports.registerInEvent = async (req, res) => {
     }
     catch(err) {
         console.error(err);
+        c = 0;
         return res.status(500).json({
             status: 500,
             msg: "Something went Wrong",
@@ -577,70 +581,91 @@ exports.registerInEvent = async (req, res) => {
         //member 2 is present
         try{
             user2 = await User.findOne({endvrid: req.body.member2}).exec();
-            if(!user2.profile) {
-                //user2 profile not completed
-                // console.log("member 2 profile");
-                return res.status(400).json({
-                    status: 400,
-                    msg: "Member 2's Profile is not Verified",
-                    error: "Member 2's Profile is not Verified"
-                });
-            } else if(!user2.eventPass) {
-                //user2 does not have event pass
-                // console.log("member2 event pass");
-                return res.status(402).json({
-                    status: 402,
-                    msg: "Member 2 Does not have event pass",
-                    error: "Member 2 Does not have event pass"
-                });
-            } else {
-                user2.registered.forEach(event => {
-                    if(event.event.toString() === eventId){
-                        //user2 already registerd in the event
-                        // console.log("member2 already");
-                        return res.status(400).json({
-                            status: 400,
-                            msg: "Member 2 is already Registered",
-                            error: "Member 2 is already Registered"
-                        });
-                    }
-                });
-                memberStatus.member2 = user2._id.toString();
+            if(user2){
+                if(!user2.profile) {
+                    //user2 profile not completed
+                    // console.log("member 2 profile");
+                    c = 0;
+                    return res.status(400).json({
+                        status: 400,
+                        msg: "Member 2's Profile is not Verified",
+                        error: "Member 2's Profile is not Verified"
+                    });
+                } else if(!user2.eventPass) {
+                    //user2 does not have event pass
+                    // console.log("member2 event pass");
+                    c = 0;
+                    return res.status(402).json({
+                        status: 402,
+                        msg: "Member 2 Does not have event pass",
+                        error: "Member 2 Does not have event pass"
+                    });
+                } else {
+                    user2.registered.forEach(event => {
+                        if(event.event.toString() === eventId){
+                            //user2 already registerd in the event
+                            // console.log("member2 already");
+                            c = 0;
+                            return res.status(400).json({
+                                status: 400,
+                                msg: "Member 2 is already Registered",
+                                error: "Member 2 is already Registered"
+                            });
+                        }
+                    });
+                    memberStatus.member2 = user2._id.toString();
+                }
             }
         }
         catch(err) {
             console.error(err);
+            c = 0;
             return res.status(500).json({
                 status: 500,
-                msg: "Something went Wrong",
-                error: "Something went Wrong"
+                msg: "Member 2 not found",
+                error: "Member 2 not found"
             });
         }
     }
 
     //all validataions completed
-
+    if(c){
     const members = [];
     members.push(user1.endvrid);
     req.body.member2 && members.push(user2.endvrid);
-
     let team = new Team({
         event: eventId,
-        leader: user._id,
+        leader: user1._id,
         teamMembers: members
     });
+    
+
+    try{
+        const someEvent = await Event.findOne({_id: eventId}).exec();
+        someEvent.paid.push(team._id);
+        var eventName = someEvent.eventName
+        someEvent.save();
+    } catch (err) {
+        console.log(err)
+    }
     //saved team in the database
     team.save();
-
+    let someUserData = {
+        eventName,
+        members,
+        eventId
+    };
     user1.registered.push({
         teams: team._id,
         event: eventId,
         editable: false
     });
+    user1.myEvents.push(someUserData);
     user1.save();
 
     //if user2 is present then save in his database also
     if(req.body.member2){
+        user2.myEvents.push(someUserData);
         user2.registered.push({
             teams: team._id,
             event: eventId,
@@ -652,6 +677,7 @@ exports.registerInEvent = async (req, res) => {
         status: 200,
         msg: "Team registered Successfully"
     });
+    }
 }
 
 // exports.registerEventOne  = async (req,res,next) => {

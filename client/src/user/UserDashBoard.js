@@ -120,15 +120,20 @@ const UserDashBoard = (props) => {
     };
 
     const showRegistesterdEvents = () => {
+        console.log(userData.myEvents)
         return (
-            events ? 
-            events.map((event, index) => {
+            userData.myEvents ? 
+            userData.myEvents.map((event, index) => {
                 return (
                     <tr>
                         <th scope="row">{index + 1}</th>
                         <td>{event.eventName}</td>
-                        <td>Registered</td>
-                        <td className={event.paidStatus ? "color-registered" : ""}>{event.paidStatus ? "Paid" : "UnPaid"}</td>
+                        <td className={true ? "color-registered" : ""}>Yes</td>
+                        <td className={true ? "color-white ls-1" : ""}>{event.members.map((member,index)=> {
+                            return (
+                                <li>{member}</li>
+                            )
+                        })}</td>
                     </tr>
                 );
             }) : ""

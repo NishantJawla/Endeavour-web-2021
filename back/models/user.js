@@ -69,6 +69,9 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+    myEvents: {
+        type: Array
+    },
     resetPassword: {
         passCode:{
             type:String
