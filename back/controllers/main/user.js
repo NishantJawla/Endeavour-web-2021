@@ -529,7 +529,6 @@ exports.registerInEvent = async (req, res) => {
     let user1 = undefined;
     try {
         user1 = await User.findOne({_id: req.user._id}).exec();
-        console.log(user1);
         if(!user1.profile){
             //profile is not verified
             // console.log("user1 not verified"); 
