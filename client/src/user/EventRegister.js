@@ -84,7 +84,11 @@ const  EventRegister = (props) => {
 //   }
     function showButton(){
         const { user } = isAuthenticated();
-        if(user){
+        if(idParam.toString() === "60a0af70a45a7705fc059d82"){
+            return (
+                <a href="https://www.google.com" target="_blank" rel="noreferrer" className="w-100 rounded bg-primary hbg-dark color-white fs-6 text-decoration-none border-0 ls-1 fw-bold py-3 px-3">Register Now</a>
+            );
+        } else if(user){
             return (
                 <button onClick={changeShowPopup} className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Register Now</button>
             );

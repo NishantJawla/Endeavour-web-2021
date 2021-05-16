@@ -61,6 +61,10 @@ const userSchema = new Schema({
     discord: {
         type: String
     },
+    eventPass: {
+        type: Boolean,
+        default: false
+    },
     resetPassword: {
         passCode:{
             type:String
