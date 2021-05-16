@@ -516,7 +516,10 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
 }
 
 exports.registerEventOne  = async (req,res,next) => {
+    console.log(req.body.member2)
     console.log("Reached here!")
+    console.log(req.body.member3)
+    console.log(req.user)
     let status = true;
     var teamId = undefined;
     var hasuserone = false;
@@ -531,7 +534,8 @@ exports.registerEventOne  = async (req,res,next) => {
         })
     }else{
         try {
-            var user1 = await User.findOne({endvrid : req.user.endvrid}).exec();
+            var user1 = await User.findById(req.user._id).exec();
+            const eventSaveHandle = await Event.findById(req.params.eventId).exec();
             if(user1.profile === false){
                 status = false;
                 return res.json(400).json({
@@ -544,30 +548,9 @@ exports.registerEventOne  = async (req,res,next) => {
                     if(team.event.toString() === req.params.eventId){
                         teamId = team.teams
                         hasuserone = true;
-                        if(team.editable === false) {
-                            return res.status(400).json({
-                                status: 400,
-                                msg: "You are already registered in a team",
-                                error: "You are already registered in a team"
-                            })
-                        } else {
-                            try {
-                            let myFunction =  async () => {
-                                let someTeam = await Team.findOne({_id:team.teams.toString()}).exec();
-                                if(someTeam.leader.toString() !== user1._id.toString()) {
-                                    teamId = undefined
-                                    var filtered = someTeam.teamMembers.filter(function(value, index, arr){ 
-                                        return value.toString() !== user1._id.toString();
-                                    });
-                                    someTeam.teamMembers = filtered;
-                                    someTeam.save();
-                                }
-                                }
-                                myFunction();
-                            } catch(err) {
-                                console.log(err);
-                            }
-                        }
+                        return res.send(400).json({
+                            error: "You have been already registered"
+                        })
                     }
                 }); 
             }
@@ -580,7 +563,7 @@ exports.registerEventOne  = async (req,res,next) => {
             })
         }
 
-        if(req.body.member2) {
+        if(req.body.member2 != undefined) {
     try {
         var user2 = await User.findOne({endvrid : req.body.member2}).exec();
         if(user2.profile === false){
@@ -594,29 +577,9 @@ exports.registerEventOne  = async (req,res,next) => {
             user2.registered.forEach(team => {
                 if(team.event.toString() === req.params.eventId){
                     hasusertwo = true;
-                    if(team.editable === false) {
-                        return res.status(400).json({
-                            status: 400,
-                            msg: "You are already registered in a team",
-                            error: "You are already registered in a team"
-                        })
-                    } else {
-                        try{
-                            let myFunction =  async () => {
-                                let someTeam = await Team.findOne({_id:team.teams.toString()}).exec();
-                                if(someTeam._id.toString() !== teamId.toString()) {
-                                    var filtered = someTeam.teamMembers.filter(function(value, index, arr){ 
-                                        return value.toString() !== user2._id.toString();
-                                    });
-                                    someTeam.teamMembers = filtered;
-                                    someTeam.save();
-                                }
-                                }
-                                myFunction();
-                        } catch (err) {
-                            console.log(err);
-                        }
-                    }
+                    return res.send(400).json({
+                        error: "Member 2 have already registered"
+                    })
                 }
             });
         }
@@ -631,7 +594,7 @@ exports.registerEventOne  = async (req,res,next) => {
         
         }
 
-        if(req.body.member3) {
+        if(req.body.member3 != undefined) {
             try {
                 var user3 = await User.findOne({endvrid : req.body.member3}).exec();
                 if(user3.profile === false){
@@ -645,29 +608,9 @@ exports.registerEventOne  = async (req,res,next) => {
                     user3.registered.forEach(team => {
                         if(team.event.toString() === req.params.eventId){
                             hasuserthree = true
-                            if(team.editable === false) {
-                                return res.status(400).json({
-                                    status: 400,
-                                    msg: "You are already registered in a team",
-                                    error: "You are already registered in a team"
-                                })
-                            }else {
-                                try{
-                                    let myFunction =  async () => {
-                                        let someTeam = await Team.findOne({_id:team.teams.toString()}).exec();
-                                        if(someTeam._id.toString() !== teamId.toString()) {
-                                            var filtered = someTeam.teamMembers.filter(function(value, index, arr){ 
-                                                return value.toString() !== user2._id.toString();
-                                            });
-                                            someTeam.teamMembers = filtered;
-                                            someTeam.save();
-                                        }
-                                        }
-                                        myFunction();
-                                } catch (err) {
-                                    console.log(err);
-                                }
-                            }
+                            return res.send(400).json({
+                                error: "Member have been already registered"
+                            })
                         }
                     });
                 }
@@ -683,97 +626,30 @@ exports.registerEventOne  = async (req,res,next) => {
     
     }
     ////////// ----------------------------Verified Users -------------------------///
-    if(teamId === undefined) {
-        let data = {
-            event: req.params.eventId,
-            leader: req.user._id,
-            teamMembers: []
-        };
-        data.teamMembers.push(user1.endvrid);
-        if(user2) {
-            data.teamMembers.push(user2.endvrid);
-        }
-        if(user3) {
-            data.teamMembers.push(user3.endvrid);
-        }
-        let team = new Team(data);
-        try{
-            const teamCreated = await team.save();
-            teamId = teamCreated._id
-        }catch (err) {
-            return res.json({
-                status: 400,
-                msg: "Failed to save Team",
-                error: " Failed to save Team"
-            })
-        }
-    } else {
-        try {
-            var team = await Team.findOne({_id:teamId.toString()});
-            for(let i = 0; i<team.teamMembers.length; i++){
-                let counter = 1;
-                if(team.teamMembers[i].toString() === (user1.endvrid).toString()){
-                    counter = 0;
-                }
-                if(req.body.member2){
-                    if(team.teamMembers[i].toString() === (user2.endvrid).toString()){
-                        counter = 0;
-                    }
-                }
-                if(req.body.member3){
-                    if(team.teamMembers[i].toString() === (user3._id).toString()){
-                        counter = 0;
-                    }
-                }
-                if(counter) {
-                    try{
-                    let tempUser = await  User.findOne({endvrid:team.teamMembers[i].toString()});
-                    let filtered = tempUser.registered.filter(function(value, index, arr){ 
-                        return value.teams.toString() != teamId.toString();
-                    });
-                    tempUser.registered = filtered;
-                    try{
-                        tempUser.save()
-                    } catch(err){
-                        console.log(err)
-                    }
-                    } catch (err) {
-                        console.log(err)
-                    }
-                }
-            }
-            while(team.teamMembers.length > 0) {
-                team.teamMembers.pop();
-            }
-        team.teamMembers.push(user1.endvrid);
-        if(user2) {
-            team.teamMembers.push(user2.endvrid);
-        }
-        if(user3) {
-            team.teamMembers.push(user3.endvrid);
-        }
-        try{
-            teamId = team._id
-            team.save();
-        
-        }catch (err) {
-            return res.json({
-                status: 400,
-                msg: "Failed to save Team",
-                error: " Failed to save Team"
-            })
-        }
-        }catch (err) {
-            return res.status(400).json({
-                status: 400,
-                msg: "Team not found",
-                error: "Team not found"
-            })
-        }
-        
-
+    let data = {
+        event: eventSaveHandle._id,
+        leader: req.user._id,
+        teamMembers: []
+    };
+    data.teamMembers.push(user1.endvrid);
+    if(user2) {
+        data.teamMembers.push(user2.endvrid);
     }
-
+    if(user3) {
+        data.teamMembers.push(user3.endvrid);
+    }
+    let team = new Team(data);
+    try{
+        const teamCreated = await team.save();
+        teamId = teamCreated._id
+    }catch (err) {
+        console.log(err)
+        return res.json({
+            status: 400,
+            msg: "Failed to save Team",
+            error: " Failed to save Team"
+        })
+    }
     /////////save to user //////////////
     if(hasuserone) {
         try{
@@ -822,7 +698,7 @@ exports.registerEventOne  = async (req,res,next) => {
             console.log(err)
         }
     }else{
-        if(req.body.member2) {
+        if(req.body.member2 !== undefined) {
             try {
                 user2.registered.push({
                     teams: teamId,
@@ -874,7 +750,6 @@ exports.registerEventOne  = async (req,res,next) => {
     }
 
     try{
-        const eventSaveHandle = await Event.findById(req.params.eventId).exec();
         if(eventSaveHandle.registered.indexOf(teamId) === -1) {
             eventSaveHandle.registered.push(teamId)
             console.log("Saved to event");
