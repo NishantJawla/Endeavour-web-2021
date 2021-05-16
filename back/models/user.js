@@ -65,6 +65,10 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+    internship: {
+        type: Boolean,
+        default: false
+    },
     resetPassword: {
         passCode:{
             type:String

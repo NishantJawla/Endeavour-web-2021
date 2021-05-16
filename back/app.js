@@ -45,7 +45,9 @@ app.get('/failurejson', function(req, res) {
         error: "Authentication Failed Login Again"
     });
 });
-
+app.get('main/logo.svg', (req, res) => {
+	res.sendFile(path.join(__dirname, 'logo.png'))
+})
 //port connection
 app.listen(port,(req, res) => {
     console.log(`The website is running at ${port}`);
