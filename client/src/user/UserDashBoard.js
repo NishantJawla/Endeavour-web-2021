@@ -117,6 +117,7 @@ const UserDashBoard = (props) => {
     const showRegistesterdEvents = () => {
         console.log(events);
         return (
+            events ? 
             events.map((event, index) => {
                 return (
                     <tr>
@@ -126,7 +127,7 @@ const UserDashBoard = (props) => {
                         <td className={event.paidStatus ? "color-registered" : ""}>{event.paidStatus ? "Paid" : "UnPaid"}</td>
                     </tr>
                 );
-            })
+            }) : ""
         );
     }
 

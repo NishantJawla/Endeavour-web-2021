@@ -20,6 +20,7 @@ import ResetPassword from "./user/ResetPassword";
 import EventRegister from "./user/EventRegister";
 import SpeakersPage from "./core/components/SpeakersPage";
 import AdminRoute from "./auth/helper/AdminRoutes";
+import EventPass from "./core/components/EventPass";
 import AdminDashBoard from "./admin/AdminDashboard";
 
 const Routes = () => {
@@ -44,6 +45,7 @@ const Routes = () => {
           <Route path="/forgotpassword" exact component={ForgotPassword} />
           <Route path="/resetpassword" exact component={ResetPassword} />
           <Route path="/guests" exact component={SpeakersPage} />
+          <Route path="/geteventpass" exact component={EventPass} />
           {/* <Route path="/events"  component={EventRegister} />    */}
           <Route path="/events" render={(props) => <EventRegister {...props} />}/> 
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
