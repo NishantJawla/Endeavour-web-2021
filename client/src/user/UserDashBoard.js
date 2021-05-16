@@ -129,7 +129,11 @@ const UserDashBoard = (props) => {
                         <th scope="row">{index + 1}</th>
                         <td>{event.eventName}</td>
                         <td className={true ? "color-registered" : ""}>Yes</td>
-                        <td className={true ? "color-registered" : ""}>{event.members}</td>
+                        <td className={true ? "color-white ls-1" : ""}>{event.members.map((member,index)=> {
+                            return (
+                                <li>{member}</li>
+                            )
+                        })}</td>
                     </tr>
                 );
             }) : ""
