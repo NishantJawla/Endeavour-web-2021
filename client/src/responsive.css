@@ -58,7 +58,6 @@
     }
     .event-pass-outer-box{
         width: 100% !important;
-        border-radius: 5px !important;
     }
     .event-pass > div > div{
         width: 90% !important;
@@ -66,7 +65,6 @@
     .content{
         padding-left: 2rem !important;
         padding-right: 2rem !important;
-        border-radius: 5px !important;
     }
     .event-pass-img{
         padding-left: 2rem !important;

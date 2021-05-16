@@ -70,7 +70,8 @@ function EventPass() {
                             <div className="bg-primary event-pass-img w-50 p-5 d-none d-sm-block rounded-3 overflow-hidden">
                                 <img src={eventImg} alt="event img" width="100%" height="100%" />
                             </div>
-                            <div className="content w-50 py-4 my-3 me-3 px-5 bg-white rounded-3">
+                            <div className="content position-relative w-50 py-4 my-3 me-3 px-5 bg-white rounded-3">
+                                <div className="position-absolute price-ribbon color-white bg-primary"><div className="fs-3 color-white px-5 mx-5 py-1 ls-1">&#8377;150</div></div>
                                 <div className="fw-bold fs-4 text-center ls-1">Event Pass</div>
                                 <div className="event-pass-data">
                                     <div className="event-pass-subhead fs-5 py-2 fw-bold">Benefits</div>
