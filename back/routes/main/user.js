@@ -7,7 +7,7 @@ require('../../config/passport')(passport);
 
 //imported variables
 
-const {registerEvent, checkUserEvent, checkUserTeam, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler, getUserHandler, isRegisteredAndPaidMobileHandler,registerEventTwo,registerEventOne} = require('../../controllers/main/user');
+const {registerEvent, checkUserEvent, checkUserTeam, addTeamMember, removeTeamMember, unregisterEvent, changePasswordHandler,contactUsTwoHandler,contactUsOneHandler,updateProfileHandler, getUserHandler, isRegisteredAndPaidMobileHandler, registerEventTwo, registerEventOne, registerInEvent} = require('../../controllers/main/user');
 
 router.post("/contactUs",[
     check("contactUserName")
@@ -34,7 +34,9 @@ router.post("/contactUs",[
     .withMessage("Content Should be atleast 20 character long")
     ],contactUsOneHandler,contactUsTwoHandler);
 
-router.post("/register/:eventId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), registerEventOne,registerEventTwo);
+// router.post("/register/:eventId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), registerEventOne,registerEventTwo);
+
+router.post("/register/:eventId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), registerInEvent);
 
 router.post("/addTeamMember/:teamId",
             [check("newMember")

@@ -21,7 +21,7 @@ function Header(){
                             COHORT OF PATHFINDERS
                             </div>
                             <div className="fs-6 py-3 ls-1">
-                                April 12, 2021
+                                June 13, 2021
                             </div>
                         </div>
                         <div className="content color-white ls-2">

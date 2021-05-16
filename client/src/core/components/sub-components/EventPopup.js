@@ -138,14 +138,19 @@ const EventPopup = (props) => {
         </div>
     </div>
 
-    <div className="row py-2 ls-1 fs-6 my-2">
-        <div className="col-lg-4">
-                <label for="Username">EndvrId 2: </label>
+    {
+        props.memberCount.toString() === "2" ? 
+        <div className="row py-2 ls-1 fs-6 my-2">
+            <div className="col-lg-4">
+                    <label for="Username">EndvrId 2: </label>
+            </div>
+            <div className="col-lg-8">
+                <input onChange={handleChange("member2")} className="form-control p-3 border-0" type="text" autoComplete="off" value={member2} />
+            </div>
         </div>
-        <div className="col-lg-8">
-            <input onChange={handleChange("member2")} className="form-control p-3 border-0" type="text" autoComplete="off" value={member2} />
-        </div>
-    </div>
+        : 
+        null
+    }
 
     {
         props.memberCount.toString() === "3" ? 
@@ -168,9 +173,13 @@ const EventPopup = (props) => {
                 <div className="register-button py-3 px-5">
                     <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
                 </div>
-                <div className="register-button py-3 px-5">
-                    <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
-                </div>
+                {
+                    props.id === "60a0d441a45a7705fc059d89" ? 
+                    <div className="register-button py-3 px-5">
+                        <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
+                    </div> : ""
+                }
+                
                 
             </div>
             </React.Fragment>

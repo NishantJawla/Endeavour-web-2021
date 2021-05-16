@@ -519,6 +519,135 @@ exports.isRegisteredAndPaidMobileHandler = (req, res) => {
     })
 }
 
+exports.registerInEvent = async (req, res) => {
+    const eventId = req.params.eventId;
+    let memberStatus= {
+        leader: false,
+        member2: false
+    }
+    let user1 = undefined;
+    try {
+        user1 = await User.findOne({_id: req.user._id}).exec();
+        console.log(user1);
+        if(!user1.profile){
+            //profile is not verified
+            return res.status(400).json({
+                status: 400,
+                msg: "Please Complete Your Profile to Continue",
+                error: "Please Complete Your Profile to Continue"
+            });
+
+        } else if(!user1.eventPass){
+            //user does not have event pass
+            return res.status(402).json({
+                status: 402,
+                msg: "Leader Does not have event pass",
+                error: "Leader Does not have event pass"
+            });
+        } else {
+            //checking weather user is already registed or not
+            user1.registered.forEach(event => {
+                if(event.event.toString() === eventId){
+                    //leader is already registed
+                    return res.status(400).json({
+                        status: 400,
+                        msg: "Leader is already registerd in the event",
+                        error: "Leader is already registered in the event"
+                    });
+                }
+            });
+            memberStatus.leader = user1._id.toString();
+        }
+    }
+    catch(err) {
+        console.error(err);
+        return res.status(500).json({
+            status: 500,
+            msg: "Something went Wrong",
+            error: "Something went Wrong"
+        });
+    }
+
+    let user2= undefined;
+    //for member 2 if available
+    if(req.body.member2){
+        //member 2 is present
+        try{
+            user2 = await User.findOne({endvrid: req.body.member2}).exec();
+            if(!user2.profile) {
+                //user2 profile not completed
+                return res.status(400).json({
+                    status: 400,
+                    msg: "Member 2's Profile is not Verified",
+                    error: "Member 2's Profile is not Verified"
+                });
+            } else if(!user2.eventPass) {
+                //user2 does not have event pass
+                return res.status(402).status({
+                    status: 402,
+                    msg: "Member 2 Does not have event pass",
+                    error: "Member 2 Does not have event pass"
+                });
+            } else {
+                user2.registered.forEach(event => {
+                    if(event.event.toString() === eventId){
+                        //user2 already registerd in the event
+                        return res.status(400).json({
+                            status: 400,
+                            msg: "Member 2 is already Registered",
+                            error: "Member 2 is already Registered"
+                        });
+                    }
+                });
+                memberStatus.member2 = user2._id.toString();
+            }
+        }
+        catch(err) {
+            console.error(err);
+            return res.status(500).json({
+                status: 500,
+                msg: "Something went Wrong",
+                error: "Something went Wrong"
+            });
+        }
+    }
+
+    //all validataions completed
+
+    const members = [];
+    members.push(user1.endvrid);
+    req.body.member2 && members.push(user2.endvrid);
+
+    let team = new Team({
+        event: eventId,
+        leader: user._id,
+        teamMembers: members
+    });
+    //saved team in the database
+    team.save();
+
+    user1.registered.push({
+        teams: team._id,
+        event: eventId,
+        editable: false
+    });
+    user1.save();
+
+    //if user2 is present then save in his database also
+    if(user2){
+        user2.registered.push({
+            teams: team._id,
+            event: eventId,
+            editable: false
+        })
+        user2.save();
+    }
+    res.status(200).json({
+        status: 200,
+        msg: "Team registered Successfully"
+    });
+}
+
 // exports.registerEventOne  = async (req,res,next) => {
 //     console.log(req.body.member2)
 //     console.log("Reached here!")
