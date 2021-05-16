@@ -198,7 +198,7 @@ const EventPopup = (props) => {
 			return
 		}
 
-		const data = await fetch(`${API}payment/orders/${props.data.eventId}`, { method: 'POST' }).then((t) =>
+		const data = await fetch(`${API}payment/orders/internship`, { method: 'POST' }).then((t) =>
 			t.json()
 		)
 

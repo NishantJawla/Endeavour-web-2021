@@ -41,7 +41,7 @@ router.post("/orders/eventpass", async (req, res) => {
 }
 });
 
-router.post("/orders/intership", async (req, res) => {
+router.post("/orders/internship", async (req, res) => {
 
     try {
         const instance = new Razorpay({
