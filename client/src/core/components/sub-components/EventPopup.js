@@ -3,7 +3,7 @@ import React, { useState ,useEffect,useRef} from 'react';
 // eslint-disable-next-line
 import { Link } from 'react-router-dom';
 import closeIcon from "./../../../assets/img/icons/cancel.png";
-import {isAuthenticated, registerEvent} from "../../../auth/helper/index";
+import {isAuthenticated, registerEvent, getUserData} from "../../../auth/helper/index";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {API} from '../../../backend'
@@ -31,6 +31,12 @@ const EventPopup = (props) => {
         error: "",
         success: false,
     });
+
+    const [userInfo, setUserInfo] = useState({});
+
+    useEffect(() => {
+        getUserData(setUserInfo);
+    }, []);
     
     const {member2,member3,error,success} = userData;
 
@@ -170,16 +176,38 @@ const EventPopup = (props) => {
     {
         isAuthenticated() && (
             <React.Fragment>
+                
                 <div className="d-flex justify-space-between">
-                <div className="register-button py-3 px-5">
-                    <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
-                </div>
+                {
+                    !userInfo.eventPass ?
+                        (<React.Fragment>
+                            <div className="register-button py-3">
+                                <Link to="/geteventpass" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white">Get Event Pass</Link>
+                            </div>
+                        </React.Fragment>)
+                     : props.id !== "60a0d441a45a7705fc059d89" ?
+                    (<div className="register-button py-3 px-5">
+                        <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
+                    </div>) : !userInfo.internship ?
+                    (<div className="register-button py-3 px-5">
+                        <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
+                    </div>) : 
+                    (<div className="register-button py-3 px-5">
+                        <button onClick={(event) => {event.preventDefault()}} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Already Registered</button>
+                    </div>)
+                }
+                {/* {
+                    props.id !== "60a0d441a45a7705fc059d89" ? 
+                    <div className="register-button py-3 px-5">
+                        <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
+                    </div> : ""
+                }
                 {
                     props.id === "60a0d441a45a7705fc059d89" ? 
                     <div className="register-button py-3 px-5">
                         <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
                     </div> : ""
-                }
+                } */}
                 
                 
             </div>
@@ -195,6 +223,15 @@ const EventPopup = (props) => {
             </React.Fragment>
         )
     }
+    {/* {
+        !userInfo.eventPass && (
+            <React.Fragment>
+                <div className="register-button py-3">
+                    <Link to="/geteventpass" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white">Get Event Pass</Link>
+                </div>
+            </React.Fragment>
+        )
+    } */}
 </form>)
     
     const {user, token} = isAuthenticated();

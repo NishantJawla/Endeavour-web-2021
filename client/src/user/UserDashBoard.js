@@ -80,7 +80,6 @@ const UserDashBoard = (props) => {
                     successMessage()
                 }
             });
-            console.log("updatiung");
         }
     };
     const successMessage2 = () => {
