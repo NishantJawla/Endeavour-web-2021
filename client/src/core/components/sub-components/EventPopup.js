@@ -256,7 +256,7 @@ const EventPopup = (props) => {
 			description:`${user.endvrid}`,
 			image: 'http://localhost:1337/logo.svg',
 			handler: function (response) {
-				alert("Please wait while we are processing the payment")
+				successMessage2();
 			},
 			prefill: {
 				name : user.name,
@@ -268,7 +268,18 @@ const EventPopup = (props) => {
 		paymentObject.open()
 	}
 
-
+    const successMessage2 = () => {
+    
+        toast.success('Please wait while we are processing the payment & check your mail for receipt', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+};
 
 
     return (
