@@ -17,7 +17,7 @@ router.post("/orders/eventpass", async (req, res) => {
         });
         
     const payment_capture = 1
-    const amount = parseInt(150)
+    const amount = parseInt(1)
     const currency = 'INR'
 
     const options = {
@@ -93,6 +93,7 @@ router.post('/verification', async (req, res) => {
 		// process it
 
         if(req.body.payload.payment.entity.error_code === null){
+            
             const payment = new Payment({
                 email: req.body.payload.payment.entity.email,
                 endvrid: req.body.payload.payment.entity.description,
@@ -130,7 +131,7 @@ router.post('/verification', async (req, res) => {
 
 
 
-            if(amount === 15000){
+            if(amount === 100){
                 User.findOne({endvrid : endvrId}).exec((err, user) =>{
                     user.eventPass = true;
                     user.save((err, user) => {

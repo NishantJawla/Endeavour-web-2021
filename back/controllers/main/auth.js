@@ -77,7 +77,7 @@ if (!errors.isEmpty()) {
                     pass: process.env.GMAIL_PASS,
                 },
             });
-            const url = `${BACKDOMAIN}main/auth/confirmation/${user.uniqueString}`;
+            const url = `${process.env.BACKDOMAIN}main/auth/confirmation/${user.uniqueString}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -183,7 +183,7 @@ exports.confirmUserHandler = (req,res) => {
             if(err || !user) {
                 return res.redirect(`${DOMAIN}`);
             }
-            return res.redirect(`${process.env.DOMAIN}/signin`);
+            return res.redirect(`${process.env.DOMAIN}signin`);
         })
     })
 }

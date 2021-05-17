@@ -38,7 +38,7 @@ function EventPass() {
 		console.log(data)
 
 		const options = {
-			key: 'rzp_test_sbRY0oc744nz57',
+			key: 'rzp_live_bW2H9hmho7861f',
 			currency: data.currency,
 			amount: data.amount.toString(),
 			order_id: data.id,
