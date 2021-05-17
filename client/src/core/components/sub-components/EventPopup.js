@@ -67,7 +67,6 @@ const EventPopup = (props) => {
         }
         registerEvent(props.id, Sendingdata)
         .then((data) => {
-            console.log(data);
             if (data.error) {
             errorMessage(error)
             setUserData({ ...userData, error: data.error, success: false });
@@ -84,7 +83,6 @@ const EventPopup = (props) => {
         })
         .catch( () =>{
             errorMessage()
-            console.log("Failed!")
         }
             );
     };
@@ -248,8 +246,6 @@ const EventPopup = (props) => {
 		const data = await fetch(`${API}payment/orders/internship`, { method: 'POST' }).then((t) =>
 			t.json()
 		)
-
-		console.log(data)
 
 		const options = {
 			key: 'rzp_live_bW2H9hmho7861f',

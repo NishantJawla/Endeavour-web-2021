@@ -11,7 +11,7 @@ import navBarLogo from "./../../assets/img/icons/menu2.png";
 const Navbar = () =>  {
     const fun1 = () => {
         signout(() => {
-            console.log("successfully logged out");
+            // console.log("successfully logged out");
             fun2();
           }
           );

@@ -119,7 +119,7 @@ const UserDashBoard = (props) => {
     };
 
     const showRegistesterdEvents = () => {
-        console.log(userData.myEvents)
+        // console.log(userData.myEvents)
         return (
             userData.myEvents ? 
             userData.myEvents.map((event, index) => {

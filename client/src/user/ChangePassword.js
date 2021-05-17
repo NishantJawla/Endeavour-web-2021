@@ -41,7 +41,7 @@ const ChangePassword = () => {
     })
     .catch( () =>{
         errorMessage()
-        console.log("Error in changePasscord")
+        // console.log("Error in changePasscord")
     }
         );
 

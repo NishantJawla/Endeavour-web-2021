@@ -38,7 +38,7 @@ const ResetPassword = () => {
     setValues({ ...values, error: false });
     resetPasswordHandler({ email,passCode,plainPassword })
     .then((data) => {
-      console(data)
+      // console(data)
         if (data.error) {
         errorMessage()
         setValues({ ...values, error: data.error, success: false });

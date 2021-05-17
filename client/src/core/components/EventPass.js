@@ -45,7 +45,6 @@ function EventPass() {
     };
 
     const errorMessage = (error) => {
-		console.log("showing error message");
         toast.error(error, {
             position: 'top-right',
             autoClose: 5000,
@@ -83,7 +82,7 @@ function EventPass() {
 			)
 	
 			const {user, token} = isAuthenticated();
-			console.log(data)
+			// console.log(data)
 	
 			const options = {
 				key: 'rzp_live_bW2H9hmho7861f',

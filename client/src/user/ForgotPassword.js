@@ -40,7 +40,7 @@ const ForgotPassword = () => {
     })
     .catch( () =>{
         errorMessage()
-        console.log("Error in Forgot Password")
+        // console.log("Error in Forgot Password")
     }
         );
 
