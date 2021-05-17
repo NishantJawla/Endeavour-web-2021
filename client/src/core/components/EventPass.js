@@ -91,9 +91,9 @@ function EventPass() {
 				order_id: data.id,
 				name: `${user.name}`,
 				description:`${user.endvrid}`,
-				image: `${API}logo.svg`,
+				image: 'https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/ssdfa.png?alt=media&token=4e2a19a3-8e14-4108-9bb5-5d23a7efeac6',
 				handler: function (response) {
-					alert("Please wait while we are processing the payment")
+					successMessage2();
 				},
 				prefill: {
 					name : user.name,
@@ -110,6 +110,18 @@ function EventPass() {
 		}
 	}
 
+	const successMessage2 = () => {
+    
+        toast.success('Please wait while we are processing the payment & check your mail for receipt', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+};
 
     return (
         <React.Fragment>
