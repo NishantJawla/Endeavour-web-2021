@@ -224,7 +224,6 @@ export const updateProfile = (data) => {
 
 export const getRegisteredEvents = (setEvents) => {
     const { user, token } = isAuthenticated();
-    console.log("function called");
     const output = [];
     const users = [];
     fetch(`${API}user/getUser`, {
@@ -239,8 +238,7 @@ export const getRegisteredEvents = (setEvents) => {
     .then(response => {
         return response.json();
     })
-    .then(data => { 
-        console.log(data.userData);
+    .then(data => {
         data.userData.registered.forEach(event => {
             const eachEvent = {
                 eventName: "",
@@ -286,14 +284,6 @@ export const getRegisteredEvents = (setEvents) => {
         });
         return ;
     });
-    // users.forEach(user => {
-    //     console.log("fffffffffff",user);
-    //     user.registered.forEach(event => {
-            
-    //     });
-    //     console.log("setting data");
-    //     setEvents(output);
-    // });
 };
 
 // export const isRegisteredInEvent = (eventId, setStatus) => {

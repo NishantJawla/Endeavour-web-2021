@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 .btn,
 .jumbotron,
 .nav :hover {
@@ -17,9 +18,9 @@ body {
   padding: 0;
   left: 0;
   top: 0;
-  font-family: "Mulish", sans-serif !important;
+  font-family: 'Nunito', sans-serif !important;
   color: #202020;
-  font-size: 16px;
+  font-size: 15px;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }

@@ -16,9 +16,9 @@ for (let id in events) {
 seteventData(eventData);
 });
 }, []);
-    console.log({
-        "events": eventData
-    })
+    // console.log({
+    //     "events": eventData
+    // })
     return (
         <React.Fragment>
             <div className="events py-5 bg-main-pattern" id="events">

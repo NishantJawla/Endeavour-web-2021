@@ -328,9 +328,8 @@ exports.getAllUsersByPaidStatus = async (req, res) => {
         const registerdEvents = [];
         user.registered.forEach(async event => {
             const e = await Event.find({_id: event.event});
-            console.log("fuck me");
             console.log(e);
-            console.log(e.eventName);
+            console.log("event name", e.eventName);
             registerdEvents.push(e.eventName);
         });
         responseData.push({
