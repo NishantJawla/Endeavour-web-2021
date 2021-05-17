@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import profileImg from "./../assets/img/icons/profilepic.jpg";
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 // eslint-disable-next-line
 import { getUserData, getEventData,authenticate, updateProfile ,isAuthenticated, getRegisteredEvents} from "./../auth/helper/index";
 
@@ -72,12 +72,8 @@ const UserDashBoard = (props) => {
                         error: data.error
                     });
                 } else {
-                    authenticate(data, () => {
-                        setUpdatedData({
-                        ...updatedData,
-                        });
-                    });
                     successMessage()
+                    getUserData(setUserData);
                 }
             });
         }
@@ -152,7 +148,7 @@ const UserDashBoard = (props) => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-      }, [])
+    }, [])
 
     return (
         <div className="profile-container py-5 bg-sec-pattern bg-norepeat">
@@ -166,7 +162,12 @@ const UserDashBoard = (props) => {
                         <div className="profile-info color-white py-4 text-center">
                             <div className="fs-6 ls-1 py-1 fw-bold ">{userData.name}</div>
                             <div className="fs-6 ls-1 py-1">{userData.email}</div>
-                            <div className="fs-6 ls-1 py-1 fw-bold ">{userData.endvrid}</div>
+                            <div className="fs-6 ls-1 py-1 fw-bold">{userData.endvrid}</div>
+                            {
+                                userData.eventPass && (
+                                    <div className="fs-6 ls-1 py-1 fw-bold color-registered">Pass Active</div>
+                                )
+                            }
                         </div>
                     </div>
                     <div className="col-lg-7 col-md-10">
@@ -237,9 +238,6 @@ const UserDashBoard = (props) => {
                             <div className="row py-4">
                                 <div className="col">
                                     <button type="submit" onClick={onSubmit} className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Update Profile</button>
-                                </div>
-                                <div className="col">
-                                    <button type="reset" className="w-100 rounded bg-secondary color-white fs-6 border-0 ls-1 fw-bold py-3">Clear</button>
                                 </div>
                             </div>
                         </form>

@@ -131,9 +131,9 @@ export const resetPasswordHandler = (data) => {
     })
 }
 
-export const getUserData = (setUserData) => {
+export const getUserData = async (setUserData) => {
     const { user, token } = isAuthenticated();
-    fetch(`${API}user/getUser`, {
+    await fetch(`${API}user/getUser`, {
         mode: "cors",
         method: "GET",
         headers: {
@@ -222,11 +222,11 @@ export const updateProfile = (data) => {
     });
 };
 
-export const getRegisteredEvents = (setEvents) => {
+export const getRegisteredEvents = async (setEvents) => {
     const { user, token } = isAuthenticated();
     const output = [];
     const users = [];
-    fetch(`${API}user/getUser`, {
+    await fetch(`${API}user/getUser`, {
         mode: "cors",
         method: "GET",
         headers: {
@@ -238,7 +238,7 @@ export const getRegisteredEvents = (setEvents) => {
     .then(response => {
         return response.json();
     })
-    .then(data => {
+    .then(  data => {
         data.userData.registered.forEach(event => {
             const eachEvent = {
                 eventName: "",
