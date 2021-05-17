@@ -8,7 +8,7 @@ const port = process.env.PORT;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 //data base connection
-mongoose.connect(process.env.db, 
+mongoose.connect(process.env.DB, 
     {
         useNewUrlParser: true,
         useCreateIndex: true,

@@ -77,7 +77,7 @@ if (!errors.isEmpty()) {
                     pass: process.env.GMAIL_PASS,
                 },
             });
-            const url = `${process.env.DOMAIN}main/auth/confirmation/${user.uniqueString}`;
+            const url = `${BACKDOMAIN}main/auth/confirmation/${user.uniqueString}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
             to: req.body.email, 
@@ -180,14 +180,10 @@ exports.confirmUserHandler = (req,res) => {
         user.endvrid = 'ENDVR2021'+user.phoneNumber.toString();
         user.uniqueString = undefined
         user.save((err, user) => {
-            if (err) {
-                return res.status(400).json({
-                    status: 400,
-                    msg: "Failed to update category",
-                    error: err.message
-                })
+            if(err || !user) {
+                return res.redirect(`${DOMAIN}`);
             }
-            return res.status(200).send("E-Mail Verified Succesfully");
+            return res.redirect(`${process.env.DOMAIN}/signin`);
         })
     })
 }
