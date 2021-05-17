@@ -112,7 +112,7 @@ function EventPass() {
 
 	const successMessage2 = () => {
     
-        toast.success('Please wait while we are processing the payment & check your mail for receipt', {
+        toast.success('Please wait while we are processing the payment & check your mail for receipt. Please refresh too', {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
