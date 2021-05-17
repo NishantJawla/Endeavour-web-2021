@@ -177,7 +177,7 @@ const EventPopup = (props) => {
                 
                 <div className="d-flex justify-space-between">
                 {
-                    !userInfo.eventPass ?
+                    !userInfo.eventPass && props.id !== "60a0b51ca45a7705fc059d83" ?
                         (<React.Fragment>
                             <div className="register-button py-3">
                                 <Link to="/geteventpass" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white">Get Event Pass</Link>

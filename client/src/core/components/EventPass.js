@@ -5,7 +5,7 @@ import {isAuthenticated, getUserData} from "../../auth/helper/index";
 import eventImg from "./../../assets/img/eventpass.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 
 function loadScript(src) {
 	return new Promise((resolve) => {
@@ -21,7 +21,7 @@ function loadScript(src) {
 	})
 }
 
-	const __DEV__ = document.domain === 'localhost'
+	// const __DEV__ = document.domain === 'localhost'
 
 
 function EventPass() {
@@ -55,10 +55,20 @@ function EventPass() {
             progress: undefined,
         });
     };
-	
+	const {user, token} = isAuthenticated();
+	if(!user ) {
+		<Redirect to="/login" />
+	}
 	const  displayRazorpay = async (event)=> {
 
+		const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+		if (!res) {
+			alert('Razorpay SDK failed to load. Are you online?')
+			return
+		}
 		if(isAuthenticated() && !userData.eventPass){
+			
 			// const options = {
 			// 	key: 'rzp_live_bW2H9hmho7861f',
 			// 	currency: data.currency,
@@ -76,14 +86,11 @@ function EventPass() {
 			// 		phone_number: user.phoneNumber,
 			// 	}
 			// }
-	
 			const data = await fetch(`${API}payment/orders/eventpass`, { method: 'POST' }).then((t) =>
 				t.json()
 			)
-	
-			const {user, token} = isAuthenticated();
-			// console.log(data)
-	
+			console.log(data)
+			
 			const options = {
 				key: 'rzp_live_bW2H9hmho7861f',
 				currency: data.currency,
@@ -102,6 +109,7 @@ function EventPass() {
 				}
 			}
 			const paymentObject = new window.Razorpay(options)
+			console.log(paymentObject);
 			paymentObject.open();
 		} else if(isAuthenticated() && userData.eventPass) {
 			successMessage("You already have event pass");
