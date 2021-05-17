@@ -59,14 +59,23 @@ function EventPass() {
 	
 	const  displayRazorpay = async (event)=> {
 
-		if(isAuthenticated() && !userData.eventPass) {
-			event.preventDefault();
-			const {user, token} = isAuthenticated();
-			const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
-	
-			if (!res) {
-				alert('Razorpay SDK failed to load. Are you online?')
-				return
+		if(isAuthenticated() && !userData.eventPass){
+			const options = {
+				key: 'rzp_live_bW2H9hmho7861f',
+				currency: data.currency,
+				amount: data.amount.toString(),
+				order_id: data.id,
+				name: `${user.name}`,
+				description:`${user.endvrid}`,
+				image: `${API}logo.svg`,
+				handler: function (response) {
+					alert("Please wait while we are processing the payment")
+				},
+				prefill: {
+					name : user.name,
+					email: user.email,
+					phone_number: user.phoneNumber,
+				}
 			}
 	
 			const data = await fetch(`${API}payment/orders/eventpass`, { method: 'POST' }).then((t) =>
