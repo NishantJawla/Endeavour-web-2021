@@ -1,8 +1,11 @@
 //jshint esversion: 8
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {API} from '../../backend'
-import {isAuthenticated, registerEvent} from "../../auth/helper/index";
+import {isAuthenticated, getUserData} from "../../auth/helper/index";
 import eventImg from "./../../assets/img/eventpass.png";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Redirect } from "react-router";
 
 function loadScript(src) {
 	return new Promise((resolve) => {
@@ -18,46 +21,85 @@ function loadScript(src) {
 	})
 }
 
-const __DEV__ = document.domain === 'localhost'
+	const __DEV__ = document.domain === 'localhost'
+
+
 function EventPass() {
 
-    const  displayRazorpay = async (event)=> {
-        event.preventDefault();
-        const {user, token} = isAuthenticated();
-		const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+	const [userData, setUserData] = useState({});
 
-		if (!res) {
-			alert('Razorpay SDK failed to load. Are you online?')
-			return
-		}
+	useEffect(() => {
+		getUserData(setUserData);
+	}, []);
 
-		const data = await fetch(`${API}payment/orders/eventpass`, { method: 'POST' }).then((t) =>
-			t.json()
-		)
+	const successMessage = (success) => {
+        toast.success(`${success}`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    };
 
-		console.log(data)
+    const errorMessage = (error) => {
+		console.log("showing error message");
+        toast.error(error, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    };
+	
+	const  displayRazorpay = async (event)=> {
 
-		const options = {
-			key: 'rzp_test_sbRY0oc744nz57',
-			currency: data.currency,
-			amount: data.amount.toString(),
-			order_id: data.id,
-			name: `${user.name}`,
-			description:`${user.endvrid}`,
-			image: `${API}logo.svg`,
-			handler: function (response) {
-				alert("Please wait while we are processing the payment")
-			},
-			prefill: {
-				name : user.name,
-				email: user.email,
-				phone_number: user.phoneNumber,
+		if(isAuthenticated() && !userData.eventPass) {
+			event.preventDefault();
+			const {user, token} = isAuthenticated();
+			const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+	
+			if (!res) {
+				alert('Razorpay SDK failed to load. Are you online?')
+				return
 			}
+	
+			const data = await fetch(`${API}payment/orders/eventpass`, { method: 'POST' }).then((t) =>
+				t.json()
+			)
+	
+			console.log(data)
+	
+			const options = {
+				key: 'rzp_test_sbRY0oc744nz57',
+				currency: data.currency,
+				amount: data.amount.toString(),
+				order_id: data.id,
+				name: `${user.name}`,
+				description:`${user.endvrid}`,
+				image: `${API}logo.svg`,
+				handler: function (response) {
+					alert("Please wait while we are processing the payment")
+				},
+				prefill: {
+					name : user.name,
+					email: user.email,
+					phone_number: user.phoneNumber,
+				}
+			}
+			const paymentObject = new window.Razorpay(options)
+			paymentObject.open();
+		} else if(isAuthenticated() && userData.eventPass) {
+			successMessage("You already have event pass");
+		} else {
+			errorMessage("Please Login to continue");
 		}
-		const paymentObject = new window.Razorpay(options)
-		paymentObject.open()
 	}
-
 
 
     return (
@@ -83,6 +125,17 @@ function EventPass() {
                                     <div className="getPassButton text-center">
                                         <button className="py-2 px-3 fs-6 border-0 color-white rounded-3 bg-primary" onClick={displayRazorpay}>Get Your Pass</button>
                                     </div>
+									<ToastContainer
+									position="top-right"
+									autoClose={5000}
+									hideProgressBar={false}
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									pauseOnFocusLoss
+									draggable
+									pauseOnHover
+									/>
                                 </div>
                             </div>
                         </div>
