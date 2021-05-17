@@ -644,6 +644,12 @@ exports.registerInEvent = async (req, res) => {
         const someEvent = await Event.findOne({_id: eventId}).exec();
         someEvent.paid.push(team._id);
         var eventName = someEvent.eventName
+        someEvent.mails.push(user1.email);
+        someEvent.discord.push(user1.discord);
+        if(req.body.member2)  {
+            someEvent.mails.push(user2.email);
+            someEvent.discord.push(user2.discord);
+        }
         someEvent.save();
     } catch (err) {
         console.log(err)
@@ -673,6 +679,7 @@ exports.registerInEvent = async (req, res) => {
         })
         user2.save();
     }
+    
     res.status(200).json({
         status: 200,
         msg: "Team registered Successfully"
