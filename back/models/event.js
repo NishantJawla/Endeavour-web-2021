@@ -25,6 +25,12 @@ const eventSchema = new Schema({
         type: Boolean,
         default: false
     },
+    discord: {
+        type: Array
+    },
+    mails: {
+        type: Array
+    },
     paid:[
         {
                 type: Schema.Types.ObjectId,
