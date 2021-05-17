@@ -183,7 +183,7 @@ const EventPopup = (props) => {
                                 <Link to="/geteventpass" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white">Get Event Pass</Link>
                             </div>
                         </React.Fragment>)
-                     : props.id !== "60a0d441a45a7705fc059d89" ?
+                     : props.id !== "60a0b51ca45a7705fc059d83" ?
                     (<div className="register-button py-3 px-5">
                         <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
                     </div>) : !userInfo.internship ?
