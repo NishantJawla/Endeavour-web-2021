@@ -115,27 +115,12 @@ router.post('/verification', (req, res) => {
                     User.findOne({endvrid : endvrId}).exec((err, user) =>{
                         user.eventPass = true;
                         user.save((err, user) => {
-                            // 60a25e6c54c12d4e6c86f853
-                            Event.findOne({_id: "60a25e6c54c12d4e6c86f853"}).exec((err, event) => {
-                                event.mails.push(user.email);
-                                event.save();
-                            })
                         })
                     })
                 } else if(amount === 200){
                     User.findOne({endvrid : endvrId}).exec((err, user) =>{
                         user.internship = true;
-                        user.myEvents.push({
-                            eventName: "Internship Fair",
-                            members: user.endvrid,
-                            eventId: "60a0b51ca45a7705fc059d83"
-                        });
                         user.save((err, user) => {
-                            Event.findOne({_id: "60a0b51ca45a7705fc059d83"}).exec((err, event) => {
-                                event.mails.push(user.email);
-                                event.discord.push(user.discord);
-                                event.save();
-                            })
                         })
                     })
                 }
