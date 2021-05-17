@@ -52,7 +52,7 @@ router.post("/orders/internship", async (req, res) => {
         });
         
     const payment_capture = 1
-    const amount = parseInt(50)
+    const amount = parseInt(2)
     const currency = 'INR'
 
     const options = {
@@ -78,9 +78,9 @@ router.post("/orders/internship", async (req, res) => {
 }
 });
 
-router.post('/verification', async (req, res) => {
+router.post('/verification', (req, res) => {
 	// do a validation
-    console.log("reached here")
+    // console.log("reached here")
 	const secret = process.env.SECRET
 
 	const crypto = require('crypto')
@@ -88,82 +88,60 @@ router.post('/verification', async (req, res) => {
 	const shasum = crypto.createHmac('sha256', secret)
 	shasum.update(JSON.stringify(req.body))
 	const digest = shasum.digest('hex')
-
+    
+    
 	if (digest === req.headers['x-razorpay-signature']) {
 		// process it
-
-        if(req.body.payload.payment.entity.error_code === null){
+        const data = JSON.stringify(req.body, null, 4)
+        // console.log(data)
+        // console.log("qwertyuiop")
+        // console.log(req.body)
+        if(req.body.payload.payment){
+            if(req.body.payload.payment.entity.error_code === null){
             
-            const payment = new Payment({
-                email: req.body.payload.payment.entity.email,
-                endvrid: req.body.payload.payment.entity.description,
-                phoneNumber: req.body.payload.payment.entity.contact,
-                transid: req.body.payload.payment.entity.id,
-                amount: req.body.payload.payment.entity.amount,
-                success: true
-            });
-            payment.save()
-            var amount = parseInt(req.body.payload.payment.entity.amount)
-            var endvrId = req.body.payload.payment.entity.description
-
-            const main = async () => {
-            
-                let transporter = nodemailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: process.env.GMAIL_USER,
-                        pass: process.env.GMAIL_PASS,
-                    },
+                const payment = new Payment({
+                    email: req.body.payload.payment.entity.email,
+                    endvrid: req.body.payload.payment.entity.description,
+                    phoneNumber: req.body.payload.payment.entity.contact,
+                    transid: req.body.payload.payment.entity.id,
+                    amount: req.body.payload.payment.entity.amount,
+                    success: true
                 });
-                let info = await transporter.sendMail({
-                from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-                to: req.body.payload.payment.entity.email, 
-                subject: "Payment Successfull email", 
-                text: "Hi it's a payment successfull email", 
-                html: `
-                <b>Hey! ${req.body.payload.payment.entity.description}</b>,<br>Thank you for your payment that you made on the endeavour website of amount Rs ${parseInt(parseInt(amount)/100)} through transaction number.  ${req.body.payload.payment.entity.id}.  This mail is an acknowledgement of receipt for the amount.<br>
-                If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
-                `, });
-            }
-            await main().catch(err => {
-            console.log(err)
-            });
-
-
-
-            if(amount === 100){
-                User.findOne({endvrid : endvrId}).exec((err, user) =>{
-                    user.eventPass = true;
-                    user.save((err, user) => {
+                payment.save()
+                var amount = parseInt(req.body.payload.payment.entity.amount)
+                var endvrId = req.body.payload.payment.entity.description
+    
+                if(amount === 100){
+                    User.findOne({endvrid : endvrId}).exec((err, user) =>{
+                        user.eventPass = true;
+                        user.save((err, user) => {
+                        })
                     })
-                })
-            } else if(amount === 5000){
-                User.findOne({endvrid : endvrId}).exec((err, user) =>{
-                    user.internship = true;
-                    user.save((err, user) => {
-                    
+                } else if(amount === 200){
+                    User.findOne({endvrid : endvrId}).exec((err, user) =>{
+                        user.internship = true;
+                        user.save((err, user) => {
+                        
+                        })
                     })
+                }
+                
+            } else {
+                const payment = new Payment({
+                    email: req.body.payload.payment.entity.email,
+                    endvrid: req.body.payload.payment.entity.description,
+                    phoneNumber: req.body.payload.payment.entity.contact,
+                    amount: req.body.payload.payment.entity.amount,
+                    transid: req.body.payload.payment.entity.id
+                });
+                payment.save((err, payment) => {
                 })
             }
-            
         } else {
-            const payment = new Payment({
-                email: req.body.payload.payment.entity.email,
-                endvrid: req.body.payload.payment.entity.description,
-                phoneNumber: req.body.payload.payment.entity.contact,
-                amount: req.body.payload.payment.entity.amount,
-                transid: req.body.payload.payment.entity.id
-            });
-            payment.save((err, payment) => {
-                return res.status(400).json({
-                    "error" : req.body.payload.payment.entity.error_description
-                })
-            })
+            // pass it
         }
-		require('fs').writeFileSync('payment.json', JSON.stringify(req.body, null, 4))
-	} else {
-		// pass it
-	}
+        }
+        
 	res.json({ status: 'ok' })
 })
 
