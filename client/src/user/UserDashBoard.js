@@ -3,6 +3,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import profileImg from "../assets/img/astronaut.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import discordImg from "../assets/discord.png";
 // eslint-disable-next-line
 import { getUserData, getEventData,authenticate, updateProfile ,isAuthenticated, getRegisteredEvents} from "./../auth/helper/index";
 
@@ -55,7 +56,7 @@ const UserDashBoard = (props) => {
 
     useEffect(() => {
         getUserData(setUserData);
-        getRegisteredEvents(setEvents);
+        // getRegisteredEvents(setEvents);
     }, []);
 
     const onSubmit = (event) => {
@@ -238,6 +239,13 @@ const UserDashBoard = (props) => {
                             <div className="row py-4">
                                 <div className="col">
                                     <button type="submit" onClick={onSubmit} className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Update Profile</button>
+                                </div>
+                                <div className="col">
+                                    <button type="submit"  className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">
+                                    <a href="https://discord.gg/KwSKQb62Hv" className="text-decoration-none br-7 ls-1  py-3 fw-bold px-4  color-white ">Join Discord 
+                            <img className="mx-2" src={discordImg} alt="discord icon" width="25px"/>
+                            </a>
+                                    </button>
                                 </div>
                             </div>
                         </form>
