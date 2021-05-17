@@ -67,7 +67,7 @@ function EventPass() {
 			alert('Razorpay SDK failed to load. Are you online?')
 			return
 		}
-		if(isAuthenticated() && !userData.eventPass){
+		if(isAuthenticated() && !userData.eventPass && userData.profile){
 			
 			// const options = {
 			// 	key: 'rzp_live_bW2H9hmho7861f',
@@ -111,7 +111,10 @@ function EventPass() {
 			const paymentObject = new window.Razorpay(options)
 			console.log(paymentObject);
 			paymentObject.open();
-		} else if(isAuthenticated() && userData.eventPass) {
+		} else if(isAuthenticated() && !userData.profile) {
+			errorMessage("Please Complete Your Profile to continue");
+		}
+		else if(isAuthenticated() && userData.eventPass) {
 			successMessage("You already have event pass");
 		} else {
 			errorMessage("Please Login to continue");
