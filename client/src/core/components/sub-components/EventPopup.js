@@ -254,7 +254,7 @@ const EventPopup = (props) => {
 			order_id: data.id,
 			name: `${user.name}`,
 			description:`${user.endvrid}`,
-			image: 'http://localhost:1337/logo.svg',
+			image: 'https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/ssdfa.png?alt=media&token=4e2a19a3-8e14-4108-9bb5-5d23a7efeac6',
 			handler: function (response) {
 				successMessage2();
 			},
