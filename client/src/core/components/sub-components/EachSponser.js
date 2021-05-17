@@ -5,7 +5,7 @@ const EachSponser = (props) => {
     return(
         <div className="m-4 py-3 each-member each-sponser">
             <div className="position-relative overflow-hidden rounded">
-                <a href="https://www.google.com">
+                <a href={props.data.sponsorLink}>
                     <div className="member-img">
                         <div className="overlay bg-secondary w-100 h-100 position-absolute"></div>
                         <div href="google.com">
