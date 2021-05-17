@@ -188,7 +188,7 @@ const EventPopup = (props) => {
                         <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
                     </div>) : !userInfo.internship ?
                     (<div className="register-button py-3 px-5">
-                        <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
+                        <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay &#8377;50</button>
                     </div>) : 
                     (<div className="register-button py-3 px-5">
                         <button onClick={(event) => {event.preventDefault(); errorMessage("Already Registered")}} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Already Registered</button>
