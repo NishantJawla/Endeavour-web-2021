@@ -69,10 +69,10 @@ const EventPopup = (props) => {
         .then((data) => {
             console.log(data);
             if (data.error) {
-            errorMessage()
+            errorMessage(error)
             setUserData({ ...userData, error: data.error, success: false });
             } else {
-            successMessage()
+            successMessage('Registration Successfull')
             setUserData({
                 ...userData,
                 member2: "",
@@ -90,8 +90,8 @@ const EventPopup = (props) => {
     };
 
 
-    const successMessage = () => {
-        toast.success('Registration Successfull', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -102,7 +102,7 @@ const EventPopup = (props) => {
             });
     };
 
-    const errorMessage = () => {
+    const errorMessage = (error) => {
         if(error){
         toast.error(error, {
             position: 'top-right',
@@ -193,7 +193,7 @@ const EventPopup = (props) => {
                         <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay {props.data.price}</button>
                     </div>) : 
                     (<div className="register-button py-3 px-5">
-                        <button onClick={(event) => {event.preventDefault()}} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Already Registered</button>
+                        <button onClick={(event) => {event.preventDefault(); errorMessage("Already Registered")}} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Already Registered</button>
                     </div>)
                 }
                 {/* {
