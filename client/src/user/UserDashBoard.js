@@ -1,6 +1,6 @@
 //jshint esversion: 8
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import profileImg from "./../assets/img/icons/profilepic.jpg";
+import profileImg from "../assets/img/astronaut.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // eslint-disable-next-line
