@@ -11,8 +11,11 @@ import Events from "./components/Events";
 import ContactUs from "./components/ContactUs";
 // eslint-disable-next-line
 import firebase from "../firebase";
+
 const Home = () => {
-  
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
     return (
         <React.Fragment>
             <Header />
