@@ -35,7 +35,7 @@ function Header(){
                     {
                         isAuthenticated() && (<React.Fragment>
                             <a href="https://discord.gg/KwSKQb62Hv" className="text-decoration-none br-7 ls-1 bg-primary py-3 fw-bold px-4 hbg-dark color-white join-us-button">Join Discord 
-                            <img src={discordImg} alt="discord icon" width="25px"/>
+                            <img className="mx-2"src={discordImg} alt="discord icon" width="25px"/>
                             </a>
                             </React.Fragment>)
                     }
