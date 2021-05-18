@@ -14,11 +14,11 @@ const UserDashBoard = (props) => {
     // eslint-disable-next-line
     const [events, setEvents] = useState([]);
     const [updatedData, setUpdatedData] = useState({
-        branch: userData.branch ? userData.branch : "",
-        libId: userData.libId ? userData.libId : "",
-        college: userData.college ? userData.college : "",
-        discord: userData.discord ? userData.discord : "",
-        semester: userData.semester ? userData.semester :"1",
+        branch:   userData ? userData.branch : "",
+        libId:    userData ? userData.libId : "",
+        college:  userData ? userData.college : "",
+        discord:  userData ? userData.discord : "",
+        semester: userData ? userData.semester :"1",
         error: ""
     });
     const {branch,libId,college,discord,semester,error} = updatedData;
@@ -219,14 +219,14 @@ const UserDashBoard = (props) => {
                                 </div>
                                 <div className="col-lg-9">
                                     <select onChange={handleChange} name="semester" className="form-select form-control" placeholder="semester" aria-label="Default select example">
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "1" ? true : false} value="1">I</option>
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "2" ? true : false} value="2">II</option>
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "3" ? true : false} value="3">III</option>
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "4" ? true : false} value="4">IV</option>
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "5" ? true : false} value="5">V</option>
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "6" ? true : false} value="6">VI</option>
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "7" ? true : false} value="7">VII</option>
-                                        <option className="color-secondary" selected={updatedData.semester.toString() === "8" ? true : false} value="8">VIII</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "1" ? true : false} value="1">I</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "2" ? true : false} value="2">II</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "3" ? true : false} value="3">III</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "4" ? true : false} value="4">IV</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "5" ? true : false} value="5">V</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "6" ? true : false} value="6">VI</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "7" ? true : false} value="7">VII</option>
+                                        <option className="color-secondary" selected={userData.profile && userData.semester.toString() === "8" ? true : false} value="8">VIII</option>
                                     </select>    
                                 </div>
                             </div>
