@@ -58,7 +58,7 @@ const Navbar = () =>  {
                     <div className="navbar-nav w-100 d-flex justify-content-end">
                         <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/geteventpass">Get Event Pass</NavLink>
                         <Link activeClassName="active"    className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/">Home</Link>
-                        <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/guests">Speakers</NavLink>
+                        <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/guests">Our Guests</NavLink>
                         <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/sponsers">Sponsors</NavLink>
                         <NavLink activeClassName="active" className="nav-link mx-4 ls-1 fs-6 color-white fw-bold" to="/team">Team</NavLink>
                         {
