@@ -262,7 +262,7 @@ const UserDashBoard = (props) => {
                             <th scope="col">#</th>
                             <th scope="col">Event Name</th>
                             <th scope="col">Registered</th>
-                            <th scope="col">Paid</th>
+                            <th scope="col">Team</th>
                             </tr>
                         </thead>
                         <tbody>

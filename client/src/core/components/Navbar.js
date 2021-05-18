@@ -48,7 +48,7 @@ const Navbar = () =>  {
                     <img src={EcellLogo} width="50px" height="50px" alt="logo" />
                     <div className="color-white px-3 fs-6 ls-1 navbar-content fw-bold d-md-block d-lg-none d-xl-block">
                         <div className="fs-4">E-Summit'21</div>
-                        COHORT OF PATHFINDERS
+                        A COHORT OF PATHFINDERS
                     </div>
                 </Link>
                 <button onClick={toggleNavbar} className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
