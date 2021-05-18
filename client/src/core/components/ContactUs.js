@@ -25,11 +25,11 @@ function ContactUs(){
                             <Carousel showArrows={true} autoPlay={true} infiniteLoop={true} showThumbs={false} showStatus={false} showIndicators={false} swipeable ={true} stopOnHover={true}>
                             <div>
                             <img src={one} alt="contact us img"/>
-                            <p className="legend">Endeavour'16</p>
+                            <p className="legend">Endeavour'19</p>
                             </div>
                             <div>
                             <img src={two} alt="contact us img"/>
-                            <p className="legend">Endeavour'17</p>
+                            <p className="legend">Endeavour'19</p>
                             </div>
                             <div>
                             <img src={three} alt="contact us img"/>
@@ -41,23 +41,23 @@ function ContactUs(){
                             </div>
                             <div>
                             <img src={five} alt="contact us img"/>
-                            <p className="legend">Endeavour'20</p>
+                            <p className="legend">Endeavour'19</p>
                             </div>
                             <div>
                             <img src={six} alt="contact us img"/>
-                            <p className="legend">Endeavour'16</p>
+                            <p className="legend">Endeavour'19</p>
                             </div>
                             <div>
                             <img src={seven} alt="contact us img"/>
-                            <p className="legend">Endeavour'17</p>
+                            <p className="legend">Endeavour'19</p>
                             </div>
                             <div>
                             <img src={eight} alt="contact us img"/>
-                            <p className="legend">Endeavour'18</p>
+                            <p className="legend">Endeavour'19</p>
                             </div>
                             <div>
                             <img src={nine} alt="contact us img"/>
-                            <p className="legend">Endeavour'19</p>
+                            <p className="legend">Endeavour'18</p>
                             </div>
                             <div>
                             <img src={ten} alt="contact us img"/>
