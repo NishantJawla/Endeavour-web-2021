@@ -20,7 +20,7 @@ function SocialLinks() {
                 <a href="https://www.instagram.com/kietecell/?igshid=lbrt09aprj0l" className="instagram pe-5" >
                     <img src={instagramIcon} width="20px" height="20px" alt="instagram link" />
                 </a>
-                <a href="https://www.youtube.com/channel/UCpKWoJOSPr3rxTbPHx_kbaw" className="youtube pe-5" >
+                <a href="https://www.youtube.com/channel/UCtnkeQnhcAGS_AWKgYUicEA" className="youtube pe-5" >
                     <img src={youtubeIcon} width="24px" height="24px" alt="youtube link" />
                 </a>
             </div>
