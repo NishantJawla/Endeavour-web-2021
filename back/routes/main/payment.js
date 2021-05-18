@@ -17,7 +17,7 @@ router.post("/orders/eventpass", async (req, res) => {
         });
         
     const payment_capture = 1
-    const amount = parseInt(1)
+    const amount = parseInt(150)
     const currency = 'INR'
 
     const options = {
@@ -52,7 +52,7 @@ router.post("/orders/internship", async (req, res) => {
         });
         
     const payment_capture = 1
-    const amount = parseInt(2)
+    const amount = parseInt(50)
     const currency = 'INR'
 
     const options = {
@@ -111,13 +111,13 @@ router.post('/verification', (req, res) => {
                 var amount = parseInt(req.body.payload.payment.entity.amount)
                 var endvrId = req.body.payload.payment.entity.description
     
-                if(amount === 100){
+                if(amount === 15000){
                     User.findOne({endvrid : endvrId}).exec((err, user) =>{
                         user.eventPass = true;
                         user.save((err, user) => {
                         })
                     })
-                } else if(amount === 200){
+                } else if(amount === 5000){
                     User.findOne({endvrid : endvrId}).exec((err, user) =>{
                         user.internship = true;
                         user.save((err, user) => {
