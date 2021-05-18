@@ -157,8 +157,8 @@ const UserDashBoard = (props) => {
         <div className="profile-container py-5 bg-sec-pattern bg-norepeat">
             <div className="container py-5">
             <div className="heading-font py-3 color-white text-center fw-bold">User Dashboard</div>
-                <div className="row profile pt-5 color-white">
-                    <div className="col-lg-5 col-md-10">
+                <div className="row profile m-auto pt-5 color-white">
+                    <div className="col-lg-5 offset-md-1 offset-lg-0 col-md-10">
                         <div className="w-50 m-auto overflow-hidden rounded-circle">
                             <img className="profile-pic" width="100%" height="100%" src={profileImg} alt="profil_pic" />
                         </div>
@@ -173,7 +173,7 @@ const UserDashBoard = (props) => {
                             }
                         </div>
                     </div>
-                    <div className="col-lg-7 col-md-10">
+                    <div className="col-lg-7 offset-md-1 offset-lg-0 col-md-10">
                         <ToastContainer
                         position="top-right"
                         autoClose={5000}
@@ -243,10 +243,10 @@ const UserDashBoard = (props) => {
                                     <button type="submit" onClick={onSubmit} className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">Update Profile</button>
                                 </div>
                                 <div className="col">
-                                    <button type="submit"  className="w-100 rounded bg-primary .hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3">
-                                    <a href="https://discord.gg/KwSKQb62Hv" className="text-decoration-none br-7 ls-1  py-3 fw-bold px-4  color-white ">Join Discord 
-                            <img className="mx-2" src={discordImg} alt="discord icon" width="25px"/>
-                            </a>
+                                    <button type="submit"  className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold">
+                                    <a href="https://discord.gg/KwSKQb62Hv" className="text-decoration-none br-7 ls-1 d-flex justify-content-center py-3 fw-bold px-1 color-white ">Join Discord 
+                                        <img className="mx-1 d-none d-sm-block" src={discordImg} alt="discord icon" width="25px"/>
+                                    </a>
                                     </button>
                                 </div>
                             </div>
