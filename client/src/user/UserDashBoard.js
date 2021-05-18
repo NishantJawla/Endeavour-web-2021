@@ -14,11 +14,11 @@ const UserDashBoard = (props) => {
     // eslint-disable-next-line
     const [events, setEvents] = useState([]);
     const [updatedData, setUpdatedData] = useState({
-        branch: user.branch ? user.branch : "",
-        libId: user.libId ? user.libId : "",
-        college: user.college ? user.college : "",
-        discord: user.discord ? user.discord : "",
-        semester: user.semester ? user.semester :"1",
+        branch: userData.branch ? userData.branch : "",
+        libId: userData.libId ? userData.libId : "",
+        college: userData.college ? userData.college : "",
+        discord: userData.discord ? userData.discord : "",
+        semester: userData.semester ? userData.semester :"1",
         error: ""
     });
     const {branch,libId,college,discord,semester,error} = updatedData;
@@ -56,6 +56,7 @@ const UserDashBoard = (props) => {
 
     useEffect(() => {
         getUserData(setUserData);
+        getUserData(setUpdatedData);
         // getRegisteredEvents(setEvents);
     }, []);
 
@@ -75,6 +76,7 @@ const UserDashBoard = (props) => {
                 } else {
                     successMessage()
                     getUserData(setUserData);
+                    getUserData(setUpdatedData);
                 }
             });
         }
