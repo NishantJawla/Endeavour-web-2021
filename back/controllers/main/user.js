@@ -647,6 +647,12 @@ exports.registerInEvent = async (req, res) => {
                 error: "Please check member2 id",
                 msg: "Please check member2 id"
             })
+        } else if(user1.endvrid === user2.endvrid){
+            return res.status(400).json({
+                status: 400,
+                error: "Endeavour Id of Member1 and Member2 is same",
+                msg: "Endeavour Id of Member1 and Member2 is same"
+            });
         } else {
             if(c){
                 const members = [];
