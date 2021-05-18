@@ -356,7 +356,7 @@ exports.resetPasswordHandler = (req,res) => {
                 return res.status(400).json({
                     status: 400,
                     msg: "passcode has been expired use forgot password again",
-                    error: "use forgot password again use forgot password again"
+                    error: "passcode has been expired use forgot password again"
                 })
             });
             

@@ -353,9 +353,13 @@ z .nav-lines {
   right: 0px;
   transform: rotateZ(45deg) translate(60px, -50px);
 }
-
+.member-img {
+  width: 200px !important;
+  height: 200px !important;
+  overflow: hidden;
+}
 /*-----swiper slide-------*/
-.swiper-container {
+.swiper-container { 
   width: 100%;
 }
 .swiper-wrapper {
