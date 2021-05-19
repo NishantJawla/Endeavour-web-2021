@@ -440,7 +440,7 @@ massMailer.prototype.SendEmail = function(Email,callback) {
                 subject: 'Internship email', 
                 text: "Hi it's a internship email",
                 html: `
-                    <b>Hey! ${user.name}</b>,Testing is going on!!!<br><br>You are one step closer to successfully get an internship register for endeavour'21 internship fair.
+                    <b>Hey!</b>,<br>Testing is going on!!!<br><br>You are one step closer to successfully get an internship register for endeavour'21 internship fair.
                     <img src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/eventpass.png?alt=media&token=052ecba5-5577-423b-a562-d778bbf24d3c" alt="eventpass" />
                     If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
                     `,
@@ -469,13 +469,17 @@ massMailer.prototype.SendEmail = function(Email,callback) {
 
 exports.massMailInternshipHandler = async (req, res) => {
     const user = await User.find({});
+    listofemails = []
+    success_email = []
+    failure_email = []
     user.forEach(user => {
         if(user.confirmed && user.role === "user"){
             if(!user.internship){
-                
+                listofemails.push(user.email)
             }
         }
     });
+    console.log(listofemails);
     new massMailer(); //lets begin
     return res.json({
         msg: "Successfully send all the mails"
