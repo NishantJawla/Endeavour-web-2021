@@ -352,3 +352,35 @@ exports.getAllUsersByPaidStatus = async (req, res) => {
         users: responseData
     });
 };
+
+exports.getEventScaleIdeaHandler = async (req, res) => {
+    var confirmed = 0
+    var total = 0
+    var eventpass = 0
+    var internship = 0
+    var profile = 0
+    const user = await User.find({});
+    user.forEach(user => {
+        total = total + 1;
+        if(user.confirmed){
+            confirmed += 1;
+            if(user.profile){
+                profile += 1;
+                if(user.eventPass){
+                    eventpass += 1
+                }
+                if(user.internship){
+                    internship += 1;
+                }
+            }
+        }
+    });
+
+    return res.send({
+        "Total": total,
+        "Confirmed": confirmed,
+        "profile": profile,
+        "eventPass": eventpass,
+        "internship": internship
+    })
+}

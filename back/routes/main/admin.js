@@ -2,7 +2,7 @@
 //jshint esversion: 8
 const express = require('express');
 const router = express.Router();
-const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus } = require("./../../controllers/main/admin");
+const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus,getEventScaleIdeaHandler } = require("./../../controllers/main/admin");
 const { check, validationResult } = require("express-validator");
 const passport = require('passport');
 require('../../config/passport')(passport);
@@ -27,9 +27,8 @@ router.get("/api/teamHead/all/:paidStatus", passport.authenticate('jwt',{session
 router.get("/api/getUser/endvId/:endvrId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getUserFromEndvrId);
 router.get("/api/getUser/number/:number", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getUserFromMobile);
 router.get("/api/getUser/all", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getAllUsersByPaidStatus);
-
-
 router.post('/changePaidStatus',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changePaidStatusHandler,addTeamToEventsHandler);
+router.get('/eventstatus',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getEventScaleIdeaHandler);
 
 
 module.exports = router; 

@@ -197,7 +197,7 @@ exports.signoutHandler = (req, res) => {
 };
 
 exports.isAdmin = (req, res,next) => {
-    if(req.user.role !==  'superman' ){
+    if(req.user.role ===  'user' ){
         return res.status(403).json({
             status: 403,
             msg : "You are not admin, Access Denied"
