@@ -4,6 +4,7 @@ import "./footer.css";
 import SocialLinks from "./sub-components/SocialLinks";
 import personIcon1 from "./../../assets/img/icons/person1.png";
 import personIcon2 from "./../../assets/img/icons/person3.png";
+import getOnGoogleBadge from "./../../assets/img/icons/google-play-badge.png";
 
 function Footer() {
     return (
@@ -59,8 +60,16 @@ function Footer() {
                         </div>
                         <SocialLinks />
                     </div>
+                    <div className="appLink w-100 pt-4 d-flex d-block d-md-none">
+                        <a href="https://play.google.com/store/apps/details?id=com.ecell.end_eavour" className="w-50 m-auto">
+                            <img src={getOnGoogleBadge} width="100%" alt="get it on google play badge" />
+                        </a>
+                    </div>
                 </div>
                 <div className="copyright pt-5 pb-3 text-center fw-bold fs-6 color-white">
+                        <a href="https://play.google.com/store/apps/details?id=com.ecell.end_eavour" className="position-absolute bottom-0 right-0 m-auto d-none d-md-block">
+                            <img src={getOnGoogleBadge} width="30%" alt="get it on google play badge" />
+                        </a>
                     Copyright © 2021 Technical Team e-Cell
                 </div>
             </div>
