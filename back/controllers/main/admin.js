@@ -397,8 +397,8 @@ function massMailer() {
     transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
-            user: "Your gmail ID",
-            pass: "Your gmail password"
+            user: process.env.GMAIL_USER_MASS,
+            pass: process.env.GMAIL_PASS_MASS
         }
     });
     // Fetch all the emails from database and push it in listofemails
@@ -435,10 +435,15 @@ massMailer.prototype.SendEmail = function(Email,callback) {
     async.waterfall([
         function(callback) {                
             var mailOptions = {
-                from: 'shahid@codeforgeek.com',     
+                from: '"Team e-Cell" <ecellwebtechnical@gmail.com>',     
                 to: Email,
-                subject: 'Hi ! This is from Async Script', 
-                text: "Hello World !"
+                subject: 'Internship email', 
+                text: "Hi it's a internship email",
+                html: `
+                    <b>Hey! ${user.name}</b>,Testing is going on!!!<br><br>You are one step closer to successfully get an internship register for endeavour'21 internship fair.
+                    <img src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/eventpass.png?alt=media&token=052ecba5-5577-423b-a562-d778bbf24d3c" alt="eventpass" />
+                    If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
+                    `,
             };
             transporter.sendMail(mailOptions, function(error, info) {               
                 if(error) {
@@ -461,41 +466,17 @@ massMailer.prototype.SendEmail = function(Email,callback) {
     });
 }
 
-new massMailer(); //lets begin
+
 exports.massMailInternshipHandler = async (req, res) => {
     const user = await User.find({});
     user.forEach(user => {
         if(user.confirmed && user.role === "user"){
             if(!user.internship){
-                async function main() {
-            
-                    let transporter = nodemailer.createTransport({
-                        service: 'Gmail',
-                        auth: {
-                            user: process.env.GMAIL_USER,
-                            pass: process.env.GMAIL_PASS,
-                        },
-                    });
-                    let info = await transporter.sendMail({
-                    from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-                    to: user.email,
-                    subject: "Internship email", 
-                    text: "Hi it's a internship email", 
-                    html: `
-                    <b>Hey! ${user.name}</b>,Testing is going on!!!<br><br>You are one step closer to successfully get an internship register for endeavour'21 internship fair.
-                    <img src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/eventpass.png?alt=media&token=052ecba5-5577-423b-a562-d778bbf24d3c" alt="eventpass" />
-                    If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
-                    `, });
-                    console.log("Message sent: %s", info.messageId);
-                    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-                }
-                main().catch(err => {
-                console.log(err);
-                });
                 
             }
         }
     });
+    new massMailer(); //lets begin
     return res.json({
         msg: "Successfully send all the mails"
     })
