@@ -70,11 +70,6 @@ router.post("/updateProfile",[
     .withMessage("Branch Field is Required")
     .matches(/^[a-zA-Z_ ]*$/, "i")
     .withMessage("Branch Field is inValid"),
-    check("libId")
-    .notEmpty()
-    .withMessage("Library Id Field is Required")
-    .matches(/^[a-zA-Z0-9_ ]*$/, "i")
-    .withMessage("Library Id Field is inValid"),
     check("college")
     .notEmpty()
     .withMessage("College Name is Required")
