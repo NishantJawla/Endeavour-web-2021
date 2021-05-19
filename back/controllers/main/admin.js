@@ -583,3 +583,17 @@ exports.adminConfrimUserByPhoneNumberHandler = (req, res) => {
         })
     })
 }
+
+exports.getuserbyemailAdminHandler = (req,res) => {
+    User.findOne({ email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User will this mail does not exist"
+            })
+        }
+        return res.json({
+            msg: "user is valid",
+            user
+        })
+    })
+}
