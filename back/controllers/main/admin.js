@@ -3,7 +3,10 @@ const User = require('../../models/user');
 const Team = require('../../models/team');
 const Event = require('../../models/event');
 const team = require('../../models/team');
-
+require('dotenv').config();
+const nodemailer = require("nodemailer");
+const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 exports.getRegistrationsPerEvent = (req, res) => {
     Event.find({}, (error, events) => {
@@ -382,5 +385,44 @@ exports.getEventScaleIdeaHandler = async (req, res) => {
         "profile": profile,
         "eventPass": eventpass,
         "internship": internship
+    })
+}
+
+exports.massMailInternshipHandler = async (req, res) => {
+    const user = await User.find({});
+    user.forEach(user => {
+        if(user.confirmed && user.role === "user"){
+            if(!user.internship){
+                async function main() {
+            
+                    let transporter = nodemailer.createTransport({
+                        service: 'Gmail',
+                        auth: {
+                            user: process.env.GMAIL_USER,
+                            pass: process.env.GMAIL_PASS,
+                        },
+                    });
+                    let info = await transporter.sendMail({
+                    from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
+                    to: user.email,
+                    subject: "Internship email", 
+                    text: "Hi it's a internship email", 
+                    html: `
+                    <b>Hey! ${user.name}</b>,Testing is going on!!!<br><br>You are one step closer to successfully get an internship register for endeavour'21 internship fair.
+                    <img src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/eventpass.png?alt=media&token=052ecba5-5577-423b-a562-d778bbf24d3c" alt="eventpass" />
+                    If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
+                    `, });
+                    console.log("Message sent: %s", info.messageId);
+                    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+                }
+                main().catch(err => {
+                console.log(err);
+                });
+                
+            }
+        }
+    });
+    return res.json({
+        msg: "Successfully send all the mails"
     })
 }
