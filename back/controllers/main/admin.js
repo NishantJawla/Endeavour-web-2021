@@ -426,3 +426,53 @@ exports.massMailInternshipHandler = async (req, res) => {
         msg: "Successfully send all the mails"
     })
 }
+
+exports.adminConfrimUserByMailHandler = (req, res) => {
+    User.findOne({email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+        return res.status(400).json({
+            error: "Unable to find user"
+        })
+        }
+        user.confirmed = true;
+        user.endvrid = 'ENDVR2021'+user.phoneNumber.toString();
+        user.uniqueString = undefined
+        user.save((err, user) => {
+            if(err || !user) {
+                return res.json({
+                    error: "Unable to save user"
+                })
+            }else {
+                return res.json({
+                    msg: "User successfully confirmed"
+                })
+            }
+            
+        })
+    })
+}
+
+exports.adminConfrimUserByPhoneNumberHandler = (req, res) => {
+    User.findOne({phoneNumber: req.body.phoneNumber}).exec((err,user) => {
+        if(err || !user){
+        return res.status(400).json({
+            error: "Unable to find user"
+        })
+        }
+        user.confirmed = true;
+        user.endvrid = 'ENDVR2021'+user.phoneNumber.toString();
+        user.uniqueString = undefined
+        user.save((err, user) => {
+            if(err || !user) {
+                return res.json({
+                    error: "Unable to save user"
+                })
+            }else {
+                return res.json({
+                    msg: "User successfully confirmed"
+                })
+            }
+            
+        })
+    })
+}
