@@ -437,12 +437,60 @@ massMailer.prototype.SendEmail = function(Email,callback) {
             var mailOptions = {
                 from: '"Team e-Cell" <ecellwebtechnical@gmail.com>',     
                 to: Email,
-                subject: 'Internship email', 
-                text: "Hi it's a internship email",
+                subject: 'Get Your Pass Now', 
+                text: "Hi it's a get your pass email",
                 html: `
-                    <b>Hey!</b>,<br>Testing is going on!!!<br><br>You are one step closer to successfully get an internship register for endeavour'21 internship fair.
-                    <img src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/eventpass.png?alt=media&token=052ecba5-5577-423b-a562-d778bbf24d3c" alt="eventpass" />
-                    If any queries, please contact :<br>(ecellwebtechnical@gmail.com)<br>Regards<br>Team e-Cell
+                <div style="width:inherit !important; background-color: #202020; width: 100%; height: 100%; margin: 0px; padding: 50px;">
+        <div style="margin: auto; display: flex;">
+            <img style="margin: auto; align-self:center;" src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/loaderLogo.png?alt=media&token=323355c3-7aff-4d0c-801c-9dbcba45dfe5" width="158px" height="150px" />
+        </div>
+        <div style="width: 100%; color: white;">
+            <div style="font-weight: 800; color: white; font-size: 22px; letter-spacing: 1px;">Hey! </div>
+            <div style="text-align: justify; padding-top: 14px; font-size: 16px; line-height: 25px; letter-spacing: 1px;">
+                Hope you are doing great! <br>
+
+                We have received your registration for Endeavour'21, and would like to notify you that you can be a part of our events by buying an Endeavour'21 pass, at an affordable price, to enjoy the E-SUMMIT at its fullest! <br>
+                <ol>
+                    <li>
+                        The Super-Pack: Rs.150/-
+                        <ul>
+                            <li>Take part in any number of  events of your choice  (excluding the hackathon and Internship Fair), and various other events like-</li>
+                            <li>Speaker Session</li>
+                            <li>Preparatory Events</li>
+                            <li>Workshops</li>
+                            <li>Entertainment Eve</li>
+                        </ul>
+                    </li>
+                    <li>Hackathon: Rs. 100/-</li>
+                    <li>Internship Fair: Rs. 50 for being a part of any 2 internships.</li>
+                    <li>Preparatory events: FREE</li>
+                </ol>
+                
+                Also, join our Discord Channel, if you haven't already!<br><br>
+                <div>
+                    <a style="text-decoration: none; color: #fff; background-color: #a13941; padding: 10px 15px; margin: 10px 0" href="https://discord.gg/KwSKQb62Hv">Join Discord</a><br>
+                </div>
+                <br><br>
+                See you there!<br>
+            </div>
+            <div style="width: 100%; display: flex; text-align: center; padding-top: 20px;">
+                <img width="540px" height="300px" style="margin: auto; align-self:center;" src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/eventpass.png?alt=media&token=052ecba5-5577-423b-a562-d778bbf24d3c" alt="">
+            </div>
+            <div style="width: 100%; display: flex; padding-top: 0px;">
+                <a href="http://endeavour-kiet.in/geteventpass" style="text-decoration: none; margin: auto; align-self: center; padding: 15px 25px; border: 0px; background-color: #a13941; color: #fff; letter-spacing: 1px; font-weight: 700; font-size: 18px; border-radius: 5px;">Get Your Pass Now</a>
+            </div>
+            <div style="text-align: justify; padding-top: 10px; font-size: 16px; line-height: 25px; letter-spacing: 1px; color: #fff;">
+                If You have any queries contact us at:<br>
+                endeavour@kiet.edu <br>
+                +91 8795484505 <br><br>
+
+                With Regards,<br>
+
+                Team e-Cell
+            </div>
+        </div>
+    </div>
+                
                     `,
             };
             transporter.sendMail(mailOptions, function(error, info) {               
@@ -457,7 +505,7 @@ massMailer.prototype.SendEmail = function(Email,callback) {
             });
         },
         function(statusCode,Email,callback) {
-                console.log("Will update DB here for " + Email + "With " + statusCode);
+                console.log("Status for sent mail " + Email + "is " + statusCode);
                 callback();
         }
         ],function(){
@@ -474,7 +522,7 @@ exports.massMailInternshipHandler = async (req, res) => {
     failure_email = []
     user.forEach(user => {
         if(user.confirmed && user.role === "user"){
-            if(!user.internship){
+            if(!user.eventPass){
                 listofemails.push(user.email)
             }
         }
