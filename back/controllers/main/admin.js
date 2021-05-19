@@ -597,3 +597,14 @@ exports.getuserbyemailAdminHandler = (req,res) => {
         })
     })
 }
+
+exports.getallinvalidusersHandler = async (req,res) => {
+    const users = await User.find({});
+    var arr = [];
+    users.forEach(user => {
+        if(!user.confirmed){
+            arr.push(user.email);
+        }
+    })
+    return res.json({arr})
+}
