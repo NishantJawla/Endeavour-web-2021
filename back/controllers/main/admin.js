@@ -608,3 +608,14 @@ exports.getallinvalidusersHandler = async (req,res) => {
     })
     return res.json({arr})
 }
+
+exports.getuserbyprofileHandler = async (req, res) => {
+    const users = await User.find({});
+    var someArray = []
+    users.forEach(user => {
+        if(user.profile){
+            someArray.push(user.email)
+        }
+    })
+    res.send({someArray})
+}
