@@ -67,14 +67,10 @@ router.post("/changePassword",passport.authenticate('jwt',{session: false,failur
 router.post("/updateProfile",[
     check("branch")
     .notEmpty()
-    .withMessage("Branch Field is Required")
-    .matches(/^[a-zA-Z_ ]*$/, "i")
-    .withMessage("Branch Field is inValid"),
+    .withMessage("Branch Field is Required"),
     check("college")
     .notEmpty()
-    .withMessage("College Name is Required")
-    .matches(/^[a-zA-Z_ ]*$/, "i")
-    .withMessage("College Name Field is inValid"),
+    .withMessage("College Name is Required"),
     check("semester")
     .notEmpty()
     .withMessage("Semester is Required")
