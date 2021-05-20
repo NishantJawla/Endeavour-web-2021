@@ -1,6 +1,7 @@
 //jshint esversion: 8
 import React from 'react';
 import "./footer.css";
+import { Link } from "react-router-dom"; 
 import SocialLinks from "./sub-components/SocialLinks";
 import personIcon1 from "./../../assets/img/icons/person1.png";
 import personIcon2 from "./../../assets/img/icons/person3.png";
@@ -15,6 +16,11 @@ function Footer() {
                         <div className="address">
                             <div className="fs-4 color-white py-3 fw-bold ls-1">Address</div>
                             <iframe title="address" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d874.4751148729615!2d77.4986140292191!3d28.75238877465378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf471f7307f87%3A0xa4a1095abb33f9ac!2sTBI%20KIET!5e0!3m2!1sen!2sin!4v1620477652006!5m2!1sen!2sin" width="100%" height="390" style={{border: 0}} allowFullScreen={true} loading="lazy"></iframe>
+                        </div>
+                        <div className="important-links row color-white pt-3">
+                            <Link to="/privacypolicy" className="col color-white">Privacy Policy</Link>
+                            <Link to="/termsofservice" className="col color-white">Term Of Service</Link>
+                            <Link to="/refundpolicy" className="col color-white">Refund Policy</Link>
                         </div>
                     </div>
                     <div className="col-md-4 col-lg-5 col-xl-4 col-xxl-4 offset-xl-0 offset-lg-0 offset-xl-1">
