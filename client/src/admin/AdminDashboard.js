@@ -4,7 +4,9 @@ import "./css/admin.css";
 import profileImg from "./../assets/img/icons/profilepic.jpg";
 import { getEventId } from "./helper/EventIds";
 import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers } from "./helper/adminapicall"; 
-
+import { isAuthenticated } from "./../auth/helper/index";
+import { API } from "../backend";
+import axios from "axios";
 function AdminDashboard() {
 
     const [data, setData] = useState([]);
@@ -18,6 +20,18 @@ function AdminDashboard() {
     const [mobileno, setMobileNo] = useState("");
 
     const [paidStatus, setPaidStatus] = useState(false);
+
+    const [someData, setsomeData] = useState({
+        total: "loading...",
+        confirmed: "loading...",
+        profile: "loading...",
+        eventpass: "loading...",
+        internship: "loading...",
+        first: "loading...",
+        second: "loading...",
+        third: "loading...",
+        fourth: "loading..."
+    })
 
     function changePaidStatus(event) {
         const {value} = event.target;
@@ -35,10 +49,32 @@ function AdminDashboard() {
     }
 
     useEffect(() => {
+        async function main() {
+            const {user, token} = isAuthenticated();
+            var serverData1 = await axios.get(`${API}admin/eventstatus`, {
+                headers: { Authorization: `${token}` }
+            })
+            var serverData2 = await axios.get(`${API}admin/getuserbyyear`, {
+                headers: { Authorization: `${token}` }
+            })
+            // 
+            console.log(serverData2.data);
+            setsomeData({
+                total: serverData1.data.Total,
+                confirmed: serverData1.data.Confirmed,
+                profile: serverData1.data.profile,
+                eventpass: serverData1.data.eventPass,
+                internship: serverData1.data.internship,
+                first: serverData2.data.first,
+                second: serverData2.data.second,
+                third: serverData2.data.third,
+                fourth: serverData2.data.fourth
+            })
+        }
+        main()
         registrationsPerEvent(setUsersPerEvent);
         getUsersCount(setTotalUsers);
     }, []);
-
     function getusersByEvent(event){
         const { value } = event.target;
         const eventId = getEventId(value);
@@ -75,6 +111,7 @@ function AdminDashboard() {
             </div>
         );
     }
+    const {user , token} = isAuthenticated();
 
     return (
         <React.Fragment>
@@ -87,19 +124,51 @@ function AdminDashboard() {
                                 <img className="profile-pic" width="100%" height="100%" src={profileImg} alt="profil_pic" />
                             </div>
                             <div className="profile-info color-white py-4 text-center">
-                                <div className="fs-6 ls-1 py-1 fw-bold ">Name</div>
-                                <div className="fs-6 ls-1 py-1">admin@endeavour</div>
+                                <div className="fs-6 ls-1 py-1 fw-bold ">Justice League</div>
+                                <div className="fs-6 ls-1 py-1">Hi! {user.name}</div>
                             </div>
                         </div>
                         <div className="col-lg-7 col-md-10">
                             <div className="fs-4 fw-bold pb-2 ls-1">Registration Info</div>
                             <div className="admin-info px-3">
                                 <div className="py-3 d-flex">
-                                    <div className="ls-1 fs-5 fw-bold pe-3">Total no of Uses Registerd: </div>
-                                    <div className="ls-1 fs-5 fw-bold">{totalUsers}</div>
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Total no of Users Registerd: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.total}</div>
                                 </div>
-                                <div className="ls-1 fs-5 py-4 fw-bold">Registrations Per Event
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Total no of Confirmed Users: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.confirmed}</div>
                                 </div>
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Total no of profile completed: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.profile}</div>
+                                </div>
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Event Pass kitno ne liya hai: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.eventpass}</div>
+                                </div>
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Naukri kitne logo ko chaiye: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.internship}</div>
+                                </div>
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">First Year Vale: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.first}</div>
+                                </div>
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Second Year Vale: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.second}</div>
+                                </div>
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Third Year Vale: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.third}</div>
+                                </div>
+                                <div className="py-3 d-flex">
+                                    <div className="ls-1 fs-5 fw-bold pe-3">Fourth Year Vale: </div>
+                                    <div className="ls-1 fs-5 fw-bold">{someData.fourth}</div>
+                                </div>
+                                {/* <div className="ls-1 fs-5 py-4 fw-bold">Registrations Per Event
+                                </div> */}
                                 <div className="users-by-events d-flex justify-content-between flex-wrap">
                                     {/* <div className="py-3 d-flex">
                                         <div className="ls-1 fs-6 pe-3">Total no of Uses Registerd: </div>
@@ -113,12 +182,12 @@ function AdminDashboard() {
                                         <div className="ls-1 fs-6 pe-3">Total no of Uses Registerd: </div>
                                         <div className="ls-1 fs-6 fw-bold">45</div>
                                     </div> */}
-                                    {usersPerEvent.map(user => {
+                                    {/* {usersPerEvent.map(user => {
                                         return (<div className="py-3 d-flex">
                                             <div className="ls-1 fs-6 pe-3">Total no of Uses {user.eventName}: </div>
                                             <div className="ls-1 fs-6 fw-bold">{user.teamCountRegisterd}</div>
                                         </div>)
-                                    })}
+                                    })} */}
                                 </div>
                             </div>
                         </div>
