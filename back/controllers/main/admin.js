@@ -619,3 +619,28 @@ exports.getuserbyprofileHandler = async (req, res) => {
     })
     res.send({someArray})
 }
+
+exports.getUserByYearHandler = async (req, res) => {
+    const users = await User.find({});
+    var first = 0
+    var second = 0
+    var third = 0
+    var fourth = 0
+    users.forEach(user => {
+        if(user.profile){
+            var s = parseInt(user.semester)
+            if(s<=2){
+                first += 1
+            }else if (s<=4) {
+                second += 1
+            } else if (s<=6){
+                third += 1
+            } else{
+                fourth += 1
+            }
+        }
+    })
+    return res.json({
+        first, second, third, fourth
+    })
+}
