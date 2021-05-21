@@ -644,3 +644,18 @@ exports.getUserByYearHandler = async (req, res) => {
         first, second, third, fourth
     })
 }
+
+exports.changepaidstatusofeventpassbyemailHandler = (req, res) => {
+    User.findOne({ email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            })
+        }
+        user.eventPass = true
+        user.save();
+        res.json({
+            msg: "Chnaged status succesfully"
+        })
+    })
+}
