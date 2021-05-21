@@ -674,3 +674,18 @@ exports.changepaidstatusofeventpassbyphoneHandler = (req, res) => {
         })
     })
 }
+
+exports.changepaidstatusofinternshipbyemailHandler = (req, res) => {
+    User.findOne({ email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            })
+        }
+        user.internship = true
+        user.save();
+        res.json({
+            msg: "Chnaged status succesfully"
+        })
+    })
+}

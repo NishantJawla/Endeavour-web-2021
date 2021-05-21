@@ -2,7 +2,7 @@
 //jshint esversion: 8
 const express = require('express');
 const router = express.Router();
-const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus,getEventScaleIdeaHandler,massMailInternshipHandler,adminConfrimUserByMailHandler, adminConfrimUserByPhoneNumberHandler,getuserbyemailAdminHandler,getallinvalidusersHandler,getuserbyprofileHandler,getUserByYearHandler,changepaidstatusofeventpassbyemailHandler,changepaidstatusofeventpassbyphoneHandler} = require("./../../controllers/main/admin");
+const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus,getEventScaleIdeaHandler,massMailInternshipHandler,adminConfrimUserByMailHandler, adminConfrimUserByPhoneNumberHandler,getuserbyemailAdminHandler,getallinvalidusersHandler,getuserbyprofileHandler,getUserByYearHandler,changepaidstatusofeventpassbyemailHandler,changepaidstatusofeventpassbyphoneHandler,changepaidstatusofinternshipbyemailHandler} = require("./../../controllers/main/admin");
 const { check, validationResult } = require("express-validator");
 const passport = require('passport');
 require('../../config/passport')(passport);
@@ -41,4 +41,5 @@ router.get('/getusersbyprofile',passport.authenticate('jwt',{session: false,fail
 router.get('/getuserbyyear',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getUserByYearHandler);
 router.post('/changeeventpaidstatusbyemail',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofeventpassbyemailHandler);
 router.post('/changeeventpaidstatusbyphone',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofeventpassbyphoneHandler);
+router.post('/changeinternshippaidstatusbyemail',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofinternshipbyemailHandler);
 module.exports = router; 
