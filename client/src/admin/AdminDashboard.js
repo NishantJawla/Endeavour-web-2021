@@ -195,7 +195,7 @@ function AdminDashboard() {
                     <div className="row getevets-data pt-5 color-white fs-6 ls-1 color-white">
                         <div className="">
                             <div className="fs-4 fw-bold pb-2 ls-1">Filters</div>
-                            <div className="">
+                            {/* <div className="">
                                 <div className="fw-bold fs-5">Get Users By Event</div>
                                 <div className="d-flex ">
                                     <input onChange={changePaidStatus} name="paidstatus" value="all" type="radio" />All
@@ -207,8 +207,8 @@ function AdminDashboard() {
                                     <button onClick={getusersByEvent} value="bquiz" className="btn btn-secondary mx-3 my-3 color-white">B Quiz</button>
                                     <button onClick={getusersByEvent} value="hackathon" className="btn btn-secondary mx-3 my-3 color-white">Hackathon</button>
                                 </div>
-                            </div>
-                            <div className="py-4">
+                            </div> */}
+                            {/* <div className="py-4">
                                 <div className="fw-bold fs-5">Get Team heads</div>
                                 <div className="d-flex ">
                                     <input onChange={changePaidStatus} name="paidstatus" value="all" type="radio" />All
@@ -221,8 +221,8 @@ function AdminDashboard() {
                                     <button onClick={getTeamheads} name="bquiz" className="btn btn-secondary mx-3 my-3 color-white">B Quiz</button>
                                     <button onClick={getTeamheads} name="hackathon" className="btn btn-secondary mx-3 my-3 color-white">Hackathon</button>
                                 </div>
-                            </div>
-                            <div className="py-4">
+                            </div> */}
+                            {/* <div className="py-4">
                                 <div className="fw-bold fs-5">Get User using endeavour ID</div>
                                 <div>
                                     <input onChange={changeEndvrId} type="text" name="endvrid" value={endvrId} placeholder="endeavour id" />
@@ -235,13 +235,13 @@ function AdminDashboard() {
                                     <input onChange={changeMobileno} value={mobileno} type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" name="mobileno" placeholder="mobileno" />
                                     <button onClick={getUsersByMobile} className="btn btn-secondary">Search</button>
                                 </form>
-                            </div>
-                            <div className="py-4">
+                            </div> */}
+                            {/* <div className="py-4">
                                 <div className="fw-bold fs-5">Get users</div>
                                 <button onClick={getUsersData} value="all" className="btn btn-secondary">All</button>
                                 {/* <button onClick={getUsersData} value="paid" className="btn btn-secondary mx-3 my-3 color-white">Paid</button>
-                                <button onClick={getUsersData} value="unpaid" className="btn btn-secondary mx-3 my-3 color-white">Unpaid</button> */}
-                            </div>
+                                <button onClick={getUsersData} value="unpaid" className="btn btn-secondary mx-3 my-3 color-white">Unpaid</button> 
+                            </div> */}
                         </div>
                     </div>
                 </div>
