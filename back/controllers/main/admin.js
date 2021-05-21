@@ -659,3 +659,18 @@ exports.changepaidstatusofeventpassbyemailHandler = (req, res) => {
         })
     })
 }
+
+exports.changepaidstatusofeventpassbyphoneHandler = (req, res) => {
+    User.findOne({ phoneNumber: req.body.phoneNumber}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            })
+        }
+        user.eventPass = true
+        user.save();
+        res.json({
+            msg: "Chnaged status succesfully"
+        })
+    })
+}

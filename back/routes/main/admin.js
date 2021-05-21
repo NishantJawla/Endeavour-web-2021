@@ -2,7 +2,7 @@
 //jshint esversion: 8
 const express = require('express');
 const router = express.Router();
-const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus,getEventScaleIdeaHandler,massMailInternshipHandler,adminConfrimUserByMailHandler, adminConfrimUserByPhoneNumberHandler,getuserbyemailAdminHandler,getallinvalidusersHandler,getuserbyprofileHandler,getUserByYearHandler,changepaidstatusofeventpassbyemailHandler} = require("./../../controllers/main/admin");
+const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus,getEventScaleIdeaHandler,massMailInternshipHandler,adminConfrimUserByMailHandler, adminConfrimUserByPhoneNumberHandler,getuserbyemailAdminHandler,getallinvalidusersHandler,getuserbyprofileHandler,getUserByYearHandler,changepaidstatusofeventpassbyemailHandler,changepaidstatusofeventpassbyphoneHandler} = require("./../../controllers/main/admin");
 const { check, validationResult } = require("express-validator");
 const passport = require('passport');
 require('../../config/passport')(passport);
@@ -39,5 +39,6 @@ router.post('/getuserbyadmin',passport.authenticate('jwt',{session: false,failur
 router.get('/getinvalidusers',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getallinvalidusersHandler);
 router.get('/getusersbyprofile',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getuserbyprofileHandler)
 router.get('/getuserbyyear',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getUserByYearHandler);
-router.post('/changepaidstatusbyemail',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofeventpassbyemailHandler);
+router.post('/changeeventpaidstatusbyemail',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofeventpassbyemailHandler);
+router.post('/changeeventpaidstatusbyphone',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofeventpassbyphoneHandler);
 module.exports = router; 
