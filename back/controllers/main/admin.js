@@ -5,6 +5,7 @@ const Event = require('../../models/event');
 const team = require('../../models/team');
 require('dotenv').config();
 const nodemailer = require("nodemailer");
+const bcrypt = require('bcrypt')
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 var async = require("async");
@@ -708,4 +709,26 @@ exports.changepaidstatusofinternshipbyphoneHandler = (req, res) => {
             msg: "Chnaged status succesfully"
         })
     })
+}
+
+
+exports.createAdminHandler = (req, res) => {
+    bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
+        const user = new User(req.body);
+        user.encryptedPassword = hash;
+        user.role = "superman"
+        user.confirmed = true
+        user.save((err, user) => {
+            if(err || !user){
+                console.log(err)
+                res.json({
+                    error: "Failed to create admin"
+                })
+            }
+            res.json({
+                "msg": "success admin created"
+            })
+        })
+    })
+
 }
