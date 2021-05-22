@@ -194,7 +194,7 @@ function AdminDashboard() {
                     </div>
                     <div className="row getevets-data pt-5 color-white fs-6 ls-1 color-white">
                         <div className="">
-                            <div className="fs-4 fw-bold pb-2 ls-1">Filters</div>
+                            <div className="fs-4 fw-bold pb-2 ls-1">Functions</div>
                             {/* <div className="">
                                 <div className="fw-bold fs-5">Get Users By Event</div>
                                 <div className="d-flex ">

@@ -371,12 +371,16 @@ exports.updateProfileHandler = (req,res) => {
             }
         }
         else{
+            if(user.profile){
+                user.discord = req.body.discord
+            } else {
             user.semester = req.body.semester
             user.college = req.body.college
             user.branch = req.body.branch
             user.libId = req.body.libId
             user.discord = req.body.discord
             user.profile = true
+            }
             user.save((err,user)=>{
                 if(err) {
                     if(err.keyPattern.discord === 1){
