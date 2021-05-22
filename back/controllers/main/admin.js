@@ -678,6 +678,7 @@ exports.changepaidstatusofeventpassbyphoneHandler = (req, res) => {
 }
 
 exports.changepaidstatusofinternshipbyemailHandler = (req, res) => {
+    console.log(req.body)
     User.findOne({ email: req.body.email}).exec((err,user) => {
         if(err || !user){
             return res.status(400).json({
@@ -694,6 +695,7 @@ exports.changepaidstatusofinternshipbyemailHandler = (req, res) => {
 
 
 exports.changepaidstatusofinternshipbyphoneHandler = (req, res) => {
+    console.log(req.body)
     User.findOne({  phoneNumber: req.body.phoneNumber}).exec((err,user) => {
         if(err || !user){
             return res.status(400).json({

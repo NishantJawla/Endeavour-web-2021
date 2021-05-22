@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import "./css/admin.css";
 import profileImg from "./../assets/img/superman.png";
 import { getEventId } from "./helper/EventIds";
-import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers, updatepaidstatuseventbymail, updatepaidstatuseventbyphone } from "./helper/adminapicall"; 
+import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers, updatepaidstatuseventbymail, updatepaidstatuseventbyphone,updatepaidstatusinternshipbyphone,
+    updatepaidstatusinternshipbymail} from "./helper/adminapicall"; 
 import { isAuthenticated } from "./../auth/helper/index";
 import { API } from "../backend";
 import axios from "axios";
@@ -47,7 +48,6 @@ function AdminDashboard() {
         const { value } = event.target;
         setMobileNo(value);
     }
-
     useEffect(() => {
         async function main() {
             const {user, token} = isAuthenticated();
@@ -94,12 +94,18 @@ function AdminDashboard() {
     function getUsersByEndvrId(){
         updatepaidstatuseventbymail(endvrId);
     }
-
+    const changeinternshipstatusbyemail = (event) => {
+        event.preventDefault();
+        updatepaidstatusinternshipbymail(endvrId)
+    }
     const getUsersByMobile = (event) => {
         event.preventDefault();
         updatepaidstatuseventbyphone(mobileno)
     }
-
+    const changeinternshipstatusbyphone = (event) => {
+        event.preventDefault();
+        updatepaidstatusinternshipbyphone(mobileno)
+    }
     function getUsersData(){
         getUsers(setData);
     }
@@ -236,6 +242,22 @@ function AdminDashboard() {
                                 <form>
                                     <input onChange={changeMobileno} value={mobileno} type="tel" name="mobileno" placeholder="mobileno" />
                                     <button onClick={getUsersByMobile} className="btn btn-secondary">Change</button>
+                                </form>
+                            </div>
+                            </div>
+                            <div> Change Paid Status of internship
+                            <div className="py-4">
+                                <div className="fw-bold fs-5">BY Email</div>
+                                <div>
+                                    <input onChange={changeEndvrId} type="text" name="endvrid" value={endvrId} placeholder="Email" />
+                                    <button onClick={changeinternshipstatusbyemail} className="btn btn-secondary">Change</button>
+                                </div>
+                            </div>
+                            <div className="py-4">
+                                <div className="fw-bold fs-5">By mobile Number from endvrId</div>
+                                <form>
+                                    <input onChange={changeMobileno} value={mobileno} type="tel" name="mobileno" placeholder="mobileno" />
+                                    <button onClick={changeinternshipstatusbyphone} className="btn btn-secondary">Change</button>
                                 </form>
                             </div>
                             </div>
