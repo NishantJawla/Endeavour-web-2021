@@ -662,6 +662,7 @@ exports.changepaidstatusofeventpassbyemailHandler = (req, res) => {
 }
 
 exports.changepaidstatusofeventpassbyphoneHandler = (req, res) => {
+    console.log(req.body)
     User.findOne({ phoneNumber: req.body.phoneNumber}).exec((err,user) => {
         if(err || !user){
             return res.status(400).json({

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./css/admin.css";
 import profileImg from "./../assets/img/superman.png";
 import { getEventId } from "./helper/EventIds";
-import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers, updatepaidstatuseventbymail } from "./helper/adminapicall"; 
+import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers, updatepaidstatuseventbymail, updatepaidstatuseventbyphone } from "./helper/adminapicall"; 
 import { isAuthenticated } from "./../auth/helper/index";
 import { API } from "../backend";
 import axios from "axios";
@@ -95,8 +95,9 @@ function AdminDashboard() {
         updatepaidstatuseventbymail(endvrId);
     }
 
-    function getUsersByMobile(){
-        getUserFromMobile(mobileno, setData);
+    const getUsersByMobile = (event) => {
+        event.preventDefault();
+        updatepaidstatuseventbyphone(mobileno)
     }
 
     function getUsersData(){
@@ -233,7 +234,7 @@ function AdminDashboard() {
                             <div className="py-4">
                                 <div className="fw-bold fs-5">By mobile Number from endvrId</div>
                                 <form>
-                                    <input onChange={changeMobileno} value={mobileno} type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" name="mobileno" placeholder="mobileno" />
+                                    <input onChange={changeMobileno} value={mobileno} type="tel" name="mobileno" placeholder="mobileno" />
                                     <button onClick={getUsersByMobile} className="btn btn-secondary">Change</button>
                                 </form>
                             </div>
