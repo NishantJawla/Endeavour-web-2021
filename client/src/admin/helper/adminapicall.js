@@ -246,3 +246,25 @@ export const getUsers = (paidStatus, setData) => {
 //         console.log(error);
 //     });
 // };
+
+export const updatepaidstatuseventbymail = data => {
+    const { user,  token} = isAuthenticated();
+    return fetch(`${API}admin/changeeventpaidstatusbyemail`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify({
+            email: data 
+        })
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}

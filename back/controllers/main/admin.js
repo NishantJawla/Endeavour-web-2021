@@ -646,6 +646,7 @@ exports.getUserByYearHandler = async (req, res) => {
 }
 
 exports.changepaidstatusofeventpassbyemailHandler = (req, res) => {
+    console.log(req.body)
     User.findOne({ email: req.body.email}).exec((err,user) => {
         if(err || !user){
             return res.status(400).json({

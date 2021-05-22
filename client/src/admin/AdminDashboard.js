@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./css/admin.css";
 import profileImg from "./../assets/img/superman.png";
 import { getEventId } from "./helper/EventIds";
-import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers } from "./helper/adminapicall"; 
+import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers, updatepaidstatuseventbymail } from "./helper/adminapicall"; 
 import { isAuthenticated } from "./../auth/helper/index";
 import { API } from "../backend";
 import axios from "axios";
@@ -92,7 +92,7 @@ function AdminDashboard() {
     }
 
     function getUsersByEndvrId(){
-        getUserFromEndvrId(endvrId, setData);
+        updatepaidstatuseventbymail(endvrId);
     }
 
     function getUsersByMobile(){
@@ -117,7 +117,7 @@ function AdminDashboard() {
         <React.Fragment>
             <div className="admin-portal bg-sec-pattern bg-norepeat py-5">
                 <div className="container py-5">
-                    <div className="heading-font py-3 color-white text-center fw-bold">Admin Dashboard</div>
+                    <div className="heading-font py-3 color-white text-center fw-bold">Justice League Dashboard</div>
                     <div className="row profile pt-5 color-white">
                         <div className="col-lg-5 col-md-10">
                             <div className="w-50 m-auto overflow-hidden rounded-circle">
@@ -222,20 +222,22 @@ function AdminDashboard() {
                                     <button onClick={getTeamheads} name="hackathon" className="btn btn-secondary mx-3 my-3 color-white">Hackathon</button>
                                 </div>
                             </div> */}
-                            {/* <div className="py-4">
-                                <div className="fw-bold fs-5">Get User using endeavour ID</div>
+                            <div> Change Paid Status of event Pass
+                            <div className="py-4">
+                                <div className="fw-bold fs-5">BY Email</div>
                                 <div>
-                                    <input onChange={changeEndvrId} type="text" name="endvrid" value={endvrId} placeholder="endeavour id" />
-                                    <button onClick={getUsersByEndvrId} className="btn btn-secondary">Search</button>
+                                    <input onChange={changeEndvrId} type="text" name="endvrid" value={endvrId} placeholder="Email" />
+                                    <button onClick={getUsersByEndvrId} className="btn btn-secondary">Change</button>
                                 </div>
                             </div>
                             <div className="py-4">
-                                <div className="fw-bold fs-5">Get User using mobile Number</div>
+                                <div className="fw-bold fs-5">By mobile Number from endvrId</div>
                                 <form>
                                     <input onChange={changeMobileno} value={mobileno} type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" name="mobileno" placeholder="mobileno" />
-                                    <button onClick={getUsersByMobile} className="btn btn-secondary">Search</button>
+                                    <button onClick={getUsersByMobile} className="btn btn-secondary">Change</button>
                                 </form>
-                            </div> */}
+                            </div>
+                            </div>
                             {/* <div className="py-4">
                                 <div className="fw-bold fs-5">Get users</div>
                                 <button onClick={getUsersData} value="all" className="btn btn-secondary">All</button>
