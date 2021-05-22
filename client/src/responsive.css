@@ -84,6 +84,20 @@
     .event-pass-subhead{
         font-size: 1.2rem !important;
     }
+    .top-25{
+        top: 2.5% !important;
+    }
+    .popup-main{
+        padding: 2rem 1.2rem !important;
+    }
+    .popup-main > div.col-lg-3 {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+    .speaker-popup-img > img{
+        width: 50% !important;
+        height: 50% !important;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px){
@@ -153,6 +167,9 @@
     }
     .event-pass-subhead{
         font-size: 1.2rem !important;
+    }
+    .top-25{
+        top: 5% !important;
     }
 }
 
