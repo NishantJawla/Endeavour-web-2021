@@ -1,7 +1,7 @@
 //jshint esversion: 8
 import React, { useEffect, useState } from "react";
 import "./css/admin.css";
-import profileImg from "./../assets/img/icons/profilepic.jpg";
+import profileImg from "./../assets/img/superman.png";
 import { getEventId } from "./helper/EventIds";
 import { registrationsPerEvent, getUsersCount, getUsersByEvent, getTeamHeads, getTeamHeadsAll, getUserFromEndvrId, getUserFromMobile, getUsers } from "./helper/adminapicall"; 
 import { isAuthenticated } from "./../auth/helper/index";
