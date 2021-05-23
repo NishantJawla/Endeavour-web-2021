@@ -22,10 +22,12 @@ import SpeakersPage from "./core/components/SpeakersPage";
 import AdminRoute from "./auth/helper/AdminRoutes";
 import EventPass from "./core/components/EventPass";
 import AdminDashBoard from "./admin/AdminDashboard";
+import AdminDasBoardNew from "./admin/AdminDashboardNew";
 
 const Routes = () => {
 
   const [hide, setHide] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
 
     setTimeout(() => {
         setHide(false);
@@ -34,7 +36,7 @@ const Routes = () => {
   return (
     <React.Fragment>
       <BrowserRouter>
-      { hide ? <Loader /> : null }
+      { hide ? <Loader /> : null } 
       <Navbar />
         <Switch>
           <Route path="/" exact component={Home} />
@@ -52,6 +54,7 @@ const Routes = () => {
           <PrivateRoute path="/changepassword" exact component={ChangePassword} />
           <AdminRoute path="/admin/superMan" exact component={ChangePassword} />
           <AdminRoute path="/admin/dashboard" exact component={AdminDashBoard} />
+          <Route path="/admin/newdashboard" exact component={AdminDasBoardNew} />
           <Route path="/:random" component={NotFoundPage}/>
         </Switch>
       <Footer />

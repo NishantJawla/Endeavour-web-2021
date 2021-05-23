@@ -1,0 +1,9 @@
+.navbar {
+    display: none !important;
+}
+footer{
+    display: none;
+}
+.admin-front{
+    height: 100vh;
+}
