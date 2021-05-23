@@ -1,7 +1,10 @@
 //jshint esversion: 8
-import React from "react";
+import React,{useEffect} from "react";
 
 function RefundPolicy () {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
     return (
         <div className="privacy-policy bg-sec-pattern bg-norepeat py-5">
             <div className="container py-5">
