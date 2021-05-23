@@ -50,7 +50,7 @@ const SpeakerSwiper = () => {
             "nextEl": navigationNextRef.current,
           }}
         autoplay={{
-          "delay": 1000,
+          "delay": 2500,
           "disableOnInteraction": false
         }}
         loop={true}
