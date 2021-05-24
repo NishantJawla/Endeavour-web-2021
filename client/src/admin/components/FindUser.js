@@ -11,8 +11,21 @@ function FindUser(){
     const [showSlowly, setShowSlowly] = useState(false);
 
     const showUsers = () => {
-        const all = [1,2,3,4,5,6,7,8];
-        return all.map((user, index) => {
+        // const temp = [1,2,3,4,5,6,7,8];
+        // return userData.map((user, index) => {
+        //     return (
+        //         <React.Fragment>
+        //             <EachUserLine
+        //                 key={user.endvrid} 
+        //                 index={index}
+        //                 user={user}
+        //                 setShowSlowly={setShowSlowly}
+        //                 setPopupData={setPopupData}
+        //             />
+        //         </React.Fragment>
+        //     );
+        // });
+        return userData ? userData.map((user, index) => {
             return (
                 <React.Fragment>
                     <EachUserLine
@@ -24,17 +37,17 @@ function FindUser(){
                     />
                 </React.Fragment>
             );
-        });
+        }) : ""
     };
 
     return (
         <div className="p-3">
             <SearchMenu setUserData={setUserData} />
             <div className="count pt-5">
-                <div className="color-white fs-5 ls-2 fw-bold">Count: 50</div>
+                <div className="color-white fs-5 ls-2 fw-bold">Count: {userData.length}</div>
             </div>
             <div className="usersInfo pt-3">
-                <table class="table color-white">
+                <table className="table color-white">
                     <thead>
                         <tr className="color-white">
                             <th scope="col">#</th>

@@ -23,7 +23,8 @@ function SearchMenu(props){
             console.log("feagag");
         } else {
             const options = {
-                [userOption] : optionValue 
+                key: userOption,
+                value: optionValue 
             };
             queryDataBase(options, props.setUserData);
         }

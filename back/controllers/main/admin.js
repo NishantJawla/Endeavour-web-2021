@@ -352,3 +352,17 @@ exports.getAllUsersByPaidStatus = async (req, res) => {
         users: responseData
     });
 };
+
+exports.getUsersUsersCustom = async (req, res) => {
+    const key = req.params.key;
+    const value = req.params.value;
+    const options = {
+        [key]: value
+    };
+    const users = await User.find(options);
+    res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        usersData: users
+    });
+};

@@ -251,25 +251,23 @@ export const queryDataBase = (options, setData) => {
 
     const { user, token } = isAuthenticated();
 
-    fetch(`${API}admin/api/userData/getUserData/custom`, {
+    fetch(`${API}admin/api/userData/getUserData/custom/${options.key}/${options.value}`, {
         mode: "cors",
         method: "GET",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             Authorization: `${token}`
-        },
-        body: {
-            queryParameters: options
         }
     }).then(response => {
+        console.log(response);
         if(response.ok){
             return response.json();
         } else {
             throw new Error("Not able to fetch user data");
         }
     }).then(data => {
-        setData(data.userData);
+        setData(data.usersData);
     }).catch(error => {
         console.log(error);
     });

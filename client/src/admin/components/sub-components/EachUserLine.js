@@ -5,12 +5,12 @@ function EachUserLine (props) {
 
     const showDetails = () => {
         props.setShowSlowly(true);
-        props.setUserData(props.user);
+        props.setPopupData(props.user);
     }
 
     return (
         <tr className= {props.index%2 === 0 ? "bg-primary" : ""}>
-            <th scope="row">{props.index}</th>
+            <th scope="row">{props.index + 1}</th>
             <td>{props.user.endvrid}</td>
             <td>{props.user.name}</td>
             <td>{props.user.email}</td>
