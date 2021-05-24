@@ -1,11 +1,11 @@
 //jshint esversion: 8
 import React from "react";
-import DetailsPopup from ""
 
 function EachUserLine (props) {
 
     const showDetails = () => {
-
+        props.setShowSlowly(true);
+        props.setUserData(props.user);
     }
 
     return (

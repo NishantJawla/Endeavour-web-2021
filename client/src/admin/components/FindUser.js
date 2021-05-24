@@ -2,19 +2,25 @@
 import React, { useState } from "react";
 import SearchMenu from "./SeachMenu";
 import EachUserLine from "./sub-components/EachUserLine";
+import DetailsPopup from "./sub-components/DetailsPopup";
 
 function FindUser(){
 
     const [userData, setUserData] = useState([]);
+    const [popupData, setPopupData] = useState({});
+    const [showSlowly, setShowSlowly] = useState(false);
 
     const showUsers = () => {
-        return userData.map((user, index) => {
+        const all = [1,2,3,4,5,6,7,8];
+        return all.map((user, index) => {
             return (
                 <React.Fragment>
                     <EachUserLine
                         key={user.endvrid} 
                         index={index}
                         user={user}
+                        setShowSlowly={setShowSlowly}
+                        setPopupData={setPopupData}
                     />
                 </React.Fragment>
             );
@@ -47,6 +53,7 @@ function FindUser(){
                     </tbody>
                 </table>
             </div>
+            <DetailsPopup data={popupData} showSlowly={showSlowly} setSlowSlowly={setShowSlowly} />
         </div>
     );
 }
