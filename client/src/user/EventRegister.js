@@ -157,6 +157,18 @@ const  EventRegister = (props) => {
             })
         );
     };
+    const getEventCoordiantor = () => {
+        let results = eventData[0].coordinators;
+        return (
+            results.map(eachMember => {
+                return (
+                    <div className="py-1">
+                        <div className="fs-6">{eachMember.name}: {eachMember.phone}</div>
+                    </div>
+                );
+            })
+        );
+    };
     // eslint-disable-next-line
     const splitString = (s) => {
         let result = s.split("--")
@@ -256,6 +268,14 @@ const  EventRegister = (props) => {
                                 {eventData[0] ? getEventFaqs() : ""}
                             </div>
                         </div>
+
+                        <div className="py-3 px-4">
+                            <div className="fs-5 fw-bold pb-2 ls-2">Event Coordinator's</div>
+                            <div className="fs-6 color-white ls-1">
+                                {eventData[0] ? getEventCoordiantor() : ""}
+                            </div>
+                        </div>
+
                         <div className="py-3 px-4">
                             {showButton()}
                         </div>

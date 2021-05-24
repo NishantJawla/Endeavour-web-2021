@@ -13,6 +13,10 @@ const  EachEvent = (props) => {
                 </div>
                 <div className="event-title fw-bolder ls-1 fs-5 py-2">{props.data.eventName}</div>
                 <div className="event-desc py-2">{props.data.eventTagline}</div>
+                {/* <div className="coordinator-name py-2">Coordinator's Contact
+                    <div className="">Pranav Shukla: +91 9718069294</div>
+                    <div className="">Pranav Shukla: +91 9718069294</div>
+                </div> */}
                 {
                     (props.data.isOpen === "true") && (<Link to={url} className="learn-more border-0 bg-transparent p-0 fw-bold ls-1 mt-2 color-primary" 
                     data={props}>Read More</Link>)
