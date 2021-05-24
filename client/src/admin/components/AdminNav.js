@@ -1,15 +1,16 @@
 //jshint esversion: 8
 import React from "react";
-import { Link } from "react-router-dom";
-import logo from "./../../assets/img/logo.png";
+ 
+function AdminNav(props) {
 
-function AdminNav() {
     return (
-        <div className="admin-nav">
-            <div className="logo d-flex justify-content-center">
-                <Link className="" to="/">
-                    <img src={logo} width="45px" alt="ecell logo" />
-                </Link>
+        <div className="admin-nav h-100 py-4 px-5">
+            <div className="text-center color-grey fs-5 fw-bold ls-1 pb-3 border-1 border-bottom">Admin Dashboard</div>
+            <div className="admin-nav-options color-white fs-6 py-3">
+                <div onClick={() => props.setPage("dashboard")} className="py-2 cursor-pointer my-2 ls-1" >Dashboard</div>
+                <div onClick={() => props.setPage("changePayStatus")} className="py-2 cursor-pointer my-2 ls-1" >Change Pay Status</div>
+                <div onClick={() => props.setPage("findUsers")} className="py-2 cursor-pointer my-2 ls-1" >Find users</div>
+                <div onClick={() => props.setPage("importCSV")} className="py-2 cursor-pointer my-2 ls-1" >Import CSV</div>
             </div>
         </div>
     );

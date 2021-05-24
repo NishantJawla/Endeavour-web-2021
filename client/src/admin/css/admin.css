@@ -1,9 +1,36 @@
-.navbar {
+/* .navbar {
     display: none !important;
 }
 footer{
     display: none;
-}
+} */
 .admin-front{
     height: 100vh;
+}
+.admin-nav{
+    background: #1a2035;
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+}
+.admin-nav-options > div:hover{
+    color: grey;
+}
+.bg-orange{
+    background-color: #FF6600 !important;
+}
+.bg-grey{
+    background-color: #2e2e2e !important;
+}
+.color-orange{
+    color: #FF6600 !important;
+}
+.color-sucess{
+    color: #00ff00 !important;
+}
+.each-info div.bg-orange{
+    width: 140px !important;
+}
+.dropdown-search:hover,
+.dropdown-search:focus{
+    background-color: #1a2035 !important;
+    color: #fff !important;
 }

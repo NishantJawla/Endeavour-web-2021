@@ -22,7 +22,7 @@ import SpeakersPage from "./core/components/SpeakersPage";
 import AdminRoute from "./auth/helper/AdminRoutes";
 import EventPass from "./core/components/EventPass";
 import AdminDashBoard from "./admin/AdminDashboard";
-import AdminDasBoardNew from "./admin/AdminDashboardNew";
+import AdminDasBoardNew from "./admin/AdminPage";
 
 const Routes = () => {
 

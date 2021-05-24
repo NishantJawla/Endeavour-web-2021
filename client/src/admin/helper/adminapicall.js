@@ -246,3 +246,31 @@ export const getUsers = (paidStatus, setData) => {
 //         console.log(error);
 //     });
 // };
+
+export const queryDataBase = (options, setData) => {
+
+    const { user, token } = isAuthenticated();
+
+    fetch(`${API}admin/api/userData/getUserData/custom`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        },
+        body: {
+            queryParameters: options
+        }
+    }).then(response => {
+        if(response.ok){
+            return response.json();
+        } else {
+            throw new Error("Not able to fetch user data");
+        }
+    }).then(data => {
+        setData(data.userData);
+    }).catch(error => {
+        console.log(error);
+    });
+};
