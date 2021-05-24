@@ -5,6 +5,7 @@ const saltRounds = 10;
 require('dotenv').config();
 const nodemailer = require("nodemailer");
 const { check, validationResult } = require("express-validator");
+const normalizeEmail = require('normalize-email');
 //imports
 const User = require('../../models/user');
 const Team = require('../../models/team');
@@ -293,7 +294,7 @@ exports.contactUsOneHandler = (req,res,next) => {
         });
         let info = await transporter.sendMail({
         from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-        to: req.body.contactEmail, 
+        to: normalizeEmail(req.body.contactEmail), 
         subject: "Contact Us Succesfull", 
         text: "Hi it's a contact us succefull mail", 
         html: `<b>Hello ${req.body.contactUserName}</b><br>
