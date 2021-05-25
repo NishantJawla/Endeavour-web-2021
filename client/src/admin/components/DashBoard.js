@@ -1,9 +1,27 @@
 //jshint esversion: 8
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { registrationsPerEvent } from "./../helper/adminapicall";
 
 function DashBoard() {
 
+    const [registerdUsersCount, setRegisteredUsersCount] = useState([]);
     
+    useEffect(() => {
+        registrationsPerEvent(setRegisteredUsersCount);
+    }, []);
+
+    const showRegistationsPerEvent = () => {
+        registerdUsersCount.map(event => {
+            return (
+                <div className="color-white m-4 text-center ls-1">
+                    <div className="bg-orange text-center p-3 mb-2 fs-1 rounded-3 fw-bold ls-2">
+                        148
+                    </div>
+                    {event.eventName}
+                </div>
+            );
+        });
+    };
 
     return (
         <div className="admin-dashboard px-3 py-3">

@@ -198,7 +198,7 @@ export const getUserFromMobile = (mobile, setData) => {
     });
 };
 
-export const getUsers = (paidStatus, setData) => {
+export const getUsers = (setData) => {
     const { user, token } = isAuthenticated();
     return fetch(`${API}admin/api/getUser/all`, {
         mode: "cors",
@@ -210,13 +210,14 @@ export const getUsers = (paidStatus, setData) => {
         }
     })
     .then(response => {
-        console.log("got response");
-        return response.json();
+        if(response.ok){
+            return response.json();
+        } else {
+            throw new Error("Not able to fetch users data");
+        }
     })
     .then(data => {
-        console.log("getUsers");
-        console.log(data);
-        setData(data);
+        setData(data.usersData);
         return;
     })
     .catch(error => {
@@ -260,15 +261,55 @@ export const queryDataBase = (options, setData) => {
             Authorization: `${token}`
         }
     }).then(response => {
-        console.log(response);
         if(response.ok){
             return response.json();
         } else {
             throw new Error("Not able to fetch user data");
         }
     }).then(data => {
-        console.log(data.usersData);
         setData(data.usersData);
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+export const updateUserData = (userId, updatedData) => {
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/userData/updateUserData`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify({
+            userId: userId,
+            updatedData: updatedData
+        })
+    }).then(response => {
+        return response.json();
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+
+export const deleteUserData = (userId) => {
+
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/userData/deleteUser/${userId}`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        return response.json();
     }).catch(error => {
         console.log(error);
     });

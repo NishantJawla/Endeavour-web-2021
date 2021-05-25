@@ -2,7 +2,7 @@
 //jshint esversion: 8
 const express = require('express');
 const router = express.Router();
-const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus, getUsersUsersCustom } = require("./../../controllers/main/admin");
+const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsers, getUsersUsersCustom, updateUserData, deleteUserForDB } = require("./../../controllers/main/admin");
 const { check, validationResult } = require("express-validator");
 const passport = require('passport');
 require('../../config/passport')(passport);
@@ -26,9 +26,11 @@ router.get("/api/teamHead/:eventId/:paidStatus", passport.authenticate('jwt',{se
 router.get("/api/teamHead/all/:paidStatus", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getTeamHeadAll);
 router.get("/api/getUser/endvId/:endvrId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getUserFromEndvrId);
 router.get("/api/getUser/number/:number", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getUserFromMobile);
-router.get("/api/getUser/all", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getAllUsersByPaidStatus);
 
-router.get("/api/userData/getUserData/custom/:key/:value", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), getUsersUsersCustom);
+router.post("/api/userData/updateUserData", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, updateUserData);
+router.get("/api/getUser/all", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getAllUsers);
+router.get("/api/userData/getUserData/custom/:key/:value", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getUsersUsersCustom);
+router.get("/api/userData/deleteUser/:userId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, deleteUserForDB);
 
 router.post('/changePaidStatus',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changePaidStatusHandler,addTeamToEventsHandler);
 

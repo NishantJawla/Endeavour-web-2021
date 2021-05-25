@@ -1,14 +1,18 @@
 //jshint esversion: 8
-import React, { useState } from "react";
-import SearchMenu from "./SeachMenu";
+import React, { useState, useEffect } from "react";
+import { getUsers } from "./../helper/adminapicall"
 import EachUserLine from "./sub-components/EachUserLine";
 import DetailsPopup from "./sub-components/DetailsPopup";
 
-function FindUser(){
+function FindAllUsers(){
 
     const [userData, setUserData] = useState([]);
     const [popupData, setPopupData] = useState({});
     const [showSlowly, setShowSlowly] = useState(false);
+
+    useEffect(() => {
+        getUsers()
+    }, []);
 
     const showUsers = () => {
         // const temp = [1,2,3,4,5,6,7,8];
@@ -42,7 +46,6 @@ function FindUser(){
 
     return (
         <div className="p-3">
-            <SearchMenu setUserData={setUserData} />
             <div className="count pt-5">
                 <div className="color-white fs-5 ls-2 fw-bold">Count: {userData.length}</div>
             </div>

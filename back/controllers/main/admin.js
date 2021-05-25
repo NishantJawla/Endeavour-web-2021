@@ -321,35 +321,12 @@ exports.getUserFromMobile = async (req, res) => {
     });
 };
 
-exports.getAllUsersByPaidStatus = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
     const users = await User.find({});
-    const responseData = [];
-    users.forEach(user => {
-        const registerdEvents = [];
-        user.registered.forEach(async event => {
-            const e = await Event.find({_id: event.event});
-            console.log(e);
-            console.log("event name", e.eventName);
-            registerdEvents.push(e.eventName);
-        });
-        responseData.push({
-            name: user.name,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
-            endvrid: user.endvrid,
-            semester: user.semester || "null",
-            confirmed: user.confirmed,
-            college: user.college || "null",
-            branch: user.branch || "null",
-            libId: user.libId || "null",
-            discord: user.discord || "null",
-            events: registerdEvents
-        });
-    });
     res.status(200).json({
         status: 200,
         msg: "Data Fetched Successfully",
-        users: responseData
+        usersData: users
     });
 };
 
@@ -364,5 +341,42 @@ exports.getUsersUsersCustom = async (req, res) => {
         status: 200,
         msg: "Data Fetched Successfully",
         usersData: users
+    });
+};
+
+exports.updateUserData = async (req, res) => {
+    const userId = req.body.userId;
+    const updatedData = req.body.updatedData;
+    User.findByIdAndUpdate(userId, updatedData, (err) => {
+        if(err){
+            res.status(500).json({
+                status: 500,
+                msg: "Not Able to update User data",
+                error: "Not Able to update User data"
+            });
+        } else {
+            res.status(200).json({
+                status: 200,
+                msg: "Successfully updated User Data"
+            });
+        }
+    });
+};
+
+exports.deleteUserForDB = async (req, res) => {
+    const userId = req.params.userId;
+    User.findByIdAndDelete(userId, (err) => {
+        if(err){
+            res.status(500).json({
+                status: 500, 
+                msg: "Unable to Delete user",
+                error: "Unable to delete user",
+            });
+        } else {
+            res.status(200).json({
+                status: 200,
+                msg: "Successfully deleted user from database"
+            });
+        }
     });
 };
