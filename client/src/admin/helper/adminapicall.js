@@ -248,6 +248,7 @@ export const getUsers = (setData) => {
 //     });
 // };
 
+
 export const queryDataBase = (options, setData) => {
 
     const { user, token } = isAuthenticated();
@@ -314,3 +315,91 @@ export const deleteUserData = (userId) => {
         console.log(error);
     });
 };
+
+export const updatepaidstatuseventbymail = data => {
+    const { user,  token} = isAuthenticated();
+    return fetch(`${API}admin/changeeventpaidstatusbyemail`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify({
+            email: data 
+        })
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+export const updatepaidstatuseventbyphone = data => {
+    const { user,  token} = isAuthenticated();
+    return fetch(`${API}admin/changeeventpaidstatusbyphone`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify({
+            phoneNumber: data 
+        })
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+export const updatepaidstatusinternshipbymail = data => {
+    const { user,  token} = isAuthenticated();
+    return fetch(`${API}admin/changeinternshippaidstatusbyemail`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify({
+            email: data 
+        })
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+export const updatepaidstatusinternshipbyphone = data => {
+    const { user,  token} = isAuthenticated();
+    return fetch(`${API}admin/changeinternshippaidstatusbyphone`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify({
+            phoneNumber: data 
+        })
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}

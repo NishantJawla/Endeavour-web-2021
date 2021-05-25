@@ -5,7 +5,7 @@ import linkedinIcon from "./../../../assets/img/icons/linkedin.svg";
 
 const  EachSpeakerCard = (props) => {
     return (
-        <div className="each-speakerpage bg-white rounded-3 m-4">
+        <div onClick={() => {props.setPopupData(props.data); props.setShowSlowly(true)}} className=" cursor-pointer each-speakerpage bg-white rounded-3 m-4">
             <div className="each-speaker-img overflow-hidden rounded-3">
                 <img src={props.data.imguri} width="100%" height="100%" alt="speaker" />
             </div>
@@ -14,8 +14,8 @@ const  EachSpeakerCard = (props) => {
                 {props.data.name}
                 </div>
                 <div className="designation text-center py-1 fs-7 text-wrap">
-                    <strong>{props.data.title}</strong><br/>
-                    {props.data.t}
+                    <strong>{props.data.desc}</strong><br/>
+                    {/* {props.data.t} */}
                 </div>
                 <div className="each-speaker-social-icons py-2">
                     <div className="d-flex justify-content-center">

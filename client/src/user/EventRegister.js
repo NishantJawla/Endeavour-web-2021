@@ -86,7 +86,7 @@ const  EventRegister = (props) => {
         const { user } = isAuthenticated();
         if(idParam.toString() === "60a0af70a45a7705fc059d82"){
             return (
-                <a href="https://www.google.com" target="_blank" rel="noreferrer" className="w-100 rounded bg-primary hbg-dark color-white fs-6 text-decoration-none border-0 ls-1 fw-bold py-3 px-3">Register Now</a>
+                <a href="https://dare2compete.com/o/67DAEeL?refId=XrePcxB" target="_blank" rel="noreferrer" className="w-100 rounded bg-primary hbg-dark color-white fs-6 text-decoration-none border-0 ls-1 fw-bold py-3 px-3">Register Now</a>
             );
         } else if(user){
             return (
@@ -152,6 +152,18 @@ const  EventRegister = (props) => {
                     <div className="py-2">
                         <div className="fw-bold">Question: <span className="fw-normal">{faq.question}</span></div>
                         <div className="fw-bold">Answer: <span className="fw-normal">{faq.answer}</span></div>
+                    </div>
+                );
+            })
+        );
+    };
+    const getEventCoordiantor = () => {
+        let results = eventData[0].coordinators;
+        return (
+            results.map(eachMember => {
+                return (
+                    <div className="py-1">
+                        <div className="fs-6">{eachMember.name}: {eachMember.phone}</div>
                     </div>
                 );
             })
@@ -256,6 +268,14 @@ const  EventRegister = (props) => {
                                 {eventData[0] ? getEventFaqs() : ""}
                             </div>
                         </div>
+
+                        <div className="py-3 px-4">
+                            <div className="fs-5 fw-bold pb-2 ls-2">Event Coordinator's</div>
+                            <div className="fs-6 color-white ls-1">
+                                {eventData[0] ? getEventCoordiantor() : ""}
+                            </div>
+                        </div>
+
                         <div className="py-3 px-4">
                             {showButton()}
                         </div>

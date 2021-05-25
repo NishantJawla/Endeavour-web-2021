@@ -7,6 +7,7 @@ const { check, validationResult } = require("express-validator");
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 var expressJwt = require("express-jwt");
+const normalizeEmail = require('normalize-email');
 const passport = require('passport');
 
 
@@ -37,6 +38,9 @@ if (!errors.isEmpty()) {
         }
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
             const user = new User(req.body);
+            user.email = normalizeEmail(req.body.email);
+            console.log(normalizeEmail(req.body.email));
+            console.log(user.email);
             user.encryptedPassword = hash;
             
                 const randString = () => {
@@ -117,8 +121,16 @@ exports.loginHandler = (req,res) =>{
             error: errors.array()[0].msg
         });
     }
-    User.findOne({email:req.body.email}).exec((err,user)=>{
+    var someMail = normalizeEmail(req.body.email)
+    console.log(someMail);
+    User.findOne({email: req.body.email}).exec((err,user)=>{
         if(err || !user){
+            if(!user) {
+                console.log("some error occured")
+            }
+            if(err){
+                console.log(err)
+            }
             return res.status(400).json({
                 status: 400,
                 msg: 'User with this email does not exist',
@@ -197,7 +209,7 @@ exports.signoutHandler = (req, res) => {
 };
 
 exports.isAdmin = (req, res,next) => {
-    if(req.user.role !==  'superman' ){
+    if(req.user.role ===  'user' ){
         return res.status(403).json({
             status: 403,
             msg : "You are not admin, Access Denied"

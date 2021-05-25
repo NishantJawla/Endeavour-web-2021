@@ -62,10 +62,6 @@ const UserDashBoard = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        if(userData.profile){
-            //profile is already updated add toster
-            successMessage2();
-        } else {
             updateProfile(updatedData).then(data => {
                 if(data.error){
                     errorMessage()
@@ -79,7 +75,6 @@ const UserDashBoard = (props) => {
                     getUserData(setUpdatedData);
                 }
             });
-        }
     };
     const successMessage2 = () => {
         toast.success('Profile Already updated Once', {
@@ -186,7 +181,7 @@ const UserDashBoard = (props) => {
                         pauseOnHover
                         />
                         <div className="fs-5 fw-bold pb-3 ls-1">Update Profile</div>
-                        <div className="profile-update-note py-3 color-white italic ls-1 fw-bold">The Profile can be only updated once. Make sure to enter the Correct Data.</div>
+                        <div className="profile-update-note py-3 color-white italic ls-1 fw-bold">The Profile can only be changed once. Make certain that the correct data is entered. However, the discord id can be changed later.</div>
                         <form className="edit-details" action="" method="">
                             <div className="row py-2 ls-1 fs-6">
                                 <div className="col-lg-3">

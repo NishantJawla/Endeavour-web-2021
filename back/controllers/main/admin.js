@@ -3,7 +3,16 @@ const User = require('../../models/user');
 const Team = require('../../models/team');
 const Event = require('../../models/event');
 const team = require('../../models/team');
-
+require('dotenv').config();
+const nodemailer = require("nodemailer");
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
+const jwt = require('jsonwebtoken');
+var async = require("async");
+var listofemails = []; 
+var success_email = [];
+var failure_email = [];
+var transporter;
 
 exports.getRegistrationsPerEvent = (req, res) => {
     Event.find({}, (error, events) => {
@@ -380,3 +389,386 @@ exports.deleteUserForDB = async (req, res) => {
         }
     });
 };
+
+exports.getEventScaleIdeaHandler = async (req, res) => {
+    var confirmed = 0
+    var total = 0
+    var eventpass = 0
+    var internship = 0
+    var profile = 0
+    const user = await User.find({});
+    user.forEach(user => {
+        total = total + 1;
+        if(user.confirmed){
+            confirmed += 1;
+            if(user.profile){
+                profile += 1;
+                if(user.eventPass){
+                    eventpass += 1
+                }
+                if(user.internship){
+                    internship += 1;
+                }
+            }
+        }
+    });
+
+    return res.send({
+        "Total": total,
+        "Confirmed": confirmed,
+        "profile": profile,
+        "eventPass": eventpass,
+        "internship": internship
+    })
+}
+function massMailer() {
+    var self = this;
+    transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+            user: process.env.GMAIL_USER_MASS,
+            pass: process.env.GMAIL_PASS_MASS
+        }
+    });
+    // Fetch all the emails from database and push it in listofemails
+        // Will do it later.
+    self.invokeOperation();
+};
+
+/* Invoking email sending operation at once */
+
+massMailer.prototype.invokeOperation = function() {
+    var self = this;
+    async.each(listofemails,self.SendEmail,function(){
+        console.log(success_email);
+        console.log(failure_email);
+    });
+}
+
+/* 
+* This function will be called by multiple instance.
+* Each instance will contain one email ID
+* After successfull email operation, it will be pushed in failed or success array.
+*/
+
+massMailer.prototype.SendEmail = function(Email,callback) {
+    console.log("Sending email to " + Email);
+    var self = this;
+    self.status = false;
+    // waterfall will go one after another
+    // So first email will be sent
+    // Callback will jump us to next function
+    // in that we will update DB
+    // Once done that instance is done.
+    // Once every instance is done final callback will be called.
+    async.waterfall([
+        function(callback) {                
+            var mailOptions = {
+                from: '"Team e-Cell" <ecellwebtechnical@gmail.com>',     
+                to: Email,
+                subject: 'Get Your Pass Now', 
+                text: "Hi it's a get your pass email",
+                html: `
+                <div style="width:inherit !important; background-color: #202020; width: 100%; height: 100%; margin: 0px; padding: 50px;">
+        <div style="margin: auto; display: flex;">
+            <img style="margin: auto; align-self:center;" src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/loaderLogo.png?alt=media&token=323355c3-7aff-4d0c-801c-9dbcba45dfe5" width="158px" height="150px" />
+        </div>
+        <div style="width: 100%; color: white;">
+            <div style="font-weight: 800; color: white; font-size: 22px; letter-spacing: 1px;">Hey! </div>
+            <div style="text-align: justify; padding-top: 14px; font-size: 16px; line-height: 25px; letter-spacing: 1px;">
+                Hope you are doing great! <br>
+
+                We have received your registration for Endeavour'21, and would like to notify you that you can be a part of our events by buying an Endeavour'21 pass, at an affordable price, to enjoy the E-SUMMIT at its fullest! <br>
+                <ol>
+                    <li>
+                        The Super-Pack: Rs.150/-
+                        <ul>
+                            <li>Take part in any number of  events of your choice  (excluding the hackathon and Internship Fair), and various other events like-</li>
+                            <li>Speaker Session</li>
+                            <li>Preparatory Events</li>
+                            <li>Workshops</li>
+                            <li>Entertainment Eve</li>
+                        </ul>
+                    </li>
+                    <li>Hackathon: Rs. 100/-</li>
+                    <li>Internship Fair: Rs. 50 for being a part of any 2 internships.</li>
+                    <li>Preparatory events: FREE</li>
+                </ol>
+                
+                Also, join our Discord Channel, if you haven't already!<br><br>
+                <div>
+                    <a style="text-decoration: none; color: #fff; background-color: #a13941; padding: 10px 15px; margin: 10px 0" href="https://discord.gg/KwSKQb62Hv">Join Discord</a><br>
+                </div>
+                <br><br>
+                See you there!<br>
+            </div>
+            <div style="width: 100%; display: flex; text-align: center; padding-top: 20px;">
+                <img width="540px" height="300px" style="margin: auto; align-self:center;" src="https://firebasestorage.googleapis.com/v0/b/endeavour-21.appspot.com/o/eventpass.png?alt=media&token=052ecba5-5577-423b-a562-d778bbf24d3c" alt="">
+            </div>
+            <div style="width: 100%; display: flex; padding-top: 0px;">
+                <a href="http://endeavour-kiet.in/geteventpass" style="text-decoration: none; margin: auto; align-self: center; padding: 15px 25px; border: 0px; background-color: #a13941; color: #fff; letter-spacing: 1px; font-weight: 700; font-size: 18px; border-radius: 5px;">Get Your Pass Now</a>
+            </div>
+            <div style="text-align: justify; padding-top: 10px; font-size: 16px; line-height: 25px; letter-spacing: 1px; color: #fff;">
+                If You have any queries contact us at:<br>
+                endeavour@kiet.edu <br>
+                +91 8795484505 <br><br>
+
+                With Regards,<br>
+
+                Team e-Cell
+            </div>
+        </div>
+    </div>
+                
+                    `,
+            };
+            transporter.sendMail(mailOptions, function(error, info) {               
+                if(error) {
+                    console.log(error)
+                    failure_email.push(Email);
+                } else {
+                    self.status = true;
+                    success_email.push(Email);
+                }
+                callback(null,self.status,Email);
+            });
+        },
+        function(statusCode,Email,callback) {
+                console.log("Status for sent mail " + Email + "is " + statusCode);
+                callback();
+        }
+        ],function(){
+            //When everything is done return back to caller.
+            callback();
+    });
+}
+
+
+exports.massMailInternshipHandler = async (req, res) => {
+    const user = await User.find({});
+    listofemails = []
+    success_email = []
+    failure_email = []
+    user.forEach(user => {
+        if(user.confirmed && user.role === "user"){
+            if(!user.eventPass){
+                listofemails.push(user.email)
+            }
+        }
+    });
+    console.log(listofemails);
+    new massMailer(); //lets begin
+    return res.json({
+        msg: "Successfully send all the mails"
+    })
+}
+
+exports.adminConfrimUserByMailHandler = (req, res) => {
+    User.findOne({email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+        return res.status(400).json({
+            error: "Unable to find user"
+        })
+        }
+        user.confirmed = true;
+        user.endvrid = 'ENDVR2021'+user.phoneNumber.toString();
+        user.uniqueString = undefined
+        user.save((err, user) => {
+            if(err || !user) {
+                return res.json({
+                    error: "Unable to save user"
+                })
+            }else {
+                return res.json({
+                    msg: "User successfully confirmed"
+                })
+            }
+            
+        })
+    })
+}
+
+exports.adminConfrimUserByPhoneNumberHandler = (req, res) => {
+    User.findOne({phoneNumber: req.body.phoneNumber}).exec((err,user) => {
+        if(err || !user){
+        return res.status(400).json({
+            error: "Unable to find user"
+        })
+        }
+        user.confirmed = true;
+        user.endvrid = 'ENDVR2021'+user.phoneNumber.toString();
+        user.uniqueString = undefined
+        user.save((err, user) => {
+            if(err || !user) {
+                return res.json({
+                    error: "Unable to save user"
+                })
+            }else {
+                return res.json({
+                    msg: "User successfully confirmed"
+                })
+            }
+            
+        })
+    })
+}
+
+exports.getuserbyemailAdminHandler = (req,res) => {
+    User.findOne({ email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User will this mail does not exist"
+            })
+        }
+        return res.json({
+            msg: "user is valid",
+            user
+        })
+    })
+}
+
+exports.getallinvalidusersHandler = async (req,res) => {
+    const users = await User.find({});
+    var arr = [];
+    users.forEach(user => {
+        if(!user.confirmed){
+            arr.push(user.email);
+        }
+    })
+    return res.json({arr})
+}
+
+exports.getuserbyprofileHandler = async (req, res) => {
+    const users = await User.find({});
+    var someArray = []
+    users.forEach(user => {
+        if(user.profile){
+            someArray.push(user.email)
+        }
+    })
+    res.send({someArray})
+}
+
+exports.getUserByYearHandler = async (req, res) => {
+    const users = await User.find({});
+    var first = 0
+    var second = 0
+    var third = 0
+    var fourth = 0
+    users.forEach(user => {
+        if(user.profile){
+            var s = parseInt(user.semester)
+            if(s<=2){
+                first += 1
+            }else if (s<=4) {
+                second += 1
+            } else if (s<=6){
+                third += 1
+            } else{
+                fourth += 1
+            }
+        }
+    })
+    return res.json({
+        first, second, third, fourth
+    })
+}
+
+exports.changepaidstatusofeventpassbyemailHandler = (req, res) => {
+    console.log(req.body)
+    User.findOne({ email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            })
+        }
+        user.eventPass = true
+        user.save();
+        res.json({
+            msg: "Chnaged status succesfully"
+        })
+    })
+}
+
+exports.changepaidstatusofeventpassbyphoneHandler = (req, res) => {
+    console.log(req.body)
+    User.findOne({ phoneNumber: req.body.phoneNumber}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            })
+        }
+        user.eventPass = true
+        user.save();
+        res.json({
+            msg: "Chnaged status succesfully"
+        })
+    })
+}
+
+exports.changepaidstatusofinternshipbyemailHandler = (req, res) => {
+    console.log(req.body)
+    User.findOne({ email: req.body.email}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            })
+        }
+        user.internship = true
+        user.save();
+        res.json({
+            msg: "Chnaged status succesfully"
+        })
+    })
+}
+
+
+exports.changepaidstatusofinternshipbyphoneHandler = (req, res) => {
+    console.log(req.body)
+    User.findOne({  phoneNumber: req.body.phoneNumber}).exec((err,user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            })
+        }
+        user.internship = true
+        user.save();
+        res.json({
+            msg: "Chnaged status succesfully"
+        })
+    })
+}
+
+
+exports.createAdminHandler = (req, res) => {
+    bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
+        const user = new User(req.body);
+        user.encryptedPassword = hash;
+        user.role = "superman"
+        user.confirmed = true
+        user.save((err, user) => {
+            if(err || !user){
+                console.log(err)
+                res.json({
+                    error: "Failed to create admin"
+                })
+            }
+            res.json({
+                "msg": "success admin created"
+            })
+        })
+    })
+
+}
+
+exports.getNumberOfParticipantsPerEventHandler = async (req, res) =>  {
+    const events = await Event.find({});
+    var arr = [];
+    events.forEach((event) =>{
+        arr.push({
+            name: event.eventName,
+            "No of participants" : event.mails.length
+        })
+    })
+    return res.send({arr})
+}

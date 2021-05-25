@@ -47,7 +47,7 @@ const EventPopup = (props) => {
     const  startHidePopup = (event) => {
         event.preventDefault();
         props.hidePopup();
-    }
+    };
 
     // function register(event){
     //     event.preventDefault();

@@ -23,6 +23,9 @@ import AdminRoute from "./auth/helper/AdminRoutes";
 import EventPass from "./core/components/EventPass";
 import AdminDashBoard from "./admin/AdminDashboard";
 import AdminDasBoardNew from "./admin/AdminPage";
+import PrivacyPolicy from "./core/components/PrivacyPolicy";
+import TermsOfService from "./core/components/TermsOfService";
+import RefundPolicy from "./core/components/RefundPolicy";
 
 const Routes = () => {
 
@@ -48,6 +51,9 @@ const Routes = () => {
           <Route path="/resetpassword" exact component={ResetPassword} />
           <Route path="/guests" exact component={SpeakersPage} />
           <Route path="/geteventpass" exact component={EventPass} />
+          <Route path="/privacypolicy" exact component={PrivacyPolicy} />
+          <Route path="/termsofservice" exact component={TermsOfService} />
+          <Route path="/refundpolicy" exact component={RefundPolicy} />
           {/* <Route path="/events"  component={EventRegister} />    */}
           <Route path="/events" render={(props) => <EventRegister {...props} />}/> 
           <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
