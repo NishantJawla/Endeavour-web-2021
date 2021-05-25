@@ -413,12 +413,16 @@ exports.getEventScaleIdeaHandler = async (req, res) => {
         }
     });
 
-    return res.send({
-        "Total": total,
-        "Confirmed": confirmed,
-        "profile": profile,
-        "eventPass": eventpass,
-        "internship": internship
+    return res.status(200).json({
+        status: 200,
+        msg: "Data Fetched Successfully",
+        data: {
+            total: total,
+            confirmed: confirmed,
+            profile: profile,
+            eventPass: eventpass,
+            internship: internship
+        }
     })
 }
 function massMailer() {
@@ -669,9 +673,16 @@ exports.getUserByYearHandler = async (req, res) => {
             }
         }
     })
-    return res.json({
-        first, second, third, fourth
-    })
+    return res.status(200).json({
+        status: 200,
+        msg: "Successfully fetched data",
+        usersCount: {
+            first: first,
+            second: second,
+            third: third,
+            fourth: fourth
+        }
+    });
 }
 
 exports.changepaidstatusofeventpassbyemailHandler = (req, res) => {

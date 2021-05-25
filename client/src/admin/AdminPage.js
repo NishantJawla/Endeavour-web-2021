@@ -4,6 +4,7 @@ import './css/admin.css';
 import AdminNav from "./components/AdminNav";
 import DashBoard from "./components/DashBoard";
 import FindUser from "./components/FindUser";
+import FindAllUsers from  "./components/FindAllUsers";
 
 function AdminDashboardNew() {
 
@@ -22,7 +23,7 @@ function AdminDashboardNew() {
                         {
                             page === "dashboard" ? <DashBoard /> : 
                             page === "findUsers" ? <FindUser /> : 
-                            ""
+                            page === "findUsersAll" ? <FindAllUsers /> : "" 
                         }
                     </div>
                 </div>

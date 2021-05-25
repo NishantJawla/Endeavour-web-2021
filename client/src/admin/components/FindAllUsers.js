@@ -11,7 +11,7 @@ function FindAllUsers(){
     const [showSlowly, setShowSlowly] = useState(false);
 
     useEffect(() => {
-        getUsers()
+        getUsers(setUserData);
     }, []);
 
     const showUsers = () => {
@@ -74,4 +74,4 @@ function FindAllUsers(){
     );
 }
 
-export default FindUser;
+export default FindAllUsers;
