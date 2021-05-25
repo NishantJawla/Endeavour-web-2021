@@ -29,7 +29,7 @@ function FindUser(){
             return (
                 <React.Fragment>
                     <EachUserLine
-                        key={user.endvrid} 
+                        key={user._id} 
                         index={index}
                         user={user}
                         setShowSlowly={setShowSlowly}
@@ -66,7 +66,7 @@ function FindUser(){
                     </tbody>
                 </table>
             </div>
-            <DetailsPopup data={popupData} showSlowly={showSlowly} setSlowSlowly={setShowSlowly} />
+            <DetailsPopup data={popupData} showSlowly={showSlowly} setShowSlowly={setShowSlowly} />
         </div>
     );
 }

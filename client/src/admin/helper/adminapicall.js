@@ -267,6 +267,7 @@ export const queryDataBase = (options, setData) => {
             throw new Error("Not able to fetch user data");
         }
     }).then(data => {
+        console.log(data.usersData);
         setData(data.usersData);
     }).catch(error => {
         console.log(error);
