@@ -294,7 +294,7 @@ exports.contactUsOneHandler = (req,res,next) => {
         });
         let info = await transporter.sendMail({
         from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-        to: normalizeEmail(req.body.contactEmail), 
+        to: req.body.contactEmail, 
         subject: "Contact Us Succesfull", 
         text: "Hi it's a contact us succefull mail", 
         html: `<b>Hello ${req.body.contactUserName}</b><br>

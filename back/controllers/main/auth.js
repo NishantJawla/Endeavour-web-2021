@@ -27,7 +27,7 @@ if (!errors.isEmpty()) {
     });
 }
 
-    User.findOne({email:normalizeEmail(req.body.email)}).exec((err,user)=>{
+    User.findOne({email:req.body.email}).exec((err,user)=>{
         if(user){
             return res.status(400).json({
                 status: 400,
@@ -39,6 +39,8 @@ if (!errors.isEmpty()) {
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
             const user = new User(req.body);
             user.email = normalizeEmail(req.body.email);
+            console.log(normalizeEmail(req.body.email));
+            console.log(user.email);
             user.encryptedPassword = hash;
             
                 const randString = () => {
@@ -82,7 +84,7 @@ if (!errors.isEmpty()) {
             const url = `${process.env.BACKDOMAIN}main/auth/confirmation/${user.uniqueString}`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-            to: normalizeEmail(req.body.email), 
+            to: req.body.email, 
             subject: "Verification email", 
             text: "Hi it's a verification email", 
             html: `
@@ -119,8 +121,16 @@ exports.loginHandler = (req,res) =>{
             error: errors.array()[0].msg
         });
     }
-    User.findOne({email: normalizeEmail(req.body.email)}).exec((err,user)=>{
+    var someMail = normalizeEmail(req.body.email)
+    console.log(someMail);
+    User.findOne({email: req.body.email}).exec((err,user)=>{
         if(err || !user){
+            if(!user) {
+                console.log("some error occured")
+            }
+            if(err){
+                console.log(err)
+            }
             return res.status(400).json({
                 status: 400,
                 msg: 'User with this email does not exist',
@@ -224,7 +234,7 @@ exports.forgotPasswordHandler = (req,res) => {
             error: errors.array()[0].msg
         });
     }
-    User.findOne({email: normalizeEmail(req.body.email)}).exec((err,user)=> {
+    User.findOne({email: req.body.email}).exec((err,user)=> {
         if(err || !user){
             if(err){
                 return res.status(500).json({
@@ -266,7 +276,7 @@ exports.forgotPasswordHandler = (req,res) => {
             const url = `${process.env.DOMAIN}resetpassword`;
             let info = await transporter.sendMail({
             from: '"Team e-Cell" <ecellwebtechnical@gmail.com>', 
-            to: normalizeEmail(req.body.email), 
+            to: req.body.email, 
             subject: "Forgot Password Support", 
             text: "it's a forgot password email", 
             html: `<b>Hello ${req.body.name}</b><br>Forgot your password? No worries!<br>
@@ -319,7 +329,7 @@ exports.resetPasswordHandler = (req,res) => {
         });
     }
     User.findOne({
-        email: normalizeEmail(req.params.uniqueString)
+        email: req.params.uniqueString
     }).exec((err,user)=> {
         if(err || !user){
             if(err){
