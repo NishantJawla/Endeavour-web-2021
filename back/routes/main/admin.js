@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsersByPaidStatus,getEventScaleIdeaHandler,massMailInternshipHandler,adminConfrimUserByMailHandler, adminConfrimUserByPhoneNumberHandler,getuserbyemailAdminHandler,getallinvalidusersHandler,getuserbyprofileHandler,getUserByYearHandler,changepaidstatusofeventpassbyemailHandler,changepaidstatusofeventpassbyphoneHandler,changepaidstatusofinternshipbyemailHandler,changepaidstatusofinternshipbyphoneHandler,
-    createAdminHandler} = require("./../../controllers/main/admin");
+    createAdminHandler,getNumberOfParticipantsPerEventHandler} = require("./../../controllers/main/admin");
 const { check, validationResult } = require("express-validator");
 const passport = require('passport');
 require('../../config/passport')(passport);
@@ -45,4 +45,5 @@ router.post('/changeeventpaidstatusbyphone',passport.authenticate('jwt',{session
 router.post('/changeinternshippaidstatusbyemail',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofinternshipbyemailHandler);
 router.post('/changeinternshippaidstatusbyphone',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changepaidstatusofinternshipbyphoneHandler);
 router.post('/createAdmin',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,createAdminHandler);
+router.get('/getpartcipantsperevent',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getNumberOfParticipantsPerEventHandler);
 module.exports = router; 

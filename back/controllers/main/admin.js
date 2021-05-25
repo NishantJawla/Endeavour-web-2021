@@ -732,3 +732,15 @@ exports.createAdminHandler = (req, res) => {
     })
 
 }
+
+exports.getNumberOfParticipantsPerEventHandler = async (req, res) =>  {
+    const events = await Event.find({});
+    var arr = [];
+    events.forEach((event) =>{
+        arr.push({
+            name: event.eventName,
+            "No of participants" : event.mails.length
+        })
+    })
+    return res.send({arr})
+}
