@@ -31,6 +31,9 @@ function EventPass() {
 	useEffect(() => {
 		getUserData(setUserData);
 	}, []);
+	useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
 	const successMessage = (success) => {
         toast.success(`${success}`, {
@@ -174,7 +177,7 @@ function EventPass() {
                     </div>
 					<div className="d-flex py-5 justify-content-center">
 						<div className="getPassButton text-center pe-4">
-							<a href="https://dare2compete.com/o/67DAEeL?refId=XrePcxB" target="_blank" rel="noreferrer" className="py-2 px-3 fs-6 border-0 color-white rounded-3 text-decoration-none bg-primary">Hackathon Rs.100</a>
+							<a href="https://dare2compete.com/o/hackathon-coding-contest-endeavour21-kiet-group-of-institutions-kiet-ghaziabad-166550" target="_blank" rel="noreferrer" className="py-2 px-3 fs-6 border-0 color-white rounded-3 text-decoration-none bg-primary">Hackathon Rs.100</a>
 						</div>
 						<div className="getPassButton text-center ps-4">
 							<a href="http://endeavour-kiet.in/events/60a0b51ca45a7705fc059d83" target="_blank" rel="noreferrer" className="py-2 px-3 text-decoration-none fs-6 border-0 color-white rounded-3 bg-primary" >Intership Fair Rs.50</a>
