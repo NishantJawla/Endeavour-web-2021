@@ -26,6 +26,7 @@ export const registrationsPerEvent = (setUsersPerEvent) => {
         return response.json();
     })
     .then(data => {
+        console.log(data);
         setUsersPerEvent(data.registrationCount);
         return;
     })
@@ -198,7 +199,7 @@ export const getUserFromMobile = (mobile, setData) => {
     });
 };
 
-export const getUsers = (paidStatus, setData) => {
+export const getUsers = (setData) => {
     const { user, token } = isAuthenticated();
     return fetch(`${API}admin/api/getUser/all`, {
         mode: "cors",
@@ -210,13 +211,14 @@ export const getUsers = (paidStatus, setData) => {
         }
     })
     .then(response => {
-        console.log("got response");
-        return response.json();
+        if(response.ok){
+            return response.json();
+        } else {
+            throw new Error("Not able to fetch users data");
+        }
     })
     .then(data => {
-        console.log("getUsers");
-        console.log(data);
-        setData(data);
+        setData(data.usersData);
         return;
     })
     .catch(error => {
@@ -284,7 +286,7 @@ export const updatepaidstatuseventbyphone = data => {
         })
     })
     .then(response => {
-        return response.json();
+      return response.json();
     })
     .catch(error => {
         console.log(error);
@@ -334,3 +336,124 @@ export const updatepaidstatusinternshipbyphone = data => {
         console.log(error);
     });
 }
+
+
+export const queryDataBase = (options, setData) => {
+
+    const { user, token } = isAuthenticated();
+
+    fetch(`${API}admin/api/userData/getUserData/custom/${options.key}/${options.value}`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        if(response.ok){
+            return response.json();
+        } else {
+            throw new Error("Not able to fetch user data");
+        }
+    }).then(data => {
+        setData(data.usersData);
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+export const updateUserData = (userId, updatedData) => {
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/userData/updateUserData`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        },
+        body: JSON.stringify({
+            userId: userId,
+            updatedData: updatedData
+        })
+    }).then(response => {
+        return response.json();
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+
+export const deleteUserData = (userId) => {
+
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/userData/deleteUser/${userId}`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+export const getGeneralEventData = (setGeneralData) => {
+    
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/eventsData/eventStatus`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        if(response.ok){
+            return response.json();
+        } else {
+            throw new Error("Not able to fetch users Data");
+        }
+    }).then(data => {
+        setGeneralData(data.data);
+        return;
+    }).catch(err => {
+        console.log(err);
+    });
+
+}; 
+
+export const getUsersPerYear = (setUsersPerYear) => {
+
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/userData/getuserbyyear`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application.json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        if(response.ok){
+            return response.json();
+        } else {
+            throw new Error("Not able to fetch users Data");
+        }
+    }).then(data => {
+        setUsersPerYear(data.usersCount);
+        return;
+    }).catch(err => {
+        console.log(err);
+    });
+};
