@@ -177,7 +177,7 @@ function EventPass() {
 							<a href="https://dare2compete.com/o/67DAEeL?refId=XrePcxB" target="_blank" rel="noreferrer" className="py-2 px-3 fs-6 border-0 color-white rounded-3 text-decoration-none bg-primary">Hackathon Rs.100</a>
 						</div>
 						<div className="getPassButton text-center ps-4">
-							<a href="http://localhost:3000/events/60a0b51ca45a7705fc059d83" target="_blank" rel="noreferrer" className="py-2 px-3 text-decoration-none fs-6 border-0 color-white rounded-3 bg-primary" >Intership Fair Rs.50</a>
+							<a href="http://endeavour-kiet.in/events/60a0b51ca45a7705fc059d83" target="_blank" rel="noreferrer" className="py-2 px-3 text-decoration-none fs-6 border-0 color-white rounded-3 bg-primary" >Intership Fair Rs.50</a>
 						</div>
 					</div>
                 </div>
