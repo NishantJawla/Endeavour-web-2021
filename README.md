@@ -19,7 +19,21 @@
 
 ### Backend .env file
 
-PORT = 7000
+```
+PORT = 
+DB = 
+GMAIL_USER = 
+GMAIL_PASS = 
+EMAIL_SECRET = 
+SECRET = 
+SECRET_2 = 
+DOMAIN = 
+RAZORPAY_SECRET =
+RAZORPAY_KEY_ID = 
+BACKDOMAIN = 
+GMAIL_USER_MASS = 
+GMAIL_PASS_MASS = 
+```
 
 ### Frontend .env file
 
