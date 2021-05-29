@@ -778,7 +778,8 @@ exports.getNumberOfParticipantsPerEventHandler = async (req, res) =>  {
     events.forEach((event) =>{
         arr.push({
             name: event.eventName,
-            "No of participants" : event.mails.length
+            "No of participants" : event.mails.length,
+            discord: event.discord
         })
     })
     return res.send({arr})

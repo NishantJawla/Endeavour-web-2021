@@ -87,7 +87,7 @@ const  EventRegister = (props) => {
         const { user } = isAuthenticated();
         if(idParam.toString() === "60a0af70a45a7705fc059d82"){
             return (
-                <a href="https://dare2compete.com/o/67DAEeL?refId=XrePcxB" target="_blank" rel="noreferrer" className="w-100 rounded bg-primary hbg-dark color-white fs-6 text-decoration-none border-0 ls-1 fw-bold py-3 px-3">Register Now</a>
+                <a href="https://dare2compete.com/o/hackathon-coding-contest-endeavour21-kiet-group-of-institutions-kiet-ghaziabad-166550" target="_blank" rel="noreferrer" className="w-100 rounded bg-primary hbg-dark color-white fs-6 text-decoration-none border-0 ls-1 fw-bold py-3 px-3">Register Now</a>
             );
         } else if(user){
             return (
@@ -180,7 +180,7 @@ const  EventRegister = (props) => {
     }
     useEffect(() => {
         window.scrollTo(0, 0)
-      }, [])
+    }, [])
 
     //   useEffect(() => {
     //     console.log("inhere!12345")
