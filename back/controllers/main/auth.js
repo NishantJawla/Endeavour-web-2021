@@ -39,8 +39,8 @@ if (!errors.isEmpty()) {
         bcrypt.hash(req.body.plainPassword, saltRounds, (err, hash) => {
             const user = new User(req.body);
             user.email = normalizeEmail(req.body.email);
-            console.log(normalizeEmail(req.body.email));
-            console.log(user.email);
+            // console.log(normalizeEmail(req.body.email));
+            // console.log(user.email);
             user.encryptedPassword = hash;
             
                 const randString = () => {

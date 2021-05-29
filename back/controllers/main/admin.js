@@ -783,3 +783,114 @@ exports.getNumberOfParticipantsPerEventHandler = async (req, res) =>  {
     })
     return res.send({arr})
 }
+
+exports.getTeamsByLeaderId = async (req, res) => {
+    const leaderId = req.params.leaderId;
+    const user = await User.findOne({endvrid: leaderId});
+    if(!user){
+        res.status(404).json({
+            status: 404,
+            msg: "No user found for the given endeavourId",
+            error: "No user found for the given endeavourId"
+        });
+    } else {
+        let teams = await Team.find({leader: user._id});
+        if(!teams){
+            res.status(404).json({
+                status: 404,
+                msg: "The user is not registerd in any event",
+                error: "The user is not registerd in any event"
+            });
+        } else {
+            res.status(200).json({
+                status: 200,
+                msg: "Successfully fetched data",
+                teamsData: teams
+            });
+        }
+    }
+}
+
+exports.deleteTeamFromId = async (req, res) => {
+    const teamId = req.params.teamId;
+    const team = await Team.findById(teamId);
+    if(!team){
+        res.status(404).json({
+            status: 404,
+            msg: "No team found",
+            error: "No team found"
+        });
+    } else {
+        const member1 = await User.findOne({endvrid: team.teamMembers[0]});
+        if(team.teamMembers[1]){
+            const member2 = await User.findOne({endvrid: team.teamMembers[1]});
+            const newEvent2 = member1.registered.filter(event => {
+                return !((""+event.teams) === teamId);
+            });
+            member2.registered = newEvent2;
+            const newMyEvents2 = member2.myEvents.filter(event => {
+                return !(("" + event.eventId) === ("" + team.event));
+            });
+            member2.myEvents = newMyEvents2;
+            member2.save();
+        }
+        const newEvent1 = member1.registered.filter(event => {
+            return !((""+event.teams) === teamId);
+        });
+        member1.registered = newEvent1;
+        const newMyEvents1 = member1.myEvents.filter(event => {
+            return !(("" + event.eventId) === ("" + team.event));
+        });
+        member1.myEvents = newMyEvents1;
+        member1.save();
+        Team.findByIdAndDelete(teamId, (err) => {
+            if(err){
+                res.status(500).json({
+                    status: 500,
+                    msg: "Not able to remove team. Something went wrong.",
+                    error: "Not able to remove team. Something went wrong."
+                });
+            } else {
+                res.status(200).json({
+                    status: 200,
+                    msg: "Successfully deleted team."
+                });
+            }
+        });
+    }
+
+    // if(team.teamMembers[0])
+    // const user1 = await User.findOne({});
+    // Team.findByIdAndDelete(teamId, (err) => {
+    //     if(err){
+    //         res.status(500).json({
+    //             status: 500,
+    //             msg: "Something went wrong",
+    //             error: "Something went wrong"
+    //         });
+    //     } else {
+    //         res.status(200).json({
+    //             status: 200,
+    //             msg: "Successfully deleted team form database"
+    //         });
+    //     }
+    // });
+};
+
+exports.getTeamsAll = async (req, res) => {
+    const teams = await Team.find({});
+
+    if(!teams){
+        res.status(404).json({
+            status: 404,
+            msg: "Not team data found",
+            error: "No Team data found"
+        });
+    } else {
+        res.status(200).json({
+            status: 200,
+            msg: "Successfully fetched teams data",
+            teamsData: teams
+        });
+    }
+};

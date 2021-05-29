@@ -5,6 +5,8 @@ import AdminNav from "./components/AdminNav";
 import DashBoard from "./components/DashBoard";
 import FindUser from "./components/FindUser";
 import FindAllUsers from  "./components/FindAllUsers";
+import FindTeams from "./components/FindTeams";
+import CreateTeam from "./components/CreateNewTeam";
 
 function AdminDashboardNew() {
 
@@ -23,7 +25,9 @@ function AdminDashboardNew() {
                         {
                             page === "dashboard" ? <DashBoard /> : 
                             page === "findUsers" ? <FindUser /> : 
-                            page === "findUsersAll" ? <FindAllUsers /> : "" 
+                            page === "findUsersAll" ? <FindAllUsers /> : 
+                            page === "findTeams" ? <FindTeams /> : 
+                            page === "createTeam" ? <CreateTeam /> : "" 
                         }
                     </div>
                 </div>

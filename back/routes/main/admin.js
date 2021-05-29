@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const {getRegistrationsPerEvent, getUserCount, getUsersUsingEventId, getTeamHead, getTeamHeadAll, getUserFromEndvrId, getUserFromMobile, getAllUsers,getEventScaleIdeaHandler,massMailInternshipHandler,adminConfrimUserByMailHandler, adminConfrimUserByPhoneNumberHandler,getuserbyemailAdminHandler,getallinvalidusersHandler,getuserbyprofileHandler,getUserByYearHandler,changepaidstatusofeventpassbyemailHandler,changepaidstatusofeventpassbyphoneHandler,changepaidstatusofinternshipbyemailHandler,changepaidstatusofinternshipbyphoneHandler,
-    createAdminHandler,getNumberOfParticipantsPerEventHandler, getUsersUsersCustom, updateUserData, deleteUserForDB} = require("./../../controllers/main/admin");
+    createAdminHandler,getNumberOfParticipantsPerEventHandler, getUsersUsersCustom, updateUserData, deleteUserForDB, getTeamsByLeaderId, deleteTeamFromId, getTeamsAll} = require("./../../controllers/main/admin");
 
 const { check, validationResult } = require("express-validator");
 const passport = require('passport');
@@ -35,8 +35,12 @@ router.post("/api/userData/updateUserData", passport.authenticate('jwt',{session
 router.get("/api/getUser/all", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getAllUsers);
 router.get("/api/userData/getUserData/custom/:key/:value", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getUsersUsersCustom);
 router.get("/api/userData/deleteUser/:userId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, deleteUserForDB);
+router.get("/api/teamData/leaderId/:leaderId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getTeamsByLeaderId);
+router.delete("/api/teamData/deleteTeam/:teamId", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, deleteTeamFromId);
+router.get("/api/teamData/getTeams/all", passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}), isAdmin, getTeamsAll);
 
 router.post('/changePaidStatus',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,changePaidStatusHandler,addTeamToEventsHandler);
+
 //new routes
 
 

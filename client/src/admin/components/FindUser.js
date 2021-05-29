@@ -40,9 +40,56 @@ function FindUser(){
         }) : ""
     };
 
+    const importCSV = () => {
+        const csvRows = [];
+        const newHeaders = [
+            "endvrid",
+            "name",
+            "email",
+            "phoneNumber",
+            "discord",
+            "semester",
+            "branch",
+            "college",
+            "libId",
+
+        ];
+        const headers = {
+            EndeavourId: "",
+            Name: "",
+            Email:'',
+            PhoneNumber: '',
+            DiscordId: '',
+            Semester: '',
+            Branch: '',
+            College: '',
+            LiberaryId: '',
+        }
+        csvRows.push(Object.keys(headers).join(","));
+
+        for(const row of userData ){
+            const values = newHeaders.map(header => {
+                const escaped = (''+row[header]).replace(/"/g, '\\"');
+                return `"${escaped}"`;
+            });
+            csvRows.push(values.join(','));
+        }
+
+        const joinedCSV = csvRows.join('\n');
+        
+        const url = window.URL.createObjectURL(new Blob([joinedCSV], {type: 'text/csv'}));
+        const a = document.createElement('a');
+        a.setAttribute('hidden', '');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'data.csv');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+
     return (
         <div className="p-3">
-            <SearchMenu setUserData={setUserData} />
+            <SearchMenu setUserData={setUserData} importCSV={importCSV} />
             <div className="count pt-5">
                 <div className="color-white fs-5 ls-2 fw-bold">Count: {userData.length}</div>
             </div>

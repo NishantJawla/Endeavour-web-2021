@@ -6,7 +6,7 @@ function EachUserLine (props) {
     const showDetails = () => {
         props.setShowSlowly(true);
         props.setPopupData(props.user);
-    }
+    };
 
     return (
         <tr className= {props.index%2 === 0 ? "bg-primary" : ""}>

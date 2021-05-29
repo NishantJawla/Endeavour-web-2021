@@ -26,7 +26,6 @@ export const registrationsPerEvent = (setUsersPerEvent) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
         setUsersPerEvent(data.registrationCount);
         return;
     })
@@ -57,7 +56,6 @@ export const getUsersCount = (setData) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
         setData(data.usersCount);
         return;
     })
@@ -86,7 +84,6 @@ export const getUsersByEvent = (eventId, paidStatus, setData) =>{
         return response.json();
     })
     .then(data => {
-        console.log(data);
         setData(data);
         return;
     })
@@ -114,8 +111,6 @@ export const getTeamHeads = (eventId, paidStatus, setData) =>{
         return response.json();
     })
     .then(data => {
-        console.log("getTeamHeads");
-        console.log(data);
         setData(data);
         return;
     })
@@ -440,7 +435,7 @@ export const getUsersPerYear = (setUsersPerYear) => {
         mode: "cors",
         method: "GET",
         headers: {
-            "Content-Type": "application.json",
+            "Content-Type": "application/json",
             Accept: "application/json",
             Authorization: `${token}`
         }
@@ -455,5 +450,82 @@ export const getUsersPerYear = (setUsersPerYear) => {
         return;
     }).catch(err => {
         console.log(err);
+    });
+};
+
+export const findTeamUsingId = (endeavourId) => {
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/teamData/leaderId/${endeavourId}`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        return response.json();
+    }).catch(err => {
+        console.log(err);
+    });
+};
+
+export const deleteTeamFomId = (teamId) => {
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/teamData/deleteTeam/${teamId}`, {
+        mode: "cors",
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+export const findTeamsAll = () => {
+    const { user, token } = isAuthenticated();
+    
+    return fetch(`${API}admin/api/teamData/getTeams/all`, {
+        mode: "cors",
+        method: "GET",
+        headers : {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        }
+    }).then(response => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+export const createNewTeam = (teamData) => {
+    const { user, token } = isAuthenticated();
+
+    return fetch(`${API}admin/api/teamData/createNewTeam`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${token}`
+        },
+        body: {
+            teamData
+        }
+    }).then(response => {
+        return response.json();
+    }).catch(err => {
+        if(err){
+            console.log(err);
+        }
     });
 };

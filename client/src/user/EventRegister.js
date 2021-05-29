@@ -22,17 +22,18 @@ const  EventRegister = (props) => {
       });
     const { eventName,launched,  membersCount,price,error, success } = eventPay;
     useEffect(() => {
-    const eventRef = firebase.database().ref('eventsMain');
-    eventRef.on('value', (snapshot) => {
-    const events = snapshot.val();
-    const eventData = [];
-    for (let id in events) {
-        
-        if(events[id].eventId.toString() === idParam.toString()){
-            eventData.push({ id, ...events[id] });
+        window.scrollTo(0,0);
+        const eventRef = firebase.database().ref('eventsMain');
+        eventRef.on('value', (snapshot) => {
+        const events = snapshot.val();
+        const eventData = [];
+        for (let id in events) {
+            
+            if(events[id].eventId.toString() === idParam.toString()){
+                eventData.push({ id, ...events[id] });
+            }
         }
-    }
-    seteventData(eventData);
+        seteventData(eventData);
     });
     }, []);
 

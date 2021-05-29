@@ -1,5 +1,5 @@
 //jshint esversion: 8
-import React from "react";
+import React, { useState } from "react";
  
 function AdminNav(props) {
 
@@ -10,7 +10,8 @@ function AdminNav(props) {
                 <div onClick={() => props.setPage("dashboard")} className="py-2 cursor-pointer my-2 ls-1" >Dashboard</div>
                 <div onClick={() => props.setPage("findUsers")} className="py-2 cursor-pointer my-2 ls-1" >Find users</div>
                 <div onClick={() => props.setPage("findUsersAll")} className="py-2 cursor-pointer my-2 ls-1" >Find All Users</div>
-                <div onClick={() => props.setPage("importCSV")} className="py-2 cursor-pointer my-2 ls-1" >Import CSV</div>
+                <div onClick={() => props.setPage("findTeams")} className="py-2 cursor-pointer my-2 ls-1" >Find Teams</div>
+                {/* <div onClick={() => props.setPage("createTeam")} className="py-2 cursor-pointer my-2 ls-1" >Create Team</div> */}
             </div>
         </div>
     );

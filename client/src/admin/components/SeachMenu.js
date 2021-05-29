@@ -75,28 +75,28 @@ function SearchMenu(props){
                         userOption === "endvrid" ? 
                         <div className="endeavourId d-flex">
                             <input onChange={handleChange} className="form-control p-4" type="text" placeholder="Endeavour Id" name="endurId" value={optionValue} required/>
-                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Seach</button>
+                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Search</button>
                         </div> : ""
                     }
                     {
                         userOption === "email" ? 
                         <div className="email d-flex">
                             <input onChange={handleChange} className="form-control p-4" type="text" placeholder="Email Id" name="emailid" value={optionValue} required/>
-                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Seach</button>
+                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Search</button>
                         </div> : ""
                     }
                     {
                         userOption === "phoneNumber" ? 
                         <div className="mobileno d-flex">
                             <input onChange={handleChange} className="form-control p-4" type="tel" placeholder="Mobile No" name="mobileno" value={optionValue} required/>
-                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Seach</button>
+                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Search</button>
                         </div> : ""
                     }
                     {
                         userOption === "discord" ?
                         <div className="discord d-flex">
                             <input onChange={handleChange} className="form-control p-4" type="tel" placeholder="Discord Id" name="discordid" value={optionValue} required/>
-                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Seach</button>
+                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Search</button>
                         </div> : ""
                     }
                     {
@@ -113,7 +113,7 @@ function SearchMenu(props){
                                 <option className="color-secondary" title="Internship" value="60a0b51ca45a7705fc059d83">Internship</option>
                                 <option className="color-secondary" title="Mind Scribble" value="60a0d441a45a7705fc059d89">Mind Scribble</option>
                             </select> 
-                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Seach</button>
+                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Search</button>
                         </div> : ""
                     }
                     {
@@ -124,7 +124,7 @@ function SearchMenu(props){
                                 <option className="color-secondary" title="Have Pass" value={true}>Purchased</option>
                                 <option className="color-secondary" title="Do not have Pass" value={false}>Not Purchased</option>
                             </select> 
-                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Seach</button>
+                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Search</button>
                         </div> : ""
                     }
                     {
@@ -135,9 +135,12 @@ function SearchMenu(props){
                                 <option className="color-secondary" title="Profile Completed" value={true}>Profile Completed</option>
                                 <option className="color-secondary" title="Profile Not Completed" value={false}>Profile Not Completed</option>
                             </select> 
-                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Seach</button>
+                            <button onClick={submit} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Search</button>
                         </div> : ""
                     }
+                </div>
+                <div className="offset-1 col-1">
+                <button onClick={() => {props.importCSV()}} className="px-5 mx-3 bg-primary color-white rounded-3 border-0 ls-1 fs-6">Download CSV</button>
                 </div>
             </div>
         </div>

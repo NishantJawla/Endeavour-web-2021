@@ -26,9 +26,11 @@ seteventData(eventData);
                     <div className="heading-font text-center color-white fw-bold">Our Events</div>
                     <div className="events-container">
                         <div className="d-flex justify-content-between flex-wrap">
-                            {eventData
-    ? eventData.map((todo, index) => <EachEvent data={todo} key={index} />)
-    : ''}
+                            {
+                                eventData
+                                ? eventData.map((todo, index) => <EachEvent data={todo} key={index} />)
+                                : ''
+                            }
                         </div>
                     </div>
                 </div>
