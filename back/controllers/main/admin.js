@@ -403,14 +403,15 @@ exports.getEventScaleIdeaHandler = async (req, res) => {
             confirmed += 1;
             if(user.profile){
                 profile += 1;
-                if(user.eventPass){
-                    eventpass += 1
-                }
-                if(user.internship){
-                    internship += 1;
-                }
+            }
+            if(user.eventPass){
+                eventpass += 1
+            }
+            if(user.internship){
+                internship += 1;
             }
         }
+
     });
 
     return res.status(200).json({
