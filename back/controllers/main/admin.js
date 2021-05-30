@@ -342,9 +342,17 @@ exports.getAllUsers = async (req, res) => {
 exports.getUsersUsersCustom = async (req, res) => {
     const key = req.params.key;
     const value = req.params.value;
-    const options = {
-        [key]: value
-    };
+    let options = {};
+    if(key === "eventPass" && value === "false"){
+        options = {
+            [key]: value,
+            profile: true
+        };
+    } else {
+        options = {
+            [key]: value
+        };
+    }
     const users = await User.find(options);
     res.status(200).json({
         status: 200,
@@ -406,9 +414,9 @@ exports.getEventScaleIdeaHandler = async (req, res) => {
                 if(user.eventPass){
                     eventpass += 1
                 }
-                if(user.internship){
-                    internship += 1;
-                }
+            }
+            if(user.internship){
+                internship += 1;
             }
         }
     });

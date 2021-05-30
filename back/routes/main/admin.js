@@ -44,7 +44,7 @@ router.post('/changePaidStatus',passport.authenticate('jwt',{session: false,fail
 //new routes
 
 
-router.get('/api/eventsData/eventstatus',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,getEventScaleIdeaHandler);
+router.get('/api/eventsData/eventstatus',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin, getEventScaleIdeaHandler);
 router.get('/sendinternshipmails',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,massMailInternshipHandler);
 router.post('/confirmuserbyemail',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,adminConfrimUserByMailHandler);
 router.post('/confirmuserbyphone',passport.authenticate('jwt',{session: false,failureRedirect : '/failurejson',}),isAdmin,adminConfrimUserByPhoneNumberHandler);
