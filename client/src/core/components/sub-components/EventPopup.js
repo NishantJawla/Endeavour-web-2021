@@ -180,15 +180,15 @@ const EventPopup = (props) => {
                     !userInfo.eventPass && props.id !== "60a0b51ca45a7705fc059d83" ?
                         (<React.Fragment>
                             <div className="register-button py-3">
-                                <Link to="/geteventpass" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white">Get Event Pass</Link>
+                                <Link to="/geteventpass" className="bg-primary border-0 hbg-dark py-3 px-3 ls-1 rounded-3 color-white Disabled">Registerations Closed</Link>
                             </div>
                         </React.Fragment>)
                      : props.id !== "60a0b51ca45a7705fc059d83" ?
                     (<div className="register-button py-3 px-5">
-                        <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Register</button>
+                        <button onClick={onSubmit} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white Disabled">Registerations Closed</button>
                     </div>) : !userInfo.internship ?
                     (<div className="register-button py-3 px-5">
-                        <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Pay &#8377;50</button>
+                        <button onClick={displayRazorpay} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white Disabled">Registerations Closed</button>
                     </div>) : 
                     (<div className="register-button py-3 px-5">
                         <button onClick={(event) => {event.preventDefault(); errorMessage("Already Registered")}} className="bg-primary border-0 hbg-dark py-2 px-3 ls-1 rounded-3 color-white">Already Registered</button>

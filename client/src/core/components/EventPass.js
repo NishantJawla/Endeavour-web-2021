@@ -158,7 +158,7 @@ function EventPass() {
                                         <li>Entertain yourself in the entertainment eve.</li>
                                     </ul>
                                     <div className="getPassButton text-center">
-                                        <button className="py-2 px-3 fs-6 border-0 color-white rounded-3 bg-primary" onClick={displayRazorpay}>Get Your Pass</button>
+                                        <button className="py-2 px-3 fs-6 border-0 color-white rounded-3 bg-primary Disabled" onClick={displayRazorpay}>Registrations Closed</button>
                                     </div>
 									<ToastContainer
 									position="top-right"
