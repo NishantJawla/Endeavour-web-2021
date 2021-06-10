@@ -83,8 +83,20 @@ const  EventRegister = (props) => {
 //           }
 //       })
 //   }
+function showIntershipButton(){
+    if(idParam.toString() === "60a0b51ca45a7705fc059d83"){
+        return (
+            <a href="https://play.google.com/store/apps/details?id=com.ecell.internshipfairendeavour" target="_blank" rel="noreferrer">
+            <button onClick={"https://play.google.com/store/apps/details?id=com.ecell.internshipfairendeavour"} className="w-100 rounded bg-primary hbg-dark color-white fs-6 border-0 ls-1 fw-bold py-3 my-5">
+                <a href="https://play.google.com/store/apps/details?id=com.ecell.internshipfairendeavour" target="_blank" rel="noreferrer"
+                className="color-white text-decoration-none">
+                Get Our Internship App Now</a></button></a>
+        );
+    }
+}
     function showButton(){
         const { user } = isAuthenticated();
+        
         if(idParam.toString() === "60a0af70a45a7705fc059d82"){
             return (
                 <a href="https://dare2compete.com/o/hackathon-coding-contest-endeavour21-kiet-group-of-institutions-kiet-ghaziabad-166550" target="_blank" rel="noreferrer" className="w-100 rounded bg-primary hbg-dark color-white fs-6 text-decoration-none border-0 ls-1 fw-bold py-3 px-3">Register Now</a>
@@ -278,6 +290,7 @@ const  EventRegister = (props) => {
                         </div>
 
                         <div className="py-3 px-4">
+                            {showIntershipButton()}
                             {showButton()}
                         </div>
                     </div>
