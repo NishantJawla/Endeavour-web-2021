@@ -11,10 +11,10 @@
 
 ### Running
 
-- #Backend
+- Backend\
   npm start
-- Front End
-  cd client
+- Front End\
+  cd client\
   npm start
 
 ### Backend .env file
@@ -47,9 +47,14 @@ REACT_APP_FIREBASE_SENDER_ID =
 REACT_APP_MESSAGING_APP_ID = 
 REACT_APP_MEASURMENT_ID = 
 ```
-Made by:-
-Nishant Jawla
-Parneet Raghuvanshi
-Pranav Sukhla
+<h2 align="center">ScreenShots of The Website</h2>
+<h3>Home Page</h3>
+<img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/home.png" />
+<h3>Our Guest</h3>
+<img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/speakerpage.png" />
+Made by:-\
+Nishant Jawla\
+Parneet Raghuvanshi\
+Pranav Sukhla\
 
-From KIET e-Cell
+
