@@ -50,8 +50,18 @@ REACT_APP_MEASURMENT_ID =
 <h2 align="center">ScreenShots of The Website</h2>
 <h3>Home Page</h3>
 <img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/home.png" />
-<h3>Our Guest</h3>
+<h3>Get Event Pass</h3>
+<img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/eventpass.png" />
+<h3>Our Guest Page</h3>
 <img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/speakerpage.png" />
+<h3>Our Sponsors</h3>
+<img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/sponsors.png" />
+<h3>Team Section</h3>
+<img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/team.png" />
+<h3>User Dasboard</h3>
+<img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/userdashnoard.png" />
+<h3>Admin Dasboard</h3>
+<img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/admin.png" />
 Made by:-\
 Nishant Jawla\
 Parneet Raghuvanshi\
