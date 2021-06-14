@@ -62,9 +62,9 @@ REACT_APP_MEASURMENT_ID =
 <img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/userdashnoard.png" />
 <h3>Admin Dasboard</h3>
 <img src ="https://github.com/NishantJawla/Endeavour-web-2021/blob/main/ScreenShots/admin.png" />
-Made by:-\
-Nishant Jawla\
-Parneet Raghuvanshi\
-Pranav Sukhla\
+<p>Made By</p>
+[Nishant Jawla](https://github.com/NishantJawla)<br\>
+[Parneet Raghuvanshi](https://github.com/Parneet-Raghuvanshi)<br\>
+[Pranav Sukhla](https://github.com/pranav-develop)
 
 
