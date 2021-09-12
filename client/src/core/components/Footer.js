@@ -1,7 +1,7 @@
 //jshint esversion: 8
-import React from 'react';
+import React from "react";
 import "./footer.css";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import SocialLinks from "./sub-components/SocialLinks";
 import personIcon1 from "./../../assets/img/icons/person1.png";
 import personIcon2 from "./../../assets/img/icons/person3.png";
@@ -15,12 +15,26 @@ function Footer() {
                     <div className="col-xl-7 col-lg-7 col-md-8">
                         <div className="address">
                             <div className="fs-4 color-white py-3 fw-bold ls-1">Address</div>
-                            <iframe title="address" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d874.4751148729615!2d77.4986140292191!3d28.75238877465378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf471f7307f87%3A0xa4a1095abb33f9ac!2sTBI%20KIET!5e0!3m2!1sen!2sin!4v1620477652006!5m2!1sen!2sin" width="100%" height="390" style={{border: 0}} allowFullScreen={true} loading="lazy"></iframe>
+                            <iframe
+                                title="address"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d874.4751148729615!2d77.4986140292191!3d28.75238877465378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf471f7307f87%3A0xa4a1095abb33f9ac!2sTBI%20KIET!5e0!3m2!1sen!2sin!4v1620477652006!5m2!1sen!2sin"
+                                width="100%"
+                                height="390"
+                                style={{ border: 0 }}
+                                allowFullScreen={true}
+                                loading="lazy"
+                            ></iframe>
                         </div>
                         <div className="important-links row color-white pt-3">
-                            <Link to="/privacypolicy" className="col color-white">Privacy Policy</Link>
-                            <Link to="/termsofservice" className="col color-white">Term Of Service</Link>
-                            <Link to="/refundpolicy" className="col color-white">Refund Policy</Link>
+                            <Link to="/privacypolicy" className="col color-white">
+                                Privacy Policy
+                            </Link>
+                            <Link to="/termsofservice" className="col color-white">
+                                Term Of Service
+                            </Link>
+                            <Link to="/refundpolicy" className="col color-white">
+                                Refund Policy
+                            </Link>
                         </div>
                     </div>
                     <div className="col-md-4 col-lg-5 col-xl-4 col-xxl-4 offset-xl-0 offset-lg-0 offset-xl-1">
@@ -31,28 +45,26 @@ function Footer() {
                                     <div className="pt-3 pb-4 d-flex justify-content-center">
                                         <img src={personIcon1} height="150px" alt="person" />
                                     </div>
-                                    <div className="bg-white w-100 my-3" style={{height:"2px", }}></div>
+                                    <div className="bg-white w-100 my-3" style={{ height: "2px" }}></div>
                                     <div className="py-2">
                                         <div className="name">Nishant Jawla</div>
                                         <div className="designation">Web Developer e-Cell</div>
                                         <div className="contact">+91 7054409248</div>
                                     </div>
-                                    
                                 </div>
                                 <div className="each-contact color-grey p-3 ls-1">
                                     <div className="pt-3 pb-4 d-flex justify-content-center">
                                         <img src={personIcon2} height="150px" alt="person" />
                                     </div>
-                                    <div className="bg-white w-100 my-3" style={{height:"2px", }}></div>    
+                                    <div className="bg-white w-100 my-3" style={{ height: "2px" }}></div>
                                     <div className="py-2">
-                                        <div className="name">Pranav Shukla</div>
-                                        <div className="designation">Web Developer e-Cell</div>
-                                        <div className="contact">+91 9718069294</div>
+                                        <div className="name">Harshit Pathak</div>
+                                        <div className="designation">Web Developer</div>
+                                        <div className="contact">+91 9369650990</div>
                                     </div>
-                                    
                                 </div>
                             </div>
-                            
+
                             {/* <div className="each-contact color-grey py-3 ls-1">
                                 <div className="name">Person 1</div>
                                 <div className="designation">Member Ecell</div>
@@ -67,15 +79,25 @@ function Footer() {
                         <SocialLinks />
                     </div>
                     <div className="appLink w-100 pt-4 d-flex d-block d-md-none">
-                        <a href="https://play.google.com/store/apps/details?id=com.ecell.end_eavour" target="_blank" rel="noreferrer" className="w-50 m-auto">
+                        <a
+                            href="https://play.google.com/store/apps/details?id=com.ecell.end_eavour"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-50 m-auto"
+                        >
                             <img src={getOnGoogleBadge} width="100%" alt="get it on google play badge" />
                         </a>
                     </div>
                 </div>
                 <div className="copyright pt-5 pb-3 text-center fw-bold fs-6 color-white">
-                        <a href="https://play.google.com/store/apps/details?id=com.ecell.end_eavour" target="_blank" rel="noreferrer" className="position-absolute bottom-0 right-0 m-auto d-none d-md-block">
-                            <img src={getOnGoogleBadge} width="30%" alt="get it on google play badge" />
-                        </a>
+                    <a
+                        href="https://play.google.com/store/apps/details?id=com.ecell.end_eavour"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="position-absolute bottom-0 right-0 m-auto d-none d-md-block"
+                    >
+                        <img src={getOnGoogleBadge} width="30%" alt="get it on google play badge" />
+                    </a>
                     Copyright © 2021 Technical Team e-Cell
                 </div>
             </div>

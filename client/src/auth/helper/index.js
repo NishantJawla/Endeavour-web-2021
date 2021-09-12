@@ -1,135 +1,132 @@
 //jshint esversion: 8
-import {API} from "../../backend";
-import axios from 'axios';
-export const signup = user => {
-    return fetch(`${API}auth/signup`,{
-        mode: 'cors',
+import { API } from "../../backend";
+import axios from "axios";
+export const signup = (user) => {
+    return fetch(`${API}auth/signup`, {
+        mode: "cors",
         method: "POST",
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
     })
-    .then(response => {
-        return response.json()
-    })
-    .catch(err => {
-        console.log(err);
-        return err;
-    })
-}
-
-
-export const signin = user => {
-    return fetch(`${API}auth/login`,{
-        mode: 'cors',
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-    })
-    .then(response => {
-        return response.json()
-    })
-    .catch(err => {
-        console.log(err)
-        return err;
-    })
-}
-
-
-
-export const authenticate = (data,next) => {
-    if(typeof window !== "undefined"){
-        localStorage.setItem("jwt",JSON.stringify(data))
-        next();
-    }
-}
-
-export const signout = next => {
-    if(typeof window !== "undefined"){
-        localStorage.removeItem("jwt")
-        next();
-    
-        return fetch(`${API}auth/signout`,{
-            method: "GET"
+        .then((response) => {
+            return response.json();
         })
-        .then(response => console.log("signout success"))
-        .catch(err => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+};
+
+export const signin = (user) => {
+    return fetch(`${API}auth/login`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+};
+
+export const authenticate = (data, next) => {
+    if (typeof window !== "undefined") {
+        localStorage.setItem("jwt", JSON.stringify(data));
+        next();
     }
-}
+};
+
+export const signout = (next) => {
+    if (typeof window !== "undefined") {
+        localStorage.removeItem("jwt");
+        next();
+
+        return fetch(`${API}auth/signout`, {
+            method: "GET",
+        })
+            .then((response) => console.log("signout success"))
+            .catch((err) => console.log(err));
+    }
+};
 
 export const isAuthenticated = () => {
-    if(typeof window == "undefined"){
+    if (typeof window == "undefined") {
         return false;
     }
-    if(localStorage.getItem("jwt")){
+    if (localStorage.getItem("jwt")) {
         return JSON.parse(localStorage.getItem("jwt"));
-    }else{
+    } else {
         return false;
     }
-}
+};
 
-export const changePasswordHandler = data => {
+export const changePasswordHandler = (data) => {
     const { user, token } = isAuthenticated();
-    return fetch(`${API}user/changePassword`,{
-        mode: 'cors',
+    return fetch(`${API}user/changePassword`, {
+        mode: "cors",
         method: "POST",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
             Authorization: `${token}`,
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     })
-    .then(response => {
-        return response.json()
-    })
-    .catch(err => {
-        console.log(err)
-        return err;
-    })
-} 
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+};
 
 export const forgotPasswordHandler = (data) => {
-    return fetch(`${API}auth/forgotpassword`,{
-        mode: 'cors',
+    return fetch(`${API}auth/forgotpassword`, {
+        mode: "cors",
         method: "POST",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     })
-    .then(response => {
-        return response.json()
-    })
-    .catch(err => {
-        console.log(err)
-        return err;
-    })
-}
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+};
 
 export const resetPasswordHandler = (data) => {
-    return fetch(`${API}auth/resetPassword/${data.email}`,{
-        mode: 'cors',
+    return fetch(`${API}auth/resetPassword/${data.email}`, {
+        mode: "cors",
         method: "POST",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     })
-    .then(response => {
-        return response.json();
-    })
-    .catch(err => {
-        return err;
-    })
-}
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => {
+            return err;
+        });
+};
 
 export const getUserData = async (setUserData) => {
     const { user, token } = isAuthenticated();
@@ -139,49 +136,47 @@ export const getUserData = async (setUserData) => {
         headers: {
             "Content-Type": "application/json",
             Authorization: `${token}`,
-        }
+        },
     })
-    .then(response => {
-        if(response.ok)
-            return response.json();
-        else 
-            throw new Error("Not able to get user data");
-    })
-    .then(data => {
-        setUserData(data.userData);
-        return;
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then((response) => {
+            if (response.ok) return response.json();
+            else throw new Error("Not able to get user data");
+        })
+        .then((data) => {
+            setUserData(data.userData);
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 };
 
-export const getEventData = (eventId ,setEvents) => {
+export const getEventData = (eventId, setEvents) => {
     const { user, token } = isAuthenticated();
     return fetch(`${API}getEvent/${eventId}`, {
         mode: "cors",
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`
-        }
+            Authorization: `${token}`,
+        },
     })
-    .then(response => {
-        if (response.ok){
-            return response.json();
-        } else {
-            throw new Error("Not able to fetch events Data");
-        }
-    })
-    .then(data => {
-        setEvents(event => {
-            return [...event, data];
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Not able to fetch events Data");
+            }
+        })
+        .then((data) => {
+            setEvents((event) => {
+                return [...event, data];
+            });
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
         });
-        return;
-    })
-    .catch(error => {
-        console.log(error);
-    });
 };
 
 export const registerEvent = (eventId, userData) => {
@@ -191,35 +186,35 @@ export const registerEvent = (eventId, userData) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`
+            Authorization: `${token}`,
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
     })
-    .then(response => {
-        return response.json()
-    })
-    .catch(error => {
-       return error
-    });
+        .then((response) => {
+            return response.json();
+        })
+        .catch((error) => {
+            return error;
+        });
 };
 
 export const updateProfile = (data) => {
-    const {user, token} = isAuthenticated();
+    const { user, token } = isAuthenticated();
     return fetch(`${API}user/updateProfile`, {
         mode: "cors",
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`
+            Authorization: `${token}`,
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     })
-    .then(response => {
-        return response.json();
-    })
-    .then(error => {
-        return error;
-    });
+        .then((response) => {
+            return response.json();
+        })
+        .then((error) => {
+            return error;
+        });
 };
 
 export const getRegisteredEvents = async (setEvents) => {
@@ -232,58 +227,58 @@ export const getRegisteredEvents = async (setEvents) => {
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            Authorization: `${token}`
-        }
+            Authorization: `${token}`,
+        },
     })
-    .then(response => {
-        return response.json();
-    })
-    .then(  data => {
-        data.userData.registered.forEach(event => {
-            const eachEvent = {
-                eventName: "",
-                paidStatus: ""
-            };
-            fetch(`${API}user/checkUser/event/${event.event}`, {
-                mode: "cors",
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    Authorization: `${token}`
-                }
-            })
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                eachEvent.eventName = data.name;
-            })
-            .catch(err => {
-                console.error(err);
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            data.userData.registered.forEach((event) => {
+                const eachEvent = {
+                    eventName: "",
+                    paidStatus: "",
+                };
+                fetch(`${API}user/checkUser/event/${event.event}`, {
+                    mode: "cors",
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: `${token}`,
+                    },
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        eachEvent.eventName = data.name;
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+                fetch(`${API}user/checkUser/team/${event.teams}`, {
+                    mode: "cors",
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: `${token}`,
+                    },
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        eachEvent.paidStatus = data.paid;
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+                output.push(eachEvent);
             });
-            fetch(`${API}user/checkUser/team/${event.teams}`, {
-                mode: "cors",
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    Authorization: `${token}`
-                }
-            })
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                eachEvent.paidStatus = data.paid;
-            })
-            .catch(err => {
-                console.error(err);
-            });
-            output.push(eachEvent);
+            return;
         });
-        return ;
-    });
 };
 
 // export const isRegisteredInEvent = (eventId, setStatus) => {
@@ -313,17 +308,17 @@ export const getRegisteredEvents = async (setEvents) => {
 // };
 
 export const getEventHandler = async (data) => {
-    const {user, token} = isAuthenticated();
-    await axios.get(`${API}event/getEvent/${data}`, {
-    headers: {
-        'Authorization': `${token}`
-    }
-    })
-    .then((res) => {
-    console.log(res);
-    })
-    .catch((error) => {
-    return error
-    })
+    const { user, token } = isAuthenticated();
+    await axios
+        .get(`${API}event/getEvent/${data}`, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        })
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((error) => {
+            return error;
+        });
 };
-
